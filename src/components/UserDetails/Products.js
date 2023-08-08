@@ -1,0 +1,58 @@
+import * as React from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Title from '../common/Title';
+
+
+export default function Products({ bpDetails }) {
+  const {
+    contractVersionBPId,
+    productName,
+    allocatedVehicle = [],
+    priceAllocationType,
+    grossAmount,
+    netAmount,
+    taxAmount
+  } = bpDetails;
+  const activeVehicle = allocatedVehicle.filter(item => {
+    return item.status === 'Active'
+  });
+  const currentVehicle = activeVehicle && activeVehicle.length ? activeVehicle[0] : allocatedVehicle && allocatedVehicle.length ? allocatedVehicle[0] : [];
+
+
+  return (
+    <React.Fragment>
+      <Title>Base Product</Title>
+      <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell>BP Id</TableCell>
+            <TableCell>BP Name</TableCell>
+            <TableCell>Vehicle</TableCell>
+            <TableCell>Price Allocation Type</TableCell>
+            <TableCell>Gross Amount</TableCell>
+            <TableCell>Net Amount</TableCell>
+            <TableCell>Tax Amount</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>{contractVersionBPId}</TableCell>
+            <TableCell>{productName}</TableCell>
+            <TableCell>{currentVehicle.vehicleId}</TableCell>
+            <TableCell>{priceAllocationType}</TableCell>
+            <TableCell>{grossAmount}</TableCell>
+            <TableCell>{netAmount}</TableCell>
+            <TableCell>{taxAmount}</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+      {/* <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
+        See more orders
+      </Link> */}
+    </React.Fragment>
+  );
+}
