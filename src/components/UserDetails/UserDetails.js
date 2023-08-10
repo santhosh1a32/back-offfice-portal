@@ -18,8 +18,8 @@ import Chip from '@mui/material/Chip';
 import { getDataWithParam } from '../../DataService';
 import { useSearchParams } from 'react-router-dom';
 import { Button } from '@mui/material';
-import CustomDialog from '../common/CustomDialog';
-import PauseSubscription from './PauseSubscription';
+import PauseSubscriptionModal from './PauseSubscriptionModal';
+import CancelSubscriptionModal from './CancelSubscriptionModal';
 
 
 const UserDetails = () => {
@@ -27,19 +27,23 @@ const UserDetails = () => {
     const [contractDetails, updateContractDetails] = React.useState(CONTRACT_DETAILS);
     const [searchParams] = useSearchParams();
     const [openPauseDialog, setPauseDialog] = React.useState(false);
-    const [showNextLabel, setNextlabel] = React.useState(true);
+    const [openCancelDialog, setCancelDialog] = React.useState(false);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
 
-    const closeDialog = () => {
+    const closePauseDialog = () => {
         setPauseDialog(false);
-        setNextlabel(true);
     }
 
-    const nextHandler = () => {
-        setNextlabel(false);
+    const closeCancelDialog = () => {
+        setCancelDialog(false);
+    }
+
+    const showPauseModal = () => {
+        closeCancelDialog();
+        setPauseDialog(true);
     }
 
     const { contractVersion } = contractDetails;
@@ -71,7 +75,7 @@ const UserDetails = () => {
                 <Button size='small' variant="contained" className='action-btn' onClick={() => setPauseDialog(true)}>
                     Pause Subscription
                 </Button>
-                <Button size='small' variant="contained" color="error" className='action-btn'>
+                <Button size='small' variant="contained" color="error" className='action-btn' onClick={() => setCancelDialog(true)}>
                     Cancel Subscription
                 </Button>
             </div>
@@ -81,24 +85,6 @@ const UserDetails = () => {
 
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    {/* <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
-                        >
-                            <Typography>
-                                Contract Line Item (01/07/2023 - 31/08/2023)
-                                <span className='ml-10'><Chip label="Active" color="primary" variant="outlined" /></span>
-                            </Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            
-
-                        </AccordionDetails>
-                    </Accordion> */}
-
-
                     <SectionWithTitle title={'Contract Versions'}>
                         <Grid item xs={12} style={{ marginTop: '10px' }}>
                             {contractVersion.map(contract => (
@@ -147,17 +133,19 @@ const UserDetails = () => {
 
 
             </Grid>
+            
             {openPauseDialog && (
-                <CustomDialog
+                <PauseSubscriptionModal 
                     open={openPauseDialog}
-                    title='Pause Subscription'
-                    handleClose={closeDialog}
-                    showNextLabel={showNextLabel}
-                    onNextClicked={nextHandler}
-                    saveLabel='save'
-                >
-                    <PauseSubscription showConfirm={!showNextLabel} />
-                </CustomDialog>
+                    handleClose={closePauseDialog}
+                />
+            )}
+            {openCancelDialog && (
+                <CancelSubscriptionModal
+                    open={openCancelDialog}
+                    handleClose={closeCancelDialog}
+                    showPauseModal={showPauseModal}
+                />
             )}
         </React.Fragment>
     )

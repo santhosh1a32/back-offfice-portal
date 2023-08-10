@@ -24,7 +24,7 @@ export default function Plan({planDetails=[]}) {
         </TableHead>
         <TableBody>
           {planDetails.map((row) => (
-            <TableRow key={row.planId}>
+            <TableRow key={row.contractVersionPlanId}>
               <TableCell>{row.contractVersionPlanId}</TableCell>
               <TableCell>{row.planName}</TableCell>
               <TableCell>{row.insuranceExcess}</TableCell>
