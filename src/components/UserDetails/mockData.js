@@ -181,7 +181,73 @@ export const CONTRACT_DETAILS = {
           }
         ]
       }
-    ]
+    ],
+    Invoices: [
+      {
+        id: "il_1NhiUpDPnVWRKvJjR9syRHhv",
+        invoiceNumber: "inv-120212 (stripe invoice number)",
+        invoiceDate: "2023-05-30",
+        periodStartDate: "2023-05-30",
+        periodEndDate: "2023-09-30",
+        type: "Monthly",
+        status: "Paid",
+        invoiceUrl:
+          "https://pay.stripe.com/invoice/acct_1NVvNIF9yHeYvqmo/test_YWNjdF8xTlZ2TklGOXlIZVl2cW1vLF9PVlE4RG1jUXRJbFd5OHBNTWJ0a05RUWVOVWd2cnlNLDgzMzk5MTMx0200YX26Obh6/pdf?s=ap",
+        hostedInvoiceUrl:
+          "https://invoice.stripe.com/i/acct_1NVvNIF9yHeYvqmo/test_YWNjdF8xTlZ2TklGOXlIZVl2cW1vLF9PVlE4RG1jUXRJbFd5OHBNTWJ0a05RUWVOVWd2cnlNLDgzMzk0MDc202007feovQx4?s=db",
+        amountDue: 50400,
+        amountPaid: 50400,
+        amountRemaining: 0,
+        billingReason: "subscription_create",
+        collectionMethod: "charge_automatically",
+        currency: "EUR",
+        paymentDetails: {
+          last4CardNumber: 4435,
+        },
+      },
+      {
+        id: "il_1NhiUpDPnVWRKvJjR9syRHbv",
+        invoiceNumber: "inv-120213 (stripe invoice number)",
+        invoiceDate: "2023-05-30",
+        periodStartDate: "2023-05-30",
+        periodEndDate: "2023-08-30",
+        type: "Monthly",
+        status: "Paid",
+        invoiceUrl: "stripe invoice pdf url",
+        hostedInvoiceUrl: "stripe hosted url",
+        amountDue: 50400,
+        amountPaid: 50400,
+        amountRemaining: 0,
+        billingReason: "subscription_create",
+        collectionMethod: "charge_automatically",
+        currency: "USD",
+        paymentDetails: {
+          last4CardNumber: 9878,
+        },
+      },
+    ],
+    otherPayments: [
+      {
+        id: "il_1NhiUpDPnVWRKvJjR9syRHhv",
+        invoiceNumber: "inv-120212",
+        invoiceDate: "2023-05-30",
+        periodStartDate: "2023-05-30",
+        periodEndDate: "2023-09-30",
+        type: "One time",
+        status: "Paid",
+        invoiceUrl: "",
+        hostedInvoiceUrl: "",
+        amountDue: 500,
+        amountPaid: 400,
+        amountRemaining: 0,
+        billingReason: "cancellation fees",
+        collectionMethod: "charge_automatically",
+        currency: "EUR",
+        paymentDetails: {
+          last4cardNumber: 4435,
+        },
+      },
+    ],
   }
 
 export const MANAGE_CONTRACT_DATA = {

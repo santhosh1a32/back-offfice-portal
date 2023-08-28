@@ -7,6 +7,9 @@ import ExpProduct from './ExpProduct';
 import Products from './Products';
 import CustomerDetails from './CustomerDetails';
 import SectionWithTitle from '../common/SectionWithTitle';
+import DriverDetails from "./DriverDetails";
+import InvoiceDetails from "./InvoiceDetails";
+import OtherPaymentsDetails from "./OtherPaymentsDetails";
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -16,7 +19,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { CONTRACT_DETAILS } from './mockData';
 import Chip from '@mui/material/Chip';
 import { getDataWithParam, saveDataWithParam } from '../../DataService';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import PauseSubscriptionModal from './PauseSubscriptionModal';
 import CancelSubscriptionModal from './CancelSubscriptionModal';
@@ -47,7 +50,8 @@ const UserDetails = () => {
         horizontal: 'right',
         severity: '',
         toastMessage: ''
-    })
+    });
+    const navigate = useNavigate();
 
     const { openToast, vertical, horizontal, severity, toastMessage } = snackBarConfig;
 
@@ -161,17 +165,25 @@ const UserDetails = () => {
     return (
         <React.Fragment>
             <div className='action-block'>
+                <Button
+                    size="small"
+                    variant="outlined"
+                    className="action-btn"
+                    onClick={() => navigate("/checkList")}
+                >
+                    Pickup Checklist
+                </Button>
                 <Button size='small' variant="outlined" className='action-btn' onClick={() => setManageContractDialog(true)}>
-                <SettingsOutlinedIcon />
-                    <span style={{marginLeft: '6px'}}>Manage Contract</span>
+                    <SettingsOutlinedIcon />
+                    <span style={{ marginLeft: '6px' }}>Manage Contract</span>
                 </Button>
                 <Button size='small' variant="contained" className='action-btn' onClick={() => setPauseDialog(true)}>
-                <PauseCircleOutlinedIcon />
-                    <span style={{marginLeft: '6px'}}>Pause Subscription</span>
+                    <PauseCircleOutlinedIcon />
+                    <span style={{ marginLeft: '6px' }}>Pause Subscription</span>
                 </Button>
                 <Button size='small' variant="contained" color="error" className='action-btn' onClick={() => setCancelDialog(true)}>
                     <CancelOutlinedIcon />
-                    <span style={{marginLeft: '6px'}}>Cancel Subscription</span>
+                    <span style={{ marginLeft: '6px' }}>Cancel Subscription</span>
                 </Button>
                 {/* Info Banner */}
 
@@ -242,7 +254,11 @@ const UserDetails = () => {
 
 
             </Grid>
+            <DriverDetails />
 
+            <InvoiceDetails invoiceDetails={contractDetails.Invoices} />
+
+            <OtherPaymentsDetails />
             {openPauseDialog && (
                 <PauseSubscriptionModal
                     open={openPauseDialog}
@@ -259,7 +275,7 @@ const UserDetails = () => {
                 />
             )}
             {openMangeContractDialog && (
-                <ManageContractModal 
+                <ManageContractModal
                     open={openMangeContractDialog}
                     contractVersionDetails={getActiveContractVersionDetails()}
                     handleClose={closeManageContractDialog}
