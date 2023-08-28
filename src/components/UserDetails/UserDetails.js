@@ -165,25 +165,25 @@ const UserDetails = () => {
     return (
         <React.Fragment>
             <div className='action-block'>
-            <Button
-            size="small"
-            variant="outlined"
-            className="action-btn"
-            onClick={() => navigate("/checkList")}
-            >
-          Pickup Checklist
-        </Button>
+                <Button
+                    size="small"
+                    variant="outlined"
+                    className="action-btn"
+                    onClick={() => navigate("/checkList")}
+                >
+                    Pickup Checklist
+                </Button>
                 <Button size='small' variant="outlined" className='action-btn' onClick={() => setManageContractDialog(true)}>
-                <SettingsOutlinedIcon />
-                    <span style={{marginLeft: '6px'}}>Manage Contract</span>
+                    <SettingsOutlinedIcon />
+                    <span style={{ marginLeft: '6px' }}>Manage Contract</span>
                 </Button>
                 <Button size='small' variant="contained" className='action-btn' onClick={() => setPauseDialog(true)}>
-                <PauseCircleOutlinedIcon />
-                    <span style={{marginLeft: '6px'}}>Pause Subscription</span>
+                    <PauseCircleOutlinedIcon />
+                    <span style={{ marginLeft: '6px' }}>Pause Subscription</span>
                 </Button>
                 <Button size='small' variant="contained" color="error" className='action-btn' onClick={() => setCancelDialog(true)}>
                     <CancelOutlinedIcon />
-                    <span style={{marginLeft: '6px'}}>Cancel Subscription</span>
+                    <span style={{ marginLeft: '6px' }}>Cancel Subscription</span>
                 </Button>
                 {/* Info Banner */}
 
@@ -256,9 +256,9 @@ const UserDetails = () => {
             </Grid>
             <DriverDetails />
 
-      <InvoiceDetails invoiceDetails={contractDetails.Invoices} />
+            <InvoiceDetails invoiceDetails={contractDetails.Invoices} />
 
-      <OtherPaymentsDetails />
+            <OtherPaymentsDetails />
             {openPauseDialog && (
                 <PauseSubscriptionModal
                     open={openPauseDialog}
@@ -275,7 +275,7 @@ const UserDetails = () => {
                 />
             )}
             {openMangeContractDialog && (
-                <ManageContractModal 
+                <ManageContractModal
                     open={openMangeContractDialog}
                     contractVersionDetails={getActiveContractVersionDetails()}
                     handleClose={closeManageContractDialog}
