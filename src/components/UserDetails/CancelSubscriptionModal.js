@@ -10,13 +10,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import CustomDatePicker from '../common/CustomDatePicker';
 import dayjs from 'dayjs';
 
-export default function CancelSubscriptionModal({ open, handleClose, showPauseModal }) {
+export default function CancelSubscriptionModal({ open, handleClose, showPauseModal, handleSubmit }) {
     const [currentStep, updateStep] = React.useState(1);
     const [cancelDate, setDate] = React.useState()
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle sx={{ m: 0, p: 2 }}>
-                Pause Subscription
+                Cancel Subscription
                 <IconButton
                     aria-label="close"
                     onClick={handleClose}
@@ -48,6 +48,7 @@ export default function CancelSubscriptionModal({ open, handleClose, showPauseMo
                                 label="Cancellation Date"
                                 value={cancelDate}
                                 onChangeHandler={(val) => setDate(val)}
+                                disablePast={true}
                             />
                         </React.Fragment>
                     )}
@@ -65,7 +66,7 @@ export default function CancelSubscriptionModal({ open, handleClose, showPauseMo
                 <Button onClick={handleClose}>Close</Button>
                 {currentStep === 1 && <Button onClick={() => updateStep(2)}>Next</Button>}
                 {currentStep === 2 && <Button onClick={() => updateStep(3)}>Next</Button>}
-                {currentStep === 3 && <Button onClick={handleClose}>Submit</Button>}
+                {currentStep === 3 && <Button onClick={() => handleSubmit(cancelDate)}>Submit</Button>}
             </DialogActions>
         </Dialog>
     )

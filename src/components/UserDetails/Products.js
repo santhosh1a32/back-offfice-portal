@@ -7,9 +7,10 @@ import TableRow from '@mui/material/TableRow';
 import Title from '../common/Title';
 
 
-export default function Products({ bpDetails }) {
+export default function Products({ bpDetails, title='Base Product' }) {
+  
   const {
-    contractVersionBPId,
+    contractVersionBPNumber='',
     productName,
     allocatedVehicle = [],
     priceAllocationType,
@@ -25,7 +26,7 @@ export default function Products({ bpDetails }) {
 
   return (
     <React.Fragment>
-      <Title>Base Product</Title>
+      <Title>{title}</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -40,7 +41,7 @@ export default function Products({ bpDetails }) {
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell>{contractVersionBPId}</TableCell>
+            <TableCell>{contractVersionBPNumber}</TableCell>
             <TableCell>{productName}</TableCell>
             <TableCell>{currentVehicle.vehicleId}</TableCell>
             <TableCell>{priceAllocationType}</TableCell>

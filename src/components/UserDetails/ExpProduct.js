@@ -60,7 +60,7 @@ export default function ExpProduct({expDetails= []}) {
         <TableBody>
           {expDetails.map((row) => (
             <TableRow key={row.contractVersionEPId}>
-              <TableCell>{row.contractVersionEPId}</TableCell>
+              <TableCell>{row.contractVersionEPNumber}</TableCell>
               <TableCell>{row.experienceProductName}</TableCell>
               <TableCell>{row.experienceProductType}</TableCell>
               <TableCell>{row.grossAmount}</TableCell>

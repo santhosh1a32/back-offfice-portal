@@ -4,7 +4,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-export default function CustomDatePicker({label='Date', value, className='', onChangeHandler}) {
+export default function CustomDatePicker({
+    label='Date', 
+    value, className='', 
+    onChangeHandler,
+    disablePast
+}) {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer className={className} components={['DatePicker', 'DatePicker']}>
@@ -13,6 +18,7 @@ export default function CustomDatePicker({label='Date', value, className='', onC
                     label={label}
                     value={value}
                     onChange={(newValue) => onChangeHandler(newValue)}
+                    disablePast={disablePast}
                 />
             </DemoContainer>
         </LocalizationProvider>

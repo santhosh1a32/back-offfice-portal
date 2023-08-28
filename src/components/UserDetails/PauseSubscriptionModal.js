@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CustomDatePicker from '../common/CustomDatePicker';
 import dayjs from 'dayjs';
 
-export default function PauseSubscriptionModal({ open, handleClose }) {
+export default function PauseSubscriptionModal({ open, handleClose, handleSubmit }) {
     const [startDate, updateStartDate] = React.useState();
     const [endDate, updateEndDate] = React.useState();
     const [currentStep, updateStep] = React.useState(1);
@@ -52,11 +52,13 @@ export default function PauseSubscriptionModal({ open, handleClose }) {
                                 label="Start Date"
                                 value={startDate}
                                 onChangeHandler={(val) => changeDate('start', val)}
+                                disablePast={true}
                             />
                             <CustomDatePicker
                                 className='pause-modal'
                                 label="End Date"
                                 value={endDate}
+                                disablePast={true}
                                 onChangeHandler={(val) => changeDate('end', val)}
                             />
                         </React.Fragment>
@@ -74,7 +76,7 @@ export default function PauseSubscriptionModal({ open, handleClose }) {
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
                 {currentStep === 1 && <Button onClick={()=> updateStep(2)}>Next</Button>}
-                {currentStep === 2 && <Button onClick={handleClose}>Submit</Button>}
+                {currentStep === 2 && <Button onClick={() => handleSubmit(startDate, endDate)}>Submit</Button>}
             </DialogActions>
         </Dialog>
     )
