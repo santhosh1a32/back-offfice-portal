@@ -1,0 +1,75 @@
+export const PAYMENT_DETAILS = {
+  contractId: "a1A5i000000rrcSEAQ",
+  customerId: "90010011",
+  lastName: "Test",
+  driverId: 123,
+  firstName: "Nine",
+  invoices: [
+    {
+      id: "il_1NhiUpDPnVWRKvJjR9syRHhv",
+      amount: 650,
+      amount_excluding_tax: 600,
+      currency: "EUR",
+      lastName: "Test",
+      firstName: "Nine",
+      period: {
+        end: 1692658373000,
+        start: 1692658373000,
+      },
+      proration: false,
+      proration_details: {
+        credited_items: null,
+      },
+      discounts: 20,
+    },
+    {
+      id: "il_1NhiUpDPnVWRKvJjR9syRHhav",
+      amount: 100,
+      amount_excluding_tax: 90,
+      currency: "USD",
+      lastName: "Test",
+      firstName: "One",
+      period: {
+        end: 1692658373000,
+        start: 1692658373000,
+      },
+      proration: false,
+      proration_details: {
+        credited_items: null,
+      },
+      discounts: 20,
+    },
+    {
+      id: "il_1NhiUpDPnVWeRKvJjR9syRHhav",
+      amount: 450,
+      amount_excluding_tax: 430,
+      currency: "USD",
+      lastName: "Test",
+      firstName: "Three",
+      period: {
+        end: 1692658373000,
+        start: 1692658373000,
+      },
+    },
+  ],
+  payments: [
+    {
+      id: "price_1NQrSB2Tb35ankTnDzRrB1ly",
+      invoiceNumber: "price_1NQrSB2Tb35ankTnDzRrB1ly",
+      amount: 220,
+      currency: "EUR",
+      billingDate: 1692658373000,
+      billingReason: "convienience fees",
+      collectionMethod: "manually",
+    },
+    {
+      id: "price_1NQrSB2Tb35ankTnDzRrB1tly",
+      invoiceNumber: "price_1NQrSB2Tb35ankTnDzRrB1lty",
+      amount: 100,
+      currency: "EUR",
+      billingDate: 1692658373000,
+      billingReason: "Cancellation fees",
+      collectionMethod: "charge_automatically",
+    },
+  ],
+};

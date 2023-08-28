@@ -19,6 +19,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Home from '../components/Home/Home';
 import UserDetails from '../components/UserDetails/UserDetails';
+import CheckList from '../components/Checklist/CheckList';
 
 const drawerWidth = 240;
 
@@ -77,12 +78,12 @@ export default function Dashboard() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
-              pr: '24px', // keep right padding when drawer closed
+              pr: "24px", // keep right padding when drawer closed
             }}
           >
             <IconButton
@@ -91,8 +92,8 @@ export default function Dashboard() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
+                marginRight: "36px",
+                ...(open && { display: "none" }),
               }}
             >
               <MenuIcon />
@@ -116,9 +117,9 @@ export default function Dashboard() {
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
               px: [1],
             }}
           >
@@ -137,12 +138,12 @@ export default function Dashboard() {
           component="main"
           sx={{
             backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
+              theme.palette.mode === "light"
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            height: '100vh',
-            overflow: 'auto',
+            height: "100vh",
+            overflow: "auto",
           }}
         >
           <Toolbar />
@@ -150,6 +151,7 @@ export default function Dashboard() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/details" element={<UserDetails />} />
+              <Route path="/checkList" element={<CheckList />} />
               {/* <Route path="*" element={<Home />} /> */}
             </Routes>
           </Container>
