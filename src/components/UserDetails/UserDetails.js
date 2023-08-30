@@ -19,7 +19,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { CONTRACT_DETAILS } from './mockData';
 import Chip from '@mui/material/Chip';
 import { getDataWithParam, saveDataWithParam } from '../../DataService';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, createSearchParams } from 'react-router-dom';
 import { Button } from '@mui/material';
 import PauseSubscriptionModal from './PauseSubscriptionModal';
 import CancelSubscriptionModal from './CancelSubscriptionModal';
@@ -30,6 +30,8 @@ import MuiAlert from '@mui/material/Alert';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import PauseCircleOutlinedIcon from '@mui/icons-material/PauseCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
+import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
+
 import dayjs from 'dayjs';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -52,6 +54,10 @@ const UserDetails = () => {
         toastMessage: ''
     });
     const navigate = useNavigate();
+
+    const openCheckList = () =>{
+        navigate({ pathname:"/checkList", search:createSearchParams({ contractId:"a1A5i000000rrcS", contractVersionId:"80000328", checkListType:"Pickup" }).toString()})
+    }
 
     const { openToast, vertical, horizontal, severity, toastMessage } = snackBarConfig;
 
@@ -179,18 +185,14 @@ const UserDetails = () => {
     return (
         <React.Fragment>
             <div className='action-block'>
-                <Button
-                    size="small"
-                    variant="outlined"
-                    className="action-btn"
-                    onClick={() => navigate("/checkList")}
-                >
-                    Pickup Checklist
+                <Button size="small" variant="outlined" className="action-btn" onClick={() => openCheckList()} >
+                    <ChecklistOutlinedIcon/>
+                    <span style={{ marginLeft: '6px' }}>Pickup Checklist</span>
                 </Button>
                 <Button size='small' variant="outlined" className='action-btn' onClick={() => setManageContractDialog(true)}>
                     <SettingsOutlinedIcon />
                     <span style={{ marginLeft: '6px' }}>Manage Contract</span>
-                </Button>
+                </Button>   
                 <Button size='small' variant="contained" className='action-btn' onClick={() => setPauseDialog(true)}>
                     <PauseCircleOutlinedIcon />
                     <span style={{ marginLeft: '6px' }}>Pause Subscription</span>
@@ -272,7 +274,7 @@ const UserDetails = () => {
 
             <InvoiceDetails invoiceDetails={contractDetails.Invoices} />
 
-            <OtherPaymentsDetails />
+            <OtherPaymentsDetails otherPayments={contractDetails.otherPayments}/>
             {openPauseDialog && (
                 <PauseSubscriptionModal
                     open={openPauseDialog}
