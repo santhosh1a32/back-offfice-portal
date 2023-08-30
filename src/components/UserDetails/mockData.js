@@ -223,8 +223,88 @@ export const CONTRACT_DETAILS = {
         currency: "USD",
         paymentDetails: {
           last4CardNumber: 9878,
-        },
+        }
+       },
+        {
+          id: "il_1NhiUpDPnVWRKvJjR9syRHuv",
+          invoiceNumber: "inv-120213 (stripe invoice number)",
+          invoiceDate: "2023-05-30",
+          periodStartDate: "2023-05-30",
+          periodEndDate: "2023-08-30",
+          type: "Monthly",
+          status: "Paid",
+          invoiceUrl: "stripe invoice pdf url",
+          hostedInvoiceUrl: "stripe hosted url",
+          amountDue: 50400,
+          amountPaid: 50400,
+          amountRemaining: 0,
+          billingReason: "subscription_create",
+          collectionMethod: "charge_automatically",
+          currency: "USD",
+          paymentDetails: {
+            last4CardNumber: 9878,
+          }
+        },  
+          {
+            id: "il_1NhiUpDPnVWRKvJjR9syRHdv",
+            invoiceNumber: "inv-120213 (stripe invoice number)",
+            invoiceDate: "2023-05-30",
+            periodStartDate: "2023-05-30",
+            periodEndDate: "2023-08-30",
+            type: "Monthly",
+            status: "Paid",
+            invoiceUrl: "stripe invoice pdf url",
+            hostedInvoiceUrl: "stripe hosted url",
+            amountDue: 50400,
+            amountPaid: 50400,
+            amountRemaining: 0,
+            billingReason: "subscription_create",
+            collectionMethod: "charge_automatically",
+            currency: "USD",
+            paymentDetails: {
+              last4CardNumber: 9878,
+            }   
       },
+      {
+        id: "il_1NhiUpDPnVWRKvJjR9syRHwv",
+        invoiceNumber: "inv-120213 (stripe invoice number)",
+        invoiceDate: "2023-05-30",
+        periodStartDate: "2023-05-30",
+        periodEndDate: "2023-08-30",
+        type: "Monthly",
+        status: "Paid",
+        invoiceUrl: "stripe invoice pdf url",
+        hostedInvoiceUrl: "stripe hosted url",
+        amountDue: 50400,
+        amountPaid: 50400,
+        amountRemaining: 0,
+        billingReason: "subscription_create",
+        collectionMethod: "charge_automatically",
+        currency: "USD",
+        paymentDetails: {
+          last4CardNumber: 9878,
+        }   
+    },
+    {
+      id: "il_1NhiUpDPnVWRKvJjR9syRHqv",
+      invoiceNumber: "inv-120213 (stripe invoice number)",
+      invoiceDate: "2023-05-30",
+      periodStartDate: "2023-05-30",
+      periodEndDate: "2023-08-30",
+      type: "Monthly",
+      status: "Paid",
+      invoiceUrl: "stripe invoice pdf url",
+      hostedInvoiceUrl: "stripe hosted url",
+      amountDue: 50400,
+      amountPaid: 50400,
+      amountRemaining: 0,
+      billingReason: "subscription_create",
+      collectionMethod: "charge_automatically",
+      currency: "USD",
+      paymentDetails: {
+        last4CardNumber: 9878,
+      }   
+    }
     ],
     otherPayments: [
       {
