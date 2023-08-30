@@ -1,292 +1,212 @@
 export const CONTRACT_DETAILS = {
-    "bannerStatus": "Please note that this contract will be expired in 7 day(s)",
-    "contractId": "a1A5i000000rrcSEAQ",
-    "contractNumber": "90024478",
-    "contractType": "Subscription",
-    "startDate": 1685577600000,
-    "endDate": 1717113600000,
-    "status": "Active",
-    "subStatus": "Payment Successful",
-    "renewalfrequency": "Monthly",
-    "minimumTerm": "6",
-    "mobile": "98768754646",
-    "email": "nine@test.com",
-    "lastName": "Test",
-    "firstName": "Nine",
-    "customerId": "90010011",
-    "customerLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a005i00000JTZykAAH",
-    "contractVersion": [
-      {
-        "contractVersionId": "a1U5i000001vZxsEAE",
-        "contractVersionNumber": "80000228",
-        "status": "Upcoming",
-        "startDate": "01/09/2023",
-        "endDate": "31/05/2024",
-        "headerStatus" : "Upcoming",
-        "contractVersion_BP": {
-          "contractVersionBPId": "70006523",
-          "contractVersionBPNumber": '70006523',
-          "productName": "Tesla Model Y Long Range",
-          "grossAmount": 450.00,
-          "netAmount": 390.00,
-          "taxAmount": 60.00,
-          "priceAllocationType": "Primary",
-          "productLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1D5i000000gwCQEAY",
-          "productPricebookId": "a0J5i00000FMj0YEAT",
-          "productPricebookLineItemId": "a0K5i00000M67ChEAJ"
-        },
-        "contractVersion_Plan": [
-          {
-            "contractVersionPlanId": "40000674",
-            "contractVersionPlanNumber": "667687",
-            "planName": "Basic plan",
-            "grossAmount": 200.00,
-            "netAmount": 160.00,
-            "taxAmount": 40.00,
-            "includedMileage": 500,
-            "insuranceExcess": 2000,
-            "planLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1j5i000000Q2KzAAK"
-          }
-        ],
-        "contractVersion_EP": [
-          {
-            "contractVersionEPId": "50000449",
-            "contractVersionEPNumber": "898765",
-            "experienceProductName": "Additional driver",
-            "grossAmount": 50.00,
-            "netAmount": 40.00,
-            "taxAmount": 10.00,
-            "experienceProductType": "Add on",
-            "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030UKmEAM"
-          },
-          {
-            "contractVersionEPId": "50000450",
-            "contractVersionEPNumber": "898768",
-            "experienceProductName": "Fuel card",
-            "grossAmount": 60.00,
-            "netAmount": 48.00,
-            "taxAmount": 12.00,
-            "experienceProductType": "Add on",
-            "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030UKnEAM"
-          }
-        ]
+  "bannerStatus": "Please note that this contract will be expired in 7 day(s)",
+  "contractId": "a1A5i000000rrcSEAQ",
+  "contractNumber": "90024478",
+  "contractType": "Subscription",
+  "startDate": 1685577600000,
+  "endDate": 1717113600000,
+  "status": "Active",
+  "subStatus": "Payment Successful",
+  "renewalfrequency": "Monthly",
+  "minimumTerm": "6",
+  "mobile": "98768754646",
+  "email": "nine@test.com",
+  "lastName": "Test",
+  "firstName": "Nine",
+  "customerId": "90010011",
+  "customerLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a005i00000JTZykAAH",
+  "contractVersion": [
+    {
+      "contractVersionId": "a1U5i000001vZxsEAE",
+      "contractVersionNumber": "80000228",
+      "status": "Upcoming",
+      "startDate": "01/09/2023",
+      "endDate": "31/05/2024",
+      "headerStatus": "Upcoming",
+      "contractVersion_BP": {
+        "contractVersionBPId": "70006523",
+        "contractVersionBPNumber": '70006523',
+        "productName": "Tesla Model Y Long Range",
+        "grossAmount": 450.00,
+        "netAmount": 390.00,
+        "taxAmount": 60.00,
+        "priceAllocationType": "Primary",
+        "productLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1D5i000000gwCQEAY",
+        "productPricebookId": "a0J5i00000FMj0YEAT",
+        "productPricebookLineItemId": "a0K5i00000M67ChEAJ"
       },
-      {
-        "contractVersionId": "a1U5i000001vZxdEAE",
-        "contractVersionNumber": "80000328",
-        "status": "Active",
-        "startDate": "01/07/2023",
-        "endDate": "31/08/2023",
-        "headerStatus" : "Active",
-        "contractVersion_BP": {
-          "contractVersionBPId": "70006523",
-          "contractVersionBPNumber": "767876",
-          "productName": "Tesla Model Y Long Range",
-          "grossAmount": 450.00,
-          "netAmount": 390.00,
-          "taxAmount": 60.00,
-          "priceAllocationType": "Primary",
-          "productLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1D5i000000gwCQEAY",
-          "productPricebookId": "a0J5i00000FMj0YEAT",
-          "productPricebookLineItemId": "a0K5i00000M67ChEAJ"
-        },
-        "contractVersion_Plan": [
-          {
-            "contractVersionPlanId": "40000674",
-            "contractVersionPlanNumber": "667687",
-            "planName": "Basic plan",
-            "grossAmount": 200.00,
-            "netAmount": 160.00,
-            "taxAmount": 40.00,
-            "includedMileage": 500,
-            "insuranceExcess": 2000,
-            "planLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1j5i000000Q2KzAAK"
-          }
-        ],
-        "contractVersion_EP": [
-          {
-            "contractVersionEPId": "50000449",
-            "contractVersionEPNumber": "898765",
-            "experienceProductName": "Additional driver",
-            "grossAmount": 50.00,
-            "netAmount": 40.00,
-            "taxAmount": 10.00,
-            "experienceProductType": "Add on",
-            "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030UKmEAM"
-          },
-          {
-            "contractVersionEPId": "50000450",
-            "contractVersionEPNumber": "898765",
-            "experienceProductName": "Fuel card",
-            "grossAmount": 60.00,
-            "netAmount": 48.00,
-            "taxAmount": 12.00,
-            "experienceProductType": "Add on",
-            "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030UKnEAM"
-          }
-        ]
-      },
-      {
-        "contractVersionId": "a1U5i000001dZxsEAE",
-        "contractVersionNumber": "80000238",
-        "status": "Inactive",
-        "startDate": "01/06/2023",
-        "endDate": "30/06/2023",
-        "headerStatus" : "Inactive",
-        "contractVersion_BP": {
-          "contractVersionBPId": "70006522",
-          "contractVersionBPNumber": "767876",
-          "productName": "BMW 3 Series",
-          "grossAmount": 380.00,
-          "netAmount": 330.00,
-          "taxAmount": 50.00,
-          "priceAllocationType": "Primary",
-          "productLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1D5i000000gw7XEAQ",
-          "productPricebookId": "a0J5i00000FMj0YEAT",
-          "productPricebookLineItemId": "a0K5i00000M67ChEAJ"
-        },
-        "contractVersion_Plan": [
-          {
-            "contractVersionPlanId": "40000673",
-            "contractVersionPlanNumber": "667697",
-            "planName": "Basic plan",
-            "grossAmount": 200.00,
-            "netAmount": 160.00,
-            "taxAmount": 40.00,
-            "includedMileage": 500,
-            "insuranceExcess": 2000,
-            "planLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1j5i000000Q2L0AAK"
-          }
-        ],
-        "contractVersion_EP": [
-          {
-            "contractVersionEPId": "50000451",
-            "contractVersionEPNumber": "898765",
-            "experienceProductName": "Additional driver",
-            "grossAmount": 50.00,
-            "netAmount": 40.00,
-            "taxAmount": 10.00,
-            "experienceProductType": "Add on",
-            "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030btFEAQ"
-          },
-          {
-            "contractVersionEPId": "50000452",
-            "contractVersionEPNumber": "898765",
-            "experienceProductName": "Fuel card",
-            "grossAmount": 60.00,
-            "netAmount": 48.00,
-            "taxAmount": 12.00,
-            "experienceProductType": "Add on",
-            "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030btKEAQ"
-          }
-        ]
-      }
-    ],
-    Invoices: [
-      {
-        id: "il_1NhiUpDPnVWRKvJjR9syRHhv",
-        invoiceNumber: "inv-120212 (stripe invoice number)",
-        invoiceDate: "2023-05-30",
-        periodStartDate: "2023-05-30",
-        periodEndDate: "2023-09-30",
-        type: "Monthly",
-        status: "Paid",
-        invoiceUrl:
-          "https://pay.stripe.com/invoice/acct_1NVvNIF9yHeYvqmo/test_YWNjdF8xTlZ2TklGOXlIZVl2cW1vLF9PVlE4RG1jUXRJbFd5OHBNTWJ0a05RUWVOVWd2cnlNLDgzMzk5MTMx0200YX26Obh6/pdf?s=ap",
-        hostedInvoiceUrl:
-          "https://invoice.stripe.com/i/acct_1NVvNIF9yHeYvqmo/test_YWNjdF8xTlZ2TklGOXlIZVl2cW1vLF9PVlE4RG1jUXRJbFd5OHBNTWJ0a05RUWVOVWd2cnlNLDgzMzk0MDc202007feovQx4?s=db",
-        amountDue: 50400,
-        amountPaid: 50400,
-        amountRemaining: 0,
-        billingReason: "subscription_create",
-        collectionMethod: "charge_automatically",
-        currency: "EUR",
-        paymentDetails: {
-          last4CardNumber: 4435,
-        },
-      },
-      {
-        id: "il_1NhiUpDPnVWRKvJjR9syRHbv",
-        invoiceNumber: "inv-120213 (stripe invoice number)",
-        invoiceDate: "2023-05-30",
-        periodStartDate: "2023-05-30",
-        periodEndDate: "2023-08-30",
-        type: "Monthly",
-        status: "Paid",
-        invoiceUrl: "stripe invoice pdf url",
-        hostedInvoiceUrl: "stripe hosted url",
-        amountDue: 50400,
-        amountPaid: 50400,
-        amountRemaining: 0,
-        billingReason: "subscription_create",
-        collectionMethod: "charge_automatically",
-        currency: "USD",
-        paymentDetails: {
-          last4CardNumber: 9878,
-        }
-       },
+      "contractVersion_Plan": [
         {
-          id: "il_1NhiUpDPnVWRKvJjR9syRHuv",
-          invoiceNumber: "inv-120213 (stripe invoice number)",
-          invoiceDate: "2023-05-30",
-          periodStartDate: "2023-05-30",
-          periodEndDate: "2023-08-30",
-          type: "Monthly",
-          status: "Paid",
-          invoiceUrl: "stripe invoice pdf url",
-          hostedInvoiceUrl: "stripe hosted url",
-          amountDue: 50400,
-          amountPaid: 50400,
-          amountRemaining: 0,
-          billingReason: "subscription_create",
-          collectionMethod: "charge_automatically",
-          currency: "USD",
-          paymentDetails: {
-            last4CardNumber: 9878,
-          }
-        },  
-          {
-            id: "il_1NhiUpDPnVWRKvJjR9syRHdv",
-            invoiceNumber: "inv-120213 (stripe invoice number)",
-            invoiceDate: "2023-05-30",
-            periodStartDate: "2023-05-30",
-            periodEndDate: "2023-08-30",
-            type: "Monthly",
-            status: "Paid",
-            invoiceUrl: "stripe invoice pdf url",
-            hostedInvoiceUrl: "stripe hosted url",
-            amountDue: 50400,
-            amountPaid: 50400,
-            amountRemaining: 0,
-            billingReason: "subscription_create",
-            collectionMethod: "charge_automatically",
-            currency: "USD",
-            paymentDetails: {
-              last4CardNumber: 9878,
-            }   
-      },
-      {
-        id: "il_1NhiUpDPnVWRKvJjR9syRHwv",
-        invoiceNumber: "inv-120213 (stripe invoice number)",
-        invoiceDate: "2023-05-30",
-        periodStartDate: "2023-05-30",
-        periodEndDate: "2023-08-30",
-        type: "Monthly",
-        status: "Paid",
-        invoiceUrl: "stripe invoice pdf url",
-        hostedInvoiceUrl: "stripe hosted url",
-        amountDue: 50400,
-        amountPaid: 50400,
-        amountRemaining: 0,
-        billingReason: "subscription_create",
-        collectionMethod: "charge_automatically",
-        currency: "USD",
-        paymentDetails: {
-          last4CardNumber: 9878,
-        }   
+          "contractVersionPlanId": "40000674",
+          "contractVersionPlanNumber": "667687",
+          "planName": "Basic plan",
+          "grossAmount": 200.00,
+          "netAmount": 160.00,
+          "taxAmount": 40.00,
+          "includedMileage": 500,
+          "insuranceExcess": 2000,
+          "planLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1j5i000000Q2KzAAK"
+        }
+      ],
+      "contractVersion_EP": [
+        {
+          "contractVersionEPId": "50000449",
+          "contractVersionEPNumber": "898765",
+          "experienceProductName": "Additional driver",
+          "grossAmount": 50.00,
+          "netAmount": 40.00,
+          "taxAmount": 10.00,
+          "experienceProductType": "Add on",
+          "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030UKmEAM"
+        },
+        {
+          "contractVersionEPId": "50000450",
+          "contractVersionEPNumber": "898768",
+          "experienceProductName": "Fuel card",
+          "grossAmount": 60.00,
+          "netAmount": 48.00,
+          "taxAmount": 12.00,
+          "experienceProductType": "Add on",
+          "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030UKnEAM"
+        }
+      ]
     },
     {
-      id: "il_1NhiUpDPnVWRKvJjR9syRHqv",
+      "contractVersionId": "a1U5i000001vZxdEAE",
+      "contractVersionNumber": "80000328",
+      "status": "Active",
+      "startDate": "01/07/2023",
+      "endDate": "31/08/2023",
+      "headerStatus": "Active",
+      "contractVersion_BP": {
+        "contractVersionBPId": "70006523",
+        "contractVersionBPNumber": "767876",
+        "productName": "Tesla Model Y Long Range",
+        "grossAmount": 450.00,
+        "netAmount": 390.00,
+        "taxAmount": 60.00,
+        "priceAllocationType": "Primary",
+        "productLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1D5i000000gwCQEAY",
+        "productPricebookId": "a0J5i00000FMj0YEAT",
+        "productPricebookLineItemId": "a0K5i00000M67ChEAJ"
+      },
+      "contractVersion_Plan": [
+        {
+          "contractVersionPlanId": "40000674",
+          "contractVersionPlanNumber": "667687",
+          "planName": "Basic plan",
+          "grossAmount": 200.00,
+          "netAmount": 160.00,
+          "taxAmount": 40.00,
+          "includedMileage": 500,
+          "insuranceExcess": 2000,
+          "planLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1j5i000000Q2KzAAK"
+        }
+      ],
+      "contractVersion_EP": [
+        {
+          "contractVersionEPId": "50000449",
+          "contractVersionEPNumber": "898765",
+          "experienceProductName": "Additional driver",
+          "grossAmount": 50.00,
+          "netAmount": 40.00,
+          "taxAmount": 10.00,
+          "experienceProductType": "Add on",
+          "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030UKmEAM"
+        },
+        {
+          "contractVersionEPId": "50000450",
+          "contractVersionEPNumber": "898765",
+          "experienceProductName": "Fuel card",
+          "grossAmount": 60.00,
+          "netAmount": 48.00,
+          "taxAmount": 12.00,
+          "experienceProductType": "Add on",
+          "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030UKnEAM"
+        }
+      ]
+    },
+    {
+      "contractVersionId": "a1U5i000001dZxsEAE",
+      "contractVersionNumber": "80000238",
+      "status": "Inactive",
+      "startDate": "01/06/2023",
+      "endDate": "30/06/2023",
+      "headerStatus": "Inactive",
+      "contractVersion_BP": {
+        "contractVersionBPId": "70006522",
+        "contractVersionBPNumber": "767876",
+        "productName": "BMW 3 Series",
+        "grossAmount": 380.00,
+        "netAmount": 330.00,
+        "taxAmount": 50.00,
+        "priceAllocationType": "Primary",
+        "productLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1D5i000000gw7XEAQ",
+        "productPricebookId": "a0J5i00000FMj0YEAT",
+        "productPricebookLineItemId": "a0K5i00000M67ChEAJ"
+      },
+      "contractVersion_Plan": [
+        {
+          "contractVersionPlanId": "40000673",
+          "contractVersionPlanNumber": "667697",
+          "planName": "Basic plan",
+          "grossAmount": 200.00,
+          "netAmount": 160.00,
+          "taxAmount": 40.00,
+          "includedMileage": 500,
+          "insuranceExcess": 2000,
+          "planLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1j5i000000Q2L0AAK"
+        }
+      ],
+      "contractVersion_EP": [
+        {
+          "contractVersionEPId": "50000451",
+          "contractVersionEPNumber": "898765",
+          "experienceProductName": "Additional driver",
+          "grossAmount": 50.00,
+          "netAmount": 40.00,
+          "taxAmount": 10.00,
+          "experienceProductType": "Add on",
+          "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030btFEAQ"
+        },
+        {
+          "contractVersionEPId": "50000452",
+          "contractVersionEPNumber": "898765",
+          "experienceProductName": "Fuel card",
+          "grossAmount": 60.00,
+          "netAmount": 48.00,
+          "taxAmount": 12.00,
+          "experienceProductType": "Add on",
+          "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030btKEAQ"
+        }
+      ]
+    }
+  ],
+  Invoices: [
+    {
+      id: "il_1NhiUpDPnVWRKvJjR9syRHhv",
+      invoiceNumber: "inv-120212 (stripe invoice number)",
+      invoiceDate: "2023-05-30",
+      periodStartDate: "2023-05-30",
+      periodEndDate: "2023-09-30",
+      type: "Monthly",
+      status: "Paid",
+      invoiceUrl:
+        "https://pay.stripe.com/invoice/acct_1NVvNIF9yHeYvqmo/test_YWNjdF8xTlZ2TklGOXlIZVl2cW1vLF9PVlE4RG1jUXRJbFd5OHBNTWJ0a05RUWVOVWd2cnlNLDgzMzk5MTMx0200YX26Obh6/pdf?s=ap",
+      hostedInvoiceUrl:
+        "https://invoice.stripe.com/i/acct_1NVvNIF9yHeYvqmo/test_YWNjdF8xTlZ2TklGOXlIZVl2cW1vLF9PVlE4RG1jUXRJbFd5OHBNTWJ0a05RUWVOVWd2cnlNLDgzMzk0MDc202007feovQx4?s=db",
+      amountDue: 50400,
+      amountPaid: 50400,
+      amountRemaining: 0,
+      billingReason: "subscription_create",
+      collectionMethod: "charge_automatically",
+      currency: "EUR",
+      paymentDetails: {
+        last4CardNumber: 4435,
+      },
+    },
+    {
+      id: "il_1NhiUpDPnVWRKvJjR9syRHbv",
       invoiceNumber: "inv-120213 (stripe invoice number)",
       invoiceDate: "2023-05-30",
       periodStartDate: "2023-05-30",
@@ -303,355 +223,361 @@ export const CONTRACT_DETAILS = {
       currency: "USD",
       paymentDetails: {
         last4CardNumber: 9878,
-      }   
-    }
-    ],
-    otherPayments: [
-      {
-        id: "il_1NhiUpDPnVWRKvJjR9syRHhv",
-        invoiceNumber: "inv-120212",
-        invoiceDate: "2023-05-30",
-        periodStartDate: "2023-05-30",
-        periodEndDate: "2023-09-30",
-        type: "One time",
-        status: "Paid",
-        invoiceUrl: "",
-        hostedInvoiceUrl: "",
-        amountDue: 500,
-        amountPaid: 400,
-        amountRemaining: 0,
-        billingReason: "cancellation fees",
-        collectionMethod: "charge_automatically",
-        currency: "EUR",
-        paymentDetails: {
-          last4cardNumber: 4435,
-        },
       },
-    ],
-  }
+    },
+  ],
+  otherPayments: [
+    {
+      id: "il_1NhiUpDPnVWRKvJjR9syRHhv",
+      invoiceNumber: "inv-120212",
+      invoiceDate: "2023-05-30",
+      periodStartDate: "2023-05-30",
+      periodEndDate: "2023-09-30",
+      type: "One time",
+      status: "Paid",
+      invoiceUrl: "",
+      hostedInvoiceUrl: "",
+      amountDue: 500,
+      amountPaid: 400,
+      amountRemaining: 0,
+      billingReason: "cancellation fees",
+      collectionMethod: "charge_automatically",
+      currency: "EUR",
+      paymentDetails: {
+        last4cardNumber: 4435,
+      },
+    },
+  ],
+}
 
 export const MANAGE_CONTRACT_DATA = {
   "availableExpProducts": [
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugREAQ",
       "name": "Service appointment management fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugSEAQ",
       "name": "Driving License Check Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugTEAQ",
       "name": "Credict check fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugUEAQ",
       "name": "Start Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugVEAQ",
       "name": "Platform Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugWEAQ",
       "name": "Exceptional Return Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugXEAQ",
       "name": "Other Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugYEAQ",
       "name": "Deposit Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugZEAQ",
       "name": "Service Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugaEAA",
       "name": "Priority Service Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugbEAA",
       "name": "Vehicle Registration Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugcEAA",
       "name": "Customer Registration Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugdEAA",
       "name": "Vehicle Washing Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugeEAA",
       "name": "Road Tax",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugfEAA",
       "name": "Vehicle Holding Fee (in case of late pickup)",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081uggEAA",
       "name": "Late Pickup Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ughEAA",
       "name": "Late Return Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugiEAA",
       "name": "Regular Inspection Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugjEAA",
       "name": "Insurance Fee",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ugkEAA",
       "name": "Carbon Offset",
-      "experinceProductName": null
+      "type": "Fee"
     },
     {
-      "currency": "INR",
-      "taxAmount": 100.00,
-      "netAmount": 400.00,
-      "grossAmount": 500.00,
-      "type": "Add on",
+      "experinceProductId": "a0U5i0000081ufmEAA",
       "name": "GPS Device",
-      "experinceProductName": null
+      "type": "Add on",
+      "grossAmount": 500.00,
+      "netAmount": 400.00,
+      "taxAmount": 100.00,
+      "currency": "EUR"
     },
     {
-      "currency": "INR",
-      "taxAmount": 100.00,
-      "netAmount": 400.00,
-      "grossAmount": 500.00,
-      "type": "Insurance",
+      "experinceProductId": "a0U5i0000081ufnEAA",
       "name": "Basic Plan",
-      "experinceProductName": null
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 100.00,
-      "netAmount": 400.00,
+      "type": "Insurance",
       "grossAmount": 500.00,
-      "type": "Insurance",
+      "netAmount": 400.00,
+      "taxAmount": 100.00,
+      "currency": "EUR"
+    },
+    {
+      "experinceProductId": "a0U5i0000081ufoEAA",
       "name": "Standard Plan",
-      "experinceProductName": null
+      "type": "Insurance",
+      "grossAmount": 500.00,
+      "netAmount": 400.00,
+      "taxAmount": 100.00,
+      "currency": "EUR"
     },
     {
-      "type": "Insurance",
+      "experinceProductId": "a0U5i0000081ufpEAA",
       "name": "Smart Plan",
-      "experinceProductName": null
+      "type": "Insurance"
     },
     {
-      "type": "Mileage",
+      "experinceProductId": "a0U5i0000081ufqEAA",
+      "experinceProductName": "1000 kms",
       "name": "1000 kms",
-      "experinceProductName": null
+      "type": "Mileage"
     },
     {
-      "type": "Extra Mileage",
+      "experinceProductId": "a0U5i0000081ufrEAA",
       "name": "Extra kms for 1000 kms",
-      "experinceProductName": null
+      "type": "Extra Mileage"
     },
     {
-      "type": "Mileage",
+      "experinceProductId": "a0U5i0000081ufsEAA",
       "name": "2000 kms",
-      "experinceProductName": null
+      "type": "Mileage"
     },
     {
-      "type": "Extra Mileage",
+      "experinceProductId": "a0U5i0000081uftEAA",
       "name": "Extra kms for 2000 kms",
-      "experinceProductName": null
+      "type": "Extra Mileage"
     },
     {
-      "type": "Mileage",
+      "experinceProductId": "a0U5i0000081ufuEAA",
       "name": "3000 kms",
-      "experinceProductName": null
+      "type": "Mileage"
     },
     {
-      "type": "Extra Mileage",
+      "experinceProductId": "a0U5i0000081ufvEAA",
       "name": "Extra kms for 3000 kms",
-      "experinceProductName": null
+      "type": "Extra Mileage"
     },
     {
-      "type": "Mileage",
+      "experinceProductId": "a0U5i0000081ufwEAA",
       "name": "4000 kms",
-      "experinceProductName": null
+      "type": "Mileage"
     },
     {
-      "type": "Extra Mileage",
+      "experinceProductId": "a0U5i0000081ufxEAA",
       "name": "Extra kms for 4000 kms",
-      "experinceProductName": null
+      "type": "Extra Mileage"
     },
     {
-      "type": "Add on",
+      "experinceProductId": "a0U5i0000081ufyEAA",
       "name": "Young Driver Fee",
-      "experinceProductName": null
+      "type": "Add on"
     },
     {
-      "type": "Add on",
+      "experinceProductId": "a0U5i0000081ufzEAA",
       "name": "Road side assistance",
-      "experinceProductName": null
+      "type": "Add on"
     },
     {
-      "type": "Add on",
+      "experinceProductId": "a0U5i0000081ug0EAA",
       "name": "Replacement Car",
-      "experinceProductName": null
+      "type": "Add on"
     },
     {
-      "currency": "EUR",
-      "taxAmount": 10.00,
-      "netAmount": 40.00,
-      "grossAmount": 50.00,
-      "type": "Feature",
+      "experinceProductId": "a0U5i0000081ug1EAA",
       "name": "Pause",
-      "experinceProductName": null
+      "type": "Feature",
+      "grossAmount": 50.00,
+      "netAmount": 40.00,
+      "taxAmount": 10.00,
+      "currency": "EUR"
     },
     {
-      "type": "Fee",
+      "experinceProductId": "a0U5i0000081ug2EAA",
+      "experinceProductName": "Return Fee",
       "name": "Return Fee",
-      "experinceProductName": null
+      "type": "Fee",
+      "grossAmount": 50.00,
+      "netAmount": 40.00,
+      "taxAmount": 10.00,
+      "currency": "USD"
     },
     {
-      "type": "Feature",
+      "experinceProductId": "a0U5i0000081ug3EAA",
       "name": "Vehicle Exchange Fee",
-      "experinceProductName": null
+      "type": "Feature"
     },
     {
-      "type": "Feature",
+      "experinceProductId": "a0U5i0000081ug4EAA",
       "name": "New Vehicle Trial Fee",
-      "experinceProductName": null
+      "type": "Feature"
     },
     {
-      "type": "Add on",
+      "experinceProductId": "a0U5i0000081ug5EAA",
       "name": "Trip aboard",
-      "experinceProductName": null
+      "type": "Add on"
     },
     {
-      "type": "Add on",
+      "experinceProductId": "a0U5i0000081ug9EAA",
       "name": "Delivery Fee",
-      "experinceProductName": null
+      "type": "Add on"
     },
     {
-      "type": "Add on",
+      "experinceProductId": "a0U5i0000081ugAEAQ",
       "name": "Collection Fee",
-      "experinceProductName": null
+      "type": "Add on"
     },
     {
-      "type": "Accessories",
+      "experinceProductId": "a0U5i0000081ugBEAQ",
       "name": "Baby Seat",
-      "experinceProductName": null
+      "type": "Accessories"
     },
     {
-      "type": "Accessories",
+      "experinceProductId": "a0U5i0000081ugCEAQ",
       "name": "Toddler Seat",
-      "experinceProductName": null
+      "type": "Accessories"
     },
     {
-      "type": "Accessories",
+      "experinceProductId": "a0U5i0000081ugDEAQ",
       "name": "Child Seat",
-      "experinceProductName": null
+      "type": "Accessories"
     },
     {
-      "type": "Accessories",
+      "experinceProductId": "a0U5i0000081ugEEAQ",
       "name": "Mobile charging cables",
-      "experinceProductName": null
+      "type": "Accessories"
     },
     {
-      "type": "Accessories",
+      "experinceProductId": "a0U5i0000081ugFEAQ",
       "name": "Mobile Holder",
-      "experinceProductName": null
+      "type": "Accessories"
     },
     {
-      "type": "Add on",
+      "experinceProductId": "a0U5i0000081ug6EAA",
       "name": "Toll pass",
-      "experinceProductName": null
+      "type": "Add on"
     },
     {
-      "type": "Discount",
+      "experinceProductId": "a0U5i0000081ug7EAA",
       "name": "Minimum term completion discount (like 10% off on all subscriptions going forward)",
-      "experinceProductName": null
+      "type": "Discount"
     },
     {
-      "type": "Discount",
+      "experinceProductId": "a0U5i0000081ug8EAA",
       "name": "Second vehicle discount",
-      "experinceProductName": null
+      "type": "Discount"
     },
     {
-      "type": "Accessories",
+      "experinceProductId": "a0U5i0000081ugGEAQ",
       "name": "Ski-rack",
-      "experinceProductName": null
+      "type": "Accessories"
     },
     {
-      "type": "Accessories",
+      "experinceProductId": "a0U5i0000081ugHEAQ",
       "name": "Bike holder",
-      "experinceProductName": null
+      "type": "Accessories"
     },
     {
-      "type": "Insurance",
+      "experinceProductId": "a0U5i0000081ugIEAQ",
       "name": "Tire & windshield protection",
-      "experinceProductName": null
+      "type": "Insurance"
     },
     {
-      "type": "Insurance",
+      "experinceProductId": "a0U5i0000081ugJEAQ",
       "name": "Interior Protection",
-      "experinceProductName": null
+      "type": "Insurance"
     },
     {
-      "type": "Insurance",
+      "experinceProductId": "a0U5i0000081ugKEAQ",
       "name": "Personal Accident protection",
-      "experinceProductName": null
+      "type": "Insurance"
     },
     {
-      "type": "Claim",
+      "experinceProductId": "a0U5i0000081ugLEAQ",
       "name": "Damage claims",
-      "experinceProductName": null
+      "type": "Claim"
     },
     {
-      "type": "Claim",
+      "experinceProductId": "a0U5i0000081ugMEAQ",
       "name": "Traffic Offence",
-      "experinceProductName": null
+      "type": "Claim"
     },
     {
-      "type": "Claim",
+      "experinceProductId": "a0U5i0000081ugNEAQ",
       "name": "Toll Violation",
-      "experinceProductName": null
+      "type": "Claim"
     },
     {
-      "type": "Add on",
+      "experinceProductId": "a0U5i0000081ugOEAQ",
       "name": "Upsell Fee",
-      "experinceProductName": null
+      "type": "Add on"
     },
     {
-      "type": "Add on",
+      "experinceProductId": "a0U5i0000081ugPEAQ",
       "name": "Personal Experience Manager Fees",
-      "experinceProductName": null
+      "type": "Add on"
     },
     {
-      "type": "Add on",
+      "experinceProductId": "a0U5i0000081ugQEAQ",
       "name": "Winter Tires",
-      "experinceProductName": null
+      "type": "Add on"
     }
   ],
   "selectedExpProduct": [
@@ -662,7 +588,8 @@ export const MANAGE_CONTRACT_DATA = {
       "grossAmount": 500.00,
       "type": "Add on",
       "name": "Additional driver",
-      "experinceProductName": null
+      "experinceProductName": null,
+      "experinceProductId": "a0U5i0000081ugSEAQ",
     },
     {
       "currency": "INR",
@@ -671,7 +598,7 @@ export const MANAGE_CONTRACT_DATA = {
       "grossAmount": 60.00,
       "type": "Add on",
       "name": "Fuel card",
-      "experinceProductName": "Fuel card"
+      "experinceProductId": "a0U5i0000081ugTEAQ",
     }
   ],
   "availablePlans": [

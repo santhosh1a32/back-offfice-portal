@@ -118,7 +118,6 @@ const UserDetails = () => {
     const changeContract = (obj) => {
         if (window['BackOfficePortalCtrl']) {
             saveDataWithParam('BackOfficePortalCtrl', 'contractChangeRequest', JSON.stringify(obj)).then(result => {
-                console.log(result);
                 if (result && result.status === 'Success') {
                     getContractDetails();
                 } else {
@@ -129,6 +128,9 @@ const UserDetails = () => {
                 }
                 if (openCancelDialog) {
                     closeCancelDialog();
+                }
+                if(openMangeContractDialog) {
+                    closeManageContractDialog();
                 }
             })
         }
@@ -146,7 +148,6 @@ const UserDetails = () => {
             comments: ""
         }
         changeContract(obj);
-        console.log(obj);
         setSnackbarConfig({ ...snackBarConfig, open: true, toastMessage: 'Contract Updated Successfully' });
     }
 
@@ -160,7 +161,20 @@ const UserDetails = () => {
             newVersionEndDate: dayjs(endDate).format('YYYY-MM-DD'), //mandatory
             comments: ""
         }
-        console.log(obj);
+        changeContract(obj);
+    }
+
+    const submitManageContract = (data) => {
+        const activeContractVersion = getActiveContractVersionDetails();
+        const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
+        const obj = {
+            ...data, 
+            contractChangeRequestType: 'Manage Contract', 
+            contractId: contractDetails.contractId, //mandatory
+            contractVersionId: activeContractVersionId, //mandatory
+            newVersionStartDate: dayjs(new Date()).format('YYYY-MM-DD'),
+            comments: ""
+        }
         changeContract(obj);
     }
 
@@ -281,7 +295,7 @@ const UserDetails = () => {
                     open={openMangeContractDialog}
                     contractVersionDetails={getActiveContractVersionDetails()}
                     handleClose={closeManageContractDialog}
-                    handleSubmit={closeManageContractDialog}
+                    handleSubmit={submitManageContract}
                 />
             )}
             <Snackbar

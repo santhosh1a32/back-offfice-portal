@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Products from './Products';
 import Plan from './Plan';
+import ManageExpProduct from './ManageExpProduct';
 import AvailableProducts from './AvailableProducts';
 import { getDataWithParam } from '../../DataService';
 import { MANAGE_CONTRACT_DATA } from './mockData';
@@ -125,23 +126,49 @@ const ManageContractModal = ({ open, handleClose, handleSubmit, contractVersionD
     const [value, setValue] = React.useState(0);
     const [currentSelectedData, setSelectedData] = React.useState(contractVersionDetails.length ? contractVersionDetails[0] : {});
     const [manageContractData, setManagaeContractData] = React.useState(MANAGE_CONTRACT_DATA);
-    console.log(contractVersionDetails[0].contractVersionId, 'version Id');
+    const [newSelection, setNewSelection] = React.useState({});
+    let currentSelectedEp = [];
+    if(currentSelectedData && currentSelectedData.contractVersion_EP && currentSelectedData.contractVersion_EP.length) {
+        currentSelectedEp = currentSelectedData.contractVersion_EP.map(item => {
+            return {
+                ...item,
+                experinceProductId: item.contractVersionEPId,
+                name: item.experienceProductName,
+                type: item.experienceProductType
+            }
+        })
+    }
 
     const {
         availableProducts = [],
-        availablePlans = []
+        availablePlans = [],
+        availableExpProducts = []
     } = manageContractData;
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    const newSelectionHandler = (data, type) => {
+        if(type === 'BP') {
+            let obj = {...newSelection, newProductId: data};
+            setNewSelection(obj);
+        }
+        if(type === 'Plan') {
+            let obj = {...newSelection, newPlanId: data};
+            setNewSelection(obj);
+        }
+        if(type === 'Exp') {
+            let obj = {...newSelection, newExperienceProductIdList: data.join()};
+            setNewSelection(obj);
+        }
+    }
+
     React.useEffect(() => {
         
         if (window['BackOfficePortalCtrl'] && contractVersionDetails[0] && contractVersionDetails[0].contractVersionId) {
             var obj = { contractVersionId: contractVersionDetails[0].contractVersionId }
             getDataWithParam('BackOfficePortalCtrl', 'getDetailsForManageContract', JSON.stringify(obj)).then(result => {
-                console.log(result);
                 setManagaeContractData(result);
             })
         }
@@ -187,7 +214,9 @@ const ManageContractModal = ({ open, handleClose, handleSubmit, contractVersionD
                                 <AvailableProducts 
                                     availableOptions={availableProducts} 
                                     config={AVAILABLE_PRODUCT_CONFIG}
-                                    primaryField="productName"
+                                    primaryField="productId"
+                                    newSelectionId={newSelection.newProductId ? newSelection.newProductId : ''}
+                                    onNewSelection={(data) => newSelectionHandler(data, 'BP')}
                                 />
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={1}>
@@ -195,11 +224,18 @@ const ManageContractModal = ({ open, handleClose, handleSubmit, contractVersionD
                                 <AvailableProducts 
                                     availableOptions={availablePlans} 
                                     config={AVAILABLE_PLAN_CONFIG}
-                                    primaryField="planName"
+                                    primaryField="planId"
+                                    newSelectionId={newSelection.newPlanId ? newSelection.newPlanId : ''}
+                                    onNewSelection={(data) => newSelectionHandler(data, 'Plan')}
                                 />
                             </CustomTabPanel>
                             <CustomTabPanel value={value} index={2}>
-                                Item Three
+                                <ManageExpProduct 
+                                    availableExpProducts={availableExpProducts}
+                                    currentSelectionDetails = {currentSelectedEp}
+                                    newSelectionData={newSelection.newExperienceProductIdList ? newSelection.newExperienceProductIdList.split(',') : ''}
+                                    onNewSelection={(data) => newSelectionHandler(data, 'Exp')}
+                                />
                             </CustomTabPanel>
                         </Box>
                     </DialogContentText>
@@ -207,7 +243,7 @@ const ManageContractModal = ({ open, handleClose, handleSubmit, contractVersionD
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleSubmit}>Submit</Button>
+                <Button onClick={() => handleSubmit(newSelection)}>Submit</Button>
             </DialogActions>
         </Dialog>
     )

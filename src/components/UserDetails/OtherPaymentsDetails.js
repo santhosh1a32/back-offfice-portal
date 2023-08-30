@@ -57,7 +57,7 @@ export default function OtherPaymentsDetails({otherPayments}){
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {otherPayments.map((row) => {
+                  {/* {otherPayments.map((row) => {
                     return (
                       <TableRow
                         hover
@@ -75,7 +75,7 @@ export default function OtherPaymentsDetails({otherPayments}){
                         })}
                       </TableRow>
                     );
-                  })}
+                  })} */}
                 </TableBody>
               </Table>
             </TableContainer>
