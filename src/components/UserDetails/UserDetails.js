@@ -59,6 +59,14 @@ const UserDetails = () => {
         navigate({ pathname:"/checkList", search:createSearchParams({ contractId:"a1A5i000000rrcS", contractVersionId:"80000328", checkListType:"Pickup" }).toString()})
     }
 
+    const deliveryCheckList = () =>{
+        navigate({ pathname:"/checkList", search:createSearchParams({ contractId:"a1A5i000000rrcS", contractVersionId:"80000328", checkListType:"Delivery" }).toString()})
+    }
+
+    const collectionCheckList = () =>{
+        navigate({ pathname:"/checkList", search:createSearchParams({ contractId:"a1A5i000000rrcS", contractVersionId:"80000328", checkListType:"Collection" }).toString()})
+    }
+
     const { openToast, vertical, horizontal, severity, toastMessage } = snackBarConfig;
 
     const handleChange = (panel) => (event, isExpanded) => {
@@ -188,6 +196,14 @@ const UserDetails = () => {
                 <Button size="small" variant="outlined" className="action-btn" onClick={() => openCheckList()} >
                     <ChecklistOutlinedIcon/>
                     <span style={{ marginLeft: '6px' }}>Pickup Checklist</span>
+                </Button>
+                <Button size="small" variant="outlined" className="action-btn" onClick={() => deliveryCheckList()} >
+                    <ChecklistOutlinedIcon/>
+                    <span style={{ marginLeft: '6px' }}>Delivery Checklist</span>
+                </Button>
+                <Button size="small" variant="outlined" className="action-btn" onClick={() => collectionCheckList()} >
+                    <ChecklistOutlinedIcon/>
+                    <span style={{ marginLeft: '6px' }}>Collection Checklist</span>
                 </Button>
                 <Button size='small' variant="outlined" className='action-btn' onClick={() => setManageContractDialog(true)}>
                     <SettingsOutlinedIcon />

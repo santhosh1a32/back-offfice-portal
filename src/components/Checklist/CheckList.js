@@ -28,6 +28,15 @@ const columns = [
   { field: "actions", label: "Actions", minWidth: 100 }
 ];
 
+const checkListColumns = [
+  { field: "displayOrder", label: "Sl. No", minWidth: 50 },
+  { field: "name", label: "Task Name", minWidth: 100 },
+  { field: "taskAgentVerified", label: "Has Agent Verified?", minWidth: 50 },
+  { field: "taskAgentVerifiedByName", label: "Verified Agent Name", minWidth: 100 },
+  { field: "taskAgentVerifiedDate", label: "Agent Verification Date", minWidth: 100 },
+  { field: "actions", label: "Actions", minWidth: 100 }
+]
+
 export default function CheckList() {
   const [searchParams] = useSearchParams();
   const [checkList, setCheckList] = useState(CHECKLIST);
@@ -75,12 +84,11 @@ export default function CheckList() {
       getCheckListData();
     }, [])
 
+   { 
+    if(searchParams.get("checkListType") === "Pickup")
     return (
       <>
         <Grid container spacing={3}>
-          {/* <Typography variant="h6" gutterBottom>
-          {"Pickup Checklist"}
-        </Typography> */}
           <SectionWithTitle title={"Pickup Checklist"}></SectionWithTitle>
           <Grid item xs={12}>
             <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
@@ -114,10 +122,10 @@ export default function CheckList() {
                             if(column.field === "actions"){
                               return (
                                 <TableCell key={row.displayOrder}>
-                                { row["taskStatus"] === "Pending" ?
+                                { row["taskAgentVerified"] === false ?
                                  (<><Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Add</Button>|
-                                 <Button variant="text" onClick={() => showCheckListModal("Date Time;Address")}>Verify</Button></>)
-                                 :(<Button variant="text" onClick={() => showCheckListModal("Address")}>View  </Button>)}
+                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Verify</Button></>)
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType)}>View  </Button>)}
                                 </TableCell>
                               )
                             }
@@ -154,4 +162,161 @@ export default function CheckList() {
         )}
       </>
     );
+     else if(searchParams.get("checkListType") === "Delivery")   {
+      return (
+        <>
+        <Grid container spacing={3}>
+          <SectionWithTitle title={"Delivery Checklist"}></SectionWithTitle>
+          <Grid item xs={12}>
+            <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
+              <div className="button-grp">
+              <Button size="small" variant="contained" disabled > Complete Checklist </Button>
+              <Button size="small" variant="outlined" className="checklist-button"> Cancel Checklist </Button>
+              </div>
+            </Paper>
+            <Paper sx={{ width: "100%", overflow: "hidden" }}>
+              <TableContainer sx={{ maxHeight: 600 }}>
+                <Table stickyHeader aria-label="sticky table">
+                  <TableHead>
+                    <TableRow>
+                      {checkListColumns.map((column) => (
+                        <TableCell
+                          key={column.field}
+                          align={column.align}
+                          style={{ minWidth: column.minWidth }}
+                        >
+                          {column.label}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {checkList.CheckListDetails.map((row) => {
+                      return (
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.displayOrder} >
+                          {checkListColumns.map((column) => {
+                            const value = row[column.field];
+                            if(column.field === "actions"){
+                              return (
+                                <TableCell key={row.displayOrder}>
+                                { row["taskAgentVerified"] === false ?
+                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Add</Button>|
+                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Verify</Button></>)
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType)}>View  </Button>)}
+                                </TableCell>
+                              )
+                            }
+                            else{
+                              return (
+                                <TableCell key={column.field} align={column.align} >
+                                  {column.field === "taskCustomerVerified" ||
+                                  column.field === "taskAgentVerified" ? (
+                                    <Checkbox checked={value} />
+                                  ) : (
+                                    value
+                                  )}
+                                </TableCell>
+                              );
+                              }
+                          })}
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Paper>
+          </Grid>
+        </Grid>
+
+        {openCheckListDialog && (
+          <CheckListModal
+            type={type}
+            open={openCheckListDialog}
+            handleClose={closeCheckListDialog}
+            handleSubmit={saveCheckList}
+          />
+        )}
+      </>
+      )
+     }
+     else{
+      return(
+        <>
+        <Grid container spacing={3}>
+          <SectionWithTitle title={"Collection Checklist"}></SectionWithTitle>
+          <Grid item xs={12}>
+            <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
+              <div className="button-grp">
+              <Button size="small" variant="contained" disabled > Complete Checklist </Button>
+              <Button size="small" variant="outlined" className="checklist-button"> Cancel Checklist </Button>
+              </div>
+            </Paper>
+            <Paper sx={{ width: "100%", overflow: "hidden" }}>
+              <TableContainer sx={{ maxHeight: 600 }}>
+                <Table stickyHeader aria-label="sticky table">
+                  <TableHead>
+                    <TableRow>
+                      {checkListColumns.map((column) => (
+                        <TableCell
+                          key={column.field}
+                          align={column.align}
+                          style={{ minWidth: column.minWidth }}
+                        >
+                          {column.label}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {checkList.CheckListDetails.map((row) => {
+                      return (
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.displayOrder} >
+                          {checkListColumns.map((column) => {
+                            const value = row[column.field];
+                            if(column.field === "actions"){
+                              return (
+                                <TableCell key={row.displayOrder}>
+                                {  row["taskAgentVerified"] === false ?
+                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Add</Button>|
+                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Verify</Button></>)
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType)}>View  </Button>)}
+                                </TableCell>
+                              )
+                            }
+                            else{
+                              return (
+                                <TableCell key={column.field} align={column.align} >
+                                  {column.field === "taskCustomerVerified" ||
+                                  column.field === "taskAgentVerified" ? (
+                                    <Checkbox checked={value} />
+                                  ) : (
+                                    value
+                                  )}
+                                </TableCell>
+                              );
+                              }
+                          })}
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Paper>
+          </Grid>
+        </Grid>
+
+        {openCheckListDialog && (
+          <CheckListModal
+            type={type}
+            open={openCheckListDialog}
+            handleClose={closeCheckListDialog}
+            handleSubmit={saveCheckList}
+          />
+        )}
+      </>
+      )
+     }
+  }
 }
