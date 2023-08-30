@@ -85,9 +85,9 @@ export default function CheckListModal({ type, open, handleClose, handleSubmit})
         <form>
           <DialogContentText className="header-text"> Home Address </DialogContentText>
           <div className="address">
-          <FormControl sx={{ m: 1, width: 200 }} variant="standard">
+          <FormControl sx={{ m:2}} variant="standard" className="select-country"  >
             <InputLabel id="demo-simple-select-label">Country</InputLabel>
-              <Select id="outlined-select-country" label="Country"  name="countryIsoCode" value={formValues.countryIsoCode} onChange={handleInputChange}>
+              <Select id="outlined-select-country" label="Country" name="countryIsoCode" value={formValues.countryIsoCode} onChange={handleInputChange}>
               {countriesArr.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
@@ -95,16 +95,16 @@ export default function CheckListModal({ type, open, handleClose, handleSubmit})
             ))}
           </Select>
           </FormControl>
-          <TextField id="standard-city-input" name="city" label="City" type="text" variant="standard" value={formValues.city} onChange={handleInputChange} /> 
-          <TextField id="standard-address-input" name="addressLine1" label="Address" type="text" variant="standard" value={formValues.addressLine1} onChange={handleInputChange}/>
+          <TextField id="standard-city-input" name="city" label="City" type="text"variant="standard" value={formValues.city} onChange={handleInputChange} /> 
+          <TextField id="standard-address-input" name="addressLine1" label="Address" className="input-text" type="text" variant="standard" value={formValues.addressLine1} onChange={handleInputChange}/>
           <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" value={formValues.state} onChange={handleInputChange}/>      
-          <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" type="text" variant="standard" value={formValues.addressLine2} onChange={handleInputChange}/>
+          <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" className="input-text" type="text" variant="standard" value={formValues.addressLine2} onChange={handleInputChange}/>
           <TextField id="standard-pincode-input" name="pincode" label="PinCode" type="number"  variant="standard"  value={formValues.postalCode} onChange={handleInputChange}/>
           </div>
           <DialogContentText className="header-text"> Billing Address </DialogContentText>
           <FormControlLabel required control={<Checkbox checked={checked} onChange={handleChange}/>} label="Same as Home Address" />
-          { checked ? null : (<div>
-          <FormControl sx={{ m: 1, width: 200 }} variant="standard">
+          { checked ? null : (<div className="address">
+          <FormControl sx={{ m: 2}} variant="standard"  className="select-country">
             <InputLabel id="demo-simple-select-label">Country</InputLabel>
               <Select id="outlinedba-select-country" label="Country"  name="country" value={billingAddrformValues.countryIsoCode} onChange={handleAddrInputChange}>
               {countriesArr.map((option) => (
@@ -115,9 +115,9 @@ export default function CheckListModal({ type, open, handleClose, handleSubmit})
           </Select>
             </FormControl>
           <TextField id="standardba-city-input" name="city" label="City" type="text" variant="standard" value={billingAddrformValues.city} onChange={handleAddrInputChange} /> 
-          <TextField id="standardba-address-input" name="address" label="Address" type="text" variant="standard" value={billingAddrformValues.addressLine1} onChange={handleAddrInputChange}/>
+          <TextField id="standardba-address-input" name="address" label="Address"  className="input-text" type="text" variant="standard" value={billingAddrformValues.addressLine1} onChange={handleAddrInputChange}/>
           <TextField id="standardba-state-input" name="state" label="State" type="text" variant="standard" value={billingAddrformValues.state} onChange={handleAddrInputChange}/>      
-          <TextField id="standardba-address2-input" name="addressLine1" label="Address Line 2" type="text" variant="standard" value={billingAddrformValues.addressLine2} onChange={handleAddrInputChange}/>
+          <TextField id="standardba-address2-input" name="addressLine1" label="Address Line 2"  className="input-text" type="text" variant="standard" value={billingAddrformValues.addressLine2} onChange={handleAddrInputChange}/>
           <TextField id="standardba-pincode-input" name="pincode" label="PinCode" type="number"  variant="standard"  value={billingAddrformValues.postalCode} onChange={handleAddrInputChange}/>
           </div>)}
         </form>
@@ -146,11 +146,11 @@ export default function CheckListModal({ type, open, handleClose, handleSubmit})
           <DialogContent>
             <form>
               <DialogContentText className="header-text"> Pickup Address </DialogContentText>
-              <div className="pickUp">
+              <div className="pickup">
               <CustomDatePicker className="pickup-date" label="Pickup Date" disablePast={true} />
               <TextField id="standard-city-input" name="pickupTime" label="Pickup Time" type="text" variant="standard" value={"9.00"} onChange={handleInputChange} /> 
               </div>
-              <FormControl sx={{ m: 1, width: 200 }} variant="standard">
+              <FormControl sx={{ m: 2 }} variant="standard" className="select-country">
                 <InputLabel id="demo-simple-select-label">Country</InputLabel>
                   <Select id="outlined-select-country" label="Country"  name="countryIsoCode" value={"IN"} onChange={handleInputChange}>
                   {countriesArr.map((option) => (
@@ -161,9 +161,9 @@ export default function CheckListModal({ type, open, handleClose, handleSubmit})
               </Select>
               </FormControl>
               <TextField id="standard-city-input" name="city" label="City" type="text" variant="standard" value={"Bangalore"} onChange={handleInputChange} /> 
-              <TextField id="standard-address-input" name="addressLine1" label="Address" type="text" variant="standard" value={formValues.addressLine1} onChange={handleInputChange}/>
+              <TextField id="standard-address-input" name="addressLine1" label="Address" className="input-text" type="text" variant="standard" value={formValues.addressLine1} onChange={handleInputChange}/>
               <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" value={formValues.state} onChange={handleInputChange}/>      
-              <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" type="text" variant="standard" value={formValues.addressLine2} onChange={handleInputChange}/>
+              <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" className="input-text" type="text" variant="standard" value={formValues.addressLine2} onChange={handleInputChange}/>
               <TextField id="standard-pincode-input" name="pincode" label="PinCode" type="number"  variant="standard"  value={formValues.postalCode} onChange={handleInputChange}/>
             </form>
           </DialogContent>
