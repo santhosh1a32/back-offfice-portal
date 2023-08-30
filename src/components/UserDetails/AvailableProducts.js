@@ -11,12 +11,23 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-export default function AvailableProducts({availableOptions=[], config=[], primaryField=''}) {
+export default function AvailableProducts({
+    availableOptions=[], 
+    config=[], 
+    primaryField='',
+    newSelectionId='', 
+    onNewSelection
+}) {
     const [selectedModel, setSelectedModal] = React.useState();
     const handleChange = (event) => {
-        console.log(event.target.value);
-        setSelectedModal(event.target.value);
+        // setSelectedModal(event.target.value);
+        onNewSelection(event.target.value);
     };
+    React.useEffect(() => {
+        if(newSelectionId) {
+            setSelectedModal(newSelectionId)
+        }
+    }, [newSelectionId])
     return (
         <div style={{marginTop: '16px'}}>
             <Title>Available Options</Title>

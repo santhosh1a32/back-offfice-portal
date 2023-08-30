@@ -92,7 +92,7 @@ export default function InvoiceDetails({ invoiceDetails }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {invoiceDetails.map((row) => {
+                {/* {invoiceDetails.map((row) => {
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       {columns.map((column) => {
@@ -106,7 +106,7 @@ export default function InvoiceDetails({ invoiceDetails }) {
                       })}
                     </TableRow>
                   );
-                })}
+                })} */}
               </TableBody>
             </Table>
           </TableContainer>
