@@ -1,3 +1,39 @@
+.button-grp{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding-top: 2%;
+}
+
 .checklist-button{
-    margin-left: 250px !important;
+    margin-left: 70px !important;
+}
+
+.form-modal {
+    min-height: 300px;
+    .header-text {
+    font-weight: 600;
+    margin-top: 20px;
+    }
+    .confirm-btn{
+        // display:flex !important;
+        justify-content:center !important;
+        align-items:center !important;
+        // margin-top: 3% !important;
+        // max-width: 100px;
+    }
+    .address{
+        justify-content: center;
+        align-items: center;
+        margin-left: 10px;
+    }
+}
+.pickUp {
+    display :flex;
+    .custom-date-picker{
+        width: 100px !important;
+    }
+}
+.form-field{
+    margin-right: 10px !important;
 }
