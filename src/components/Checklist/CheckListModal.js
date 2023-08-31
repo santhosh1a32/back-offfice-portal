@@ -38,6 +38,13 @@ export default function CheckListModal({ type, open, handleClose, handleSubmit})
 
   const handleChange = (e) =>{
     setChecked(e.target.checked);
+    if(e.target.checked === true){
+    setbillingAddrFormValues(
+      formValues
+    );
+  }
+    //handleAddrInputChange(e);
+    console.log(billingAddrformValues);
   }
 
   const handleInputChange = (e) => {
@@ -59,9 +66,9 @@ export default function CheckListModal({ type, open, handleClose, handleSubmit})
   };
 
   useEffect(() => {
-    var obj = { contractId: searchParams.get("contractId"),contractVersionId:searchParams.get("contractVersionId"),checkListType:searchParams.get("checkListType") }
+    var obj = { contractId: searchParams.get("contractId"),contractVersionId:searchParams.get("contractVersionId"),checkListType:type }
     if (window['BackOfficePortalCtrl']) {
-        getDataWithParam('BackOfficePortalCtrl', 'returnCheckListDetails', JSON.stringify(obj)).then(result => {
+        getDataWithParam('BackOfficePortalCtrl', 'getHomeBillingAddress', JSON.stringify(obj)).then(result => {
             console.log(result);
         })
     }
@@ -128,7 +135,7 @@ export default function CheckListModal({ type, open, handleClose, handleSubmit})
     </Dialog>
      );
     }
-    else{
+    else if (type === "Date Time;Address"){
       return (
         <Dialog open={open} onClose={handleClose} className="form-modal">
           <IconButton

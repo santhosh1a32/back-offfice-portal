@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate, createSearchParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { Button} from "@mui/material";
@@ -15,16 +15,16 @@ import "./CheckList.scss";
 import CheckListModal from "./CheckListModal";
 import { CHECKLIST } from "./checklistMockData";
 import SectionWithTitle from '../common/SectionWithTitle';
-import { getDataWithParam } from '../../DataService';
+import { getDataWithParam, saveDataWithParam } from '../../DataService';
 
 const columns = [
   { field: "displayOrder", label: "Sl. No", minWidth: 50 },
   { field: "name", label: "Task Name", minWidth: 100 },
   { field: "taskCustomerVerified", label: "Has Customer Verified?", minWidth: 50 },
-  { field: "taskCustomerVerifiedDate", label: "Customer Verified On", minWidth: 100 },
+  { field: "taskCustomerVerifiedDate", label: "Customer Verified On", minWidth: 100},
   { field: "taskAgentVerified", label: "Has Agent Verified?", minWidth: 50 },
   { field: "taskAgentVerifiedByName", label: "Verified Agent Name", minWidth: 100 },
-  { field: "taskAgentVerifiedDate", label: "Agent Verification Date", minWidth: 100 },
+  { field: "taskAgentVerifiedDate", label: "Agent Verification Date", minWidth: 100},
   { field: "actions", label: "Actions", minWidth: 100 }
 ];
 
@@ -37,55 +37,84 @@ const checkListColumns = [
   { field: "actions", label: "Actions", minWidth: 100 }
 ]
 
+const formatField = (value,column) =>{
+  if(value!==undefined && (column === "taskAgentVerifiedDate" || column === "taskCustomerVerifiedDate")){
+   return new Date(value).toLocaleDateString();
+  }
+   else
+   return value
+} 
+
 export default function CheckList() {
   const [searchParams] = useSearchParams();
   const [checkList, setCheckList] = useState(CHECKLIST);
   const [openCheckListDialog, setCheckListDialog] = useState(false);
   const [type,setTypeData] = useState("");
+  const navigate = useNavigate();
+
+  const openContract = () =>{
+    navigate({ pathname:"/details", search:createSearchParams({ contractId:"a1A5i000000rrcS" }).toString()})
+}
         
-    const closeCheckListDialog = () => {
-        setCheckListDialog(false);
-    };
+  const closeCheckListDialog = () => {
+      setCheckListDialog(false);
+  };
 
-    const showCheckListModal = (type) => {
-            setTypeData(type)
-            setCheckListDialog(true);
-        };
+  const showCheckListModal = (type) => {
+          setTypeData(type)
+          setCheckListDialog(true);
+      };
           
-    const getCheckListData = () => {
-      var obj = { contractId: searchParams.get("contractId"),contractVersionId:searchParams.get("contractVersionId"),checkListType:searchParams.get("checkListType") }
-      if (window['BackOfficePortalCtrl']) {
-          getDataWithParam('BackOfficePortalCtrl', 'returnCheckListDetails', JSON.stringify(obj)).then(result => {
-              console.log(result);
-              setCheckList(result);
+  const getCheckListData = () => {
+    var obj = { contractId: searchParams.get("contractId"),contractVersionId:searchParams.get("contractVersionId"),checkListType:searchParams.get("checkListType") }
+    if (window['BackOfficePortalCtrl']) {
+        getDataWithParam('BackOfficePortalCtrl', 'returnCheckListDetails', JSON.stringify(obj)).then(result => {
+            console.log(result);
+            setCheckList(result);
+        })
+    }
+    }
+
+  const saveCheckList = (formValues,billingAddrformValues) => {
+    console.log(formValues);
+    console.log(billingAddrformValues);   
+    switch(type){
+      case "Address" : {
+        console.log(type);
+        const obj = {
+          billingAddress: billingAddrformValues,
+          homeAddress: formValues
+        } 
+    if (window['BackOfficePortalCtrl']) {
+      saveDataWithParam('BackOfficePortalCtrl', 'updateChecklistRequest', JSON.stringify(obj)).then(result => {
+          if (result && result.status === 'Success') {
+              getCheckListData();
+          } else {
+              console.log('error')
+          }
+          if (openCheckListDialog) {
+            closeCheckListDialog();
+          }
           })
+        }
+        break;
       }
-     }
+      case "Date Time;Address" :{
+        // console.log(type);
+        break;
+      }
+      default: {
 
-    const saveCheckList = (formValues,billingAddrformValues) => {
-      // console.log(formValues);
-      // console.log(billingAddrformValues);   
-      switch(type){
-        case "Address" : {
-         // console.log(type);
-          break;
-        }
-        case "Date Time;Address" :{
-         // console.log(type);
-          break;
-        }
-        default: {
-
-        }
       }
     }
+  }
 
     useEffect(() => {
       getCheckListData();
     }, [])
 
-   { 
-    if(searchParams.get("checkListType") === "Pickup")
+    
+  if(searchParams.get("checkListType") === "Pickup")
     return (
       <>
         <Grid container spacing={3}>
@@ -94,7 +123,7 @@ export default function CheckList() {
             <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
               <div className="button-grp">
               <Button size="small" variant="contained" disabled > Complete Checklist </Button>
-              <Button size="small" variant="outlined" className="checklist-button"> Cancel Checklist </Button>
+              <Button size="small" variant="outlined" className="checklist-button" onClick={openContract}> Cancel Checklist </Button>
               </div>
             </Paper>
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -136,7 +165,7 @@ export default function CheckList() {
                                   column.field === "taskAgentVerified" ? (
                                     <Checkbox checked={value} />
                                   ) : (
-                                    value
+                                    formatField(value,column.field)
                                   )}
                                 </TableCell>
                               );
@@ -171,7 +200,7 @@ export default function CheckList() {
             <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
               <div className="button-grp">
               <Button size="small" variant="contained" disabled > Complete Checklist </Button>
-              <Button size="small" variant="outlined" className="checklist-button"> Cancel Checklist </Button>
+              <Button size="small" variant="outlined" className="checklist-button" onClick={openContract}> Cancel Checklist </Button>
               </div>
             </Paper>
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -213,7 +242,7 @@ export default function CheckList() {
                                   column.field === "taskAgentVerified" ? (
                                     <Checkbox checked={value} />
                                   ) : (
-                                    value
+                                    formatField(value,column.field)
                                   )}
                                 </TableCell>
                               );
@@ -249,7 +278,7 @@ export default function CheckList() {
             <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
               <div className="button-grp">
               <Button size="small" variant="contained" disabled > Complete Checklist </Button>
-              <Button size="small" variant="outlined" className="checklist-button"> Cancel Checklist </Button>
+              <Button size="small" variant="outlined" className="checklist-button" onClick={openContract}> Cancel Checklist </Button>
               </div>
             </Paper>
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -291,7 +320,7 @@ export default function CheckList() {
                                   column.field === "taskAgentVerified" ? (
                                     <Checkbox checked={value} />
                                   ) : (
-                                    value
+                                    formatField(value,column.field)
                                   )}
                                 </TableCell>
                               );
@@ -319,4 +348,4 @@ export default function CheckList() {
       )
      }
   }
-}
+
