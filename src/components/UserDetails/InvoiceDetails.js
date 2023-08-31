@@ -10,6 +10,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import DownloadIcon from '@mui/icons-material/Download';
 // import TablePagination from "@mui/material/TablePagination";
 import SectionWithTitle from "../common/SectionWithTitle";
 import "./DriverDetails.scss";
@@ -55,20 +56,15 @@ const columns = [
     minWidth: 170,
     align: "right",
     format: (params) => (
-      <a
-        href={params.invoiceUrl}
-        download="PDF-document"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Button variant="outlined">Invoice Download</Button>
+      <a href={params.invoiceUrl} download="PDF-document" target="_blank" rel="noopener noreferrer" >
+       
+        <Button variant="outlined"> <DownloadIcon/>Invoice PDF</Button>
       </a>  
     ),
   },
 ];
 
 export default function InvoiceDetails({ invoiceDetails }) {
-  console.log(invoiceDetails);
   // const [invoiceDetails, setInvoices] = useState(PAYMENT_DETAILS);
 
   return (
@@ -76,7 +72,7 @@ export default function InvoiceDetails({ invoiceDetails }) {
       <Grid item xs={12} className="section">
         <SectionWithTitle title={"Invoice Details"}></SectionWithTitle>
         <Paper sx={{ width: "100%", overflow: "hidden", marginTop: "10px" }}>
-          <TableContainer sx={{ maxHeight: 440 }}>
+          <TableContainer sx={{ maxHeight: 300 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>

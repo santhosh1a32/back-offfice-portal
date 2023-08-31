@@ -34,15 +34,14 @@ const columns = [
   },
 ];
 
-export default function OtherPaymentsDetails(){
-    const [otherPaymentsDetails, setPaymentsDetails] = useState(CONTRACT_DETAILS);
-   
+export default function OtherPaymentsDetails({otherPayments}){
+   // const [otherPaymentsDetails, setPaymentsDetails] = useState(CONTRACT_DETAILS);
     return (
       <Grid container spacing={3}>
         <Grid item xs={12} className="section">
           <SectionWithTitle title={"Other Payment Details"}></SectionWithTitle>
           <Paper sx={{ width: "100%", overflow: "hidden", marginTop: "10px" }}>
-            <TableContainer sx={{ maxHeight: 440 }}>
+            <TableContainer sx={{ maxHeight: 300 }}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
@@ -58,7 +57,7 @@ export default function OtherPaymentsDetails(){
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {otherPaymentsDetails.otherPayments.map((row) => {
+                  {/* {otherPayments.map((row) => {
                     return (
                       <TableRow
                         hover
@@ -76,7 +75,7 @@ export default function OtherPaymentsDetails(){
                         })}
                       </TableRow>
                     );
-                  })}
+                  })} */}
                 </TableBody>
               </Table>
             </TableContainer>

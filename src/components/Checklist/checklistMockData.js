@@ -98,5 +98,28 @@ export const CHECKLIST = {
       "taskAgentVerified": true,
       "taskAgentVerifiedDate": "31/12/2023"
     }
+  ],
+  "addressDetails":[
+    {
+      "billingAddress":
+      {
+      "state":"Karnataka",
+      "postalCode":"560001",
+      "countryIsoCode":"DE",
+      "city":"Bangalore",
+      "addressLine2":"MG Road",
+      "addressLine1":"232",
+      "relatedRecordId":""
+    },
+      "homeAddress":{
+        "state":"Karnataka",
+        "postalCode":"560001",
+        "countryIsoCode":"IN",
+        "city":"Bangalore",
+        "addressLine2":"MG Road",
+        "addressLine1":"232",
+        "relatedRecordId":""
+      }
+    }
   ]
 }
