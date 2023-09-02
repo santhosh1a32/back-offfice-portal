@@ -200,9 +200,9 @@ export default function CheckList() {
                               return (
                                 <TableCell key={row.displayOrder}>
                                 { row["taskAgentVerified"] === false ?
-                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Add</Button>|
-                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Verify</Button></>)
-                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType)}>View  </Button>)}
+                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name)}>Add</Button>|
+                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name)}>Verify</Button></>)
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name)}>View  </Button>)}
                                 </TableCell>
                               )
                             }

@@ -97,28 +97,39 @@ export const CHECKLIST = {
       "taskCustomerVerifiedDate": "31/12/2023",
       "taskAgentVerified": true,
       "taskAgentVerifiedDate": "31/12/2023"
+    },
+    {
+      "displayOrder": 8,
+      "name": "Capture start mileage & fuel level",
+      "description": "Capture the start mileage & start fuel level after taking the vehicle from the dealer and before handing over the car to the customer",
+      "taskStatus": "Pending",
+      "taskCustomerVerified": false,
+      "taskAgentVerified": false,
+      "checkListType": "Delivery",
+      "contractCheckListId": "a1p5i0000014VQ2AAM",
+      "contractId": "a1A5i000000rrcSEAQ"
     }
   ],
-  "addressDetails":[
+  "addressDetails": [
     {
       "billingAddress":
       {
-      "state":"Karnataka",
-      "postalCode":"560001",
-      "countryIsoCode":"DE",
-      "city":"Bangalore",
-      "addressLine2":"MG Road",
-      "addressLine1":"232",
-      "relatedRecordId":""
-    },
-      "homeAddress":{
-        "state":"Karnataka",
-        "postalCode":"560001",
-        "countryIsoCode":"IN",
-        "city":"Bangalore",
-        "addressLine2":"MG Road",
-        "addressLine1":"232",
-        "relatedRecordId":""
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "countryIsoCode": "DE",
+        "city": "Bangalore",
+        "addressLine2": "MG Road",
+        "addressLine1": "232",
+        "relatedRecordId": ""
+      },
+      "homeAddress": {
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "countryIsoCode": "IN",
+        "city": "Bangalore",
+        "addressLine2": "MG Road",
+        "addressLine1": "232",
+        "relatedRecordId": ""
       }
     }
   ]
