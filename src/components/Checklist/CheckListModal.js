@@ -16,9 +16,11 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { getDataWithParam } from '../../DataService';
 import { CHECKLIST } from "./checklistMockData";
-import CustomDatePicker from "../common/CustomDatePicker";
 import countries from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json"
+import CustomDatePicker from "../common/CustomDatePicker";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 
 countries.registerLocale(enLocale);
 const countriesObj = countries.getNames("en",{select:"official"});
@@ -29,11 +31,11 @@ const countriesArr = Object.entries(countriesObj).map(([key,value]) =>{
   }
 });
 
-export default function CheckListModal({ type, open, handleClose, handleSubmit}) {
+export default function CheckListModal({ type, contractCheckListId , open, handleClose, handleSubmit}) {
   const [searchParams] = useSearchParams();
+  const [pickupAddrValues, setpickupAddrValues] = useState(CHECKLIST.result);
   const [formValues, setFormValues] = useState(CHECKLIST.addressDetails[0].homeAddress);
   const [billingAddrformValues, setbillingAddrFormValues] = useState(CHECKLIST.addressDetails[0].billingAddress);
-  const [pickupAddrValues, setpickupAddrValues] = useState();
   const[checked,setChecked] = useState(false);
 
   const handleChange = (e) =>{
@@ -65,14 +67,44 @@ export default function CheckListModal({ type, open, handleClose, handleSubmit})
     //console.log(billingAddrformValues);
   };
 
-  useEffect(() => {
-    var obj = { contractId: searchParams.get("contractId"),contractVersionId:searchParams.get("contractVersionId"),checkListType:type }
+  const formatDate = (date) =>{
+      return dayjs(date).format('YYYY-MM-DD');
+  }
+
+  const getMethodName = (type) => {
+    if(type === "Address"){
+        return 'getHomeBillingAddress'
+    }
+    else if(type === "Date Time;Address" ){
+      return 'getPickupDetails'
+    }
+  }
+
+
+  const setCheckListResult = (result) =>{
+      if(type === "Address"){
+        setFormValues(result.addressDetails[0].homeAddress);
+        setbillingAddrFormValues(result.addressDetails[0].homeAddress);
+      }
+      else if(type === "Date Time;Address"){
+        setpickupAddrValues(result);
+      }
+  }
+
+  const getCheckListItem = () =>{
+    let obj = { contractId: searchParams.get("contractId"),checkListType:type,contractCheckListId:contractCheckListId }
     if (window['BackOfficePortalCtrl']) {
-        getDataWithParam('BackOfficePortalCtrl', 'getHomeBillingAddress', JSON.stringify(obj)).then(result => {
-            console.log(result);
+        getDataWithParam('BackOfficePortalCtrl', getMethodName(type), JSON.stringify(obj)).then(result => {
+            setCheckListResult(result);
         })
     }
-  })
+  }
+
+
+  useEffect(() => {
+    getCheckListItem();
+  },[])
+
    if (type === "Address"){
     return (
       <Dialog open={open} onClose={handleClose} className="form-modal">
@@ -130,54 +162,54 @@ export default function CheckListModal({ type, open, handleClose, handleSubmit})
         </form>
       </DialogContent>
       <DialogActions className="confirm-btn">
-        <Button onClick={handleSubmit(formValues,billingAddrformValues)}>Submit</Button>
+        <Button onClick={()=>handleSubmit(formValues,billingAddrformValues)}>Submit</Button>
       </DialogActions>
     </Dialog>
      );
     }
-    else if (type === "Date Time;Address"){
-      return (
-        <Dialog open={open} onClose={handleClose} className="form-modal">
-          <IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-              position: 'absolute',
-              right: 8,
-              top: 8,
-              color: (theme) => theme.palette.grey[500],
-          }}   
-          > 
-          <CloseIcon />
-          </IconButton>
-          <DialogContent>
-            <form>
-              <DialogContentText className="header-text"> Pickup Address </DialogContentText>
-              <div className="pickup">
-              <CustomDatePicker className="pickup-date" label="Pickup Date" disablePast={true} />
-              <TextField id="standard-city-input" name="pickupTime" label="Pickup Time" type="text" variant="standard" value={"9.00"} onChange={handleInputChange} /> 
-              </div>
-              <FormControl sx={{ m: 2 }} variant="standard" className="select-country">
-                <InputLabel id="demo-simple-select-label">Country</InputLabel>
-                  <Select id="outlined-select-country" label="Country"  name="countryIsoCode" value={"IN"} onChange={handleInputChange}>
-                  {countriesArr.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </Select>
-              </FormControl>
-              <TextField id="standard-city-input" name="city" label="City" type="text" variant="standard" value={"Bangalore"} onChange={handleInputChange} /> 
-              <TextField id="standard-address-input" name="addressLine1" label="Address" className="input-text" type="text" variant="standard" value={formValues.addressLine1} onChange={handleInputChange}/>
-              <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" value={formValues.state} onChange={handleInputChange}/>      
-              <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" className="input-text" type="text" variant="standard" value={formValues.addressLine2} onChange={handleInputChange}/>
-              <TextField id="standard-pincode-input" name="pincode" label="PinCode" type="number"  variant="standard"  value={formValues.postalCode} onChange={handleInputChange}/>
-            </form>
-          </DialogContent>
-          <DialogActions className="confirm-btn">
-            <Button>Submit</Button>
-          </DialogActions>
-        </Dialog>
-      )
-    }
+  else if (type === "Date Time;Address"){
+    return(
+      <Dialog open={open} onClose={handleClose} className="form-modal">
+      <IconButton
+      aria-label="close"
+      onClick={handleClose}
+      sx={{
+          position: 'absolute',
+          right: 8,
+          top: 8,
+          color: (theme) => theme.palette.grey[500],
+      }}   
+      > 
+      <CloseIcon />
+      </IconButton>
+      <DialogContent>
+        <form>
+          <DialogContentText className="header-text"> Pickup Address </DialogContentText>
+          <div className="pickup">
+          <CustomDatePicker className="pickup-date" label="Pickup Date" value={dayjs(pickupAddrValues.pickupDetails.pickupDate)} disablePast={true} />
+          <TextField id="standard-city-input" name="pickupTime" label="Pickup Time" type="text" variant="standard" value={pickupAddrValues.pickupDetails.pickupTime} onChange={handleInputChange} /> 
+          </div>
+          <FormControl sx={{ m: 2 }} variant="standard" className="select-country">
+            <InputLabel id="demo-simple-select-label">Country</InputLabel>
+              <Select id="outlined-select-country" label="Country"  name="countryIsoCode" value={pickupAddrValues.pickupAddress.countryIsoCode} onChange={handleInputChange}>
+              {countriesArr.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+          </FormControl>
+          <TextField id="standard-city-input" name="city" label="City" type="text" variant="standard" value={pickupAddrValues.pickupAddress.city} onChange={handleInputChange} /> 
+          <TextField id="standard-address-input" name="addressLine1" label="Address" className="input-text" type="text" variant="standard" value={pickupAddrValues.pickupAddress.addressLine1} onChange={handleInputChange}/>
+          <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" value={pickupAddrValues.pickupAddress.state} onChange={handleInputChange}/>      
+          <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" className="input-text" type="text" variant="standard" value={pickupAddrValues.pickupAddress.addressLine2} onChange={handleInputChange}/>
+          <TextField id="standard-pincode-input" name="pincode" label="PinCode" type="number"  variant="standard"  value={pickupAddrValues.pickupAddress.postalCode} onChange={handleInputChange}/>
+        </form>
+      </DialogContent>
+      <DialogActions className="confirm-btn">
+        <Button onClick={()=>handleSubmit(pickupAddrValues,"")}>Submit</Button>
+      </DialogActions>
+    </Dialog>
+    )
+  }
 }

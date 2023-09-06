@@ -50,6 +50,7 @@ export default function CheckList() {
   const [checkList, setCheckList] = useState(CHECKLIST);
   const [openCheckListDialog, setCheckListDialog] = useState(false);
   const [type,setTypeData] = useState("");
+  const [contractCheckListId, setContractCheckListId] = useState("");
   const navigate = useNavigate();
 
   const openContract = () =>{
@@ -60,8 +61,9 @@ export default function CheckList() {
       setCheckListDialog(false);
   };
 
-  const showCheckListModal = (type) => {
-          setTypeData(type)
+  const showCheckListModal = (type, contractCheckListId) => {
+          setTypeData(type);
+          setContractCheckListId(contractCheckListId);
           setCheckListDialog(true);
       };
           
@@ -69,49 +71,59 @@ export default function CheckList() {
     var obj = { contractId: searchParams.get("contractId"),contractVersionId:searchParams.get("contractVersionId"),checkListType:searchParams.get("checkListType") }
     if (window['BackOfficePortalCtrl']) {
         getDataWithParam('BackOfficePortalCtrl', 'returnCheckListDetails', JSON.stringify(obj)).then(result => {
-            console.log(result);
             setCheckList(result);
         })
     }
     }
 
-  const saveCheckList = (formValues,billingAddrformValues) => {
-    console.log(formValues);
-    console.log(billingAddrformValues);   
-    switch(type){
-      case "Address" : {
-        console.log(type);
-        const obj = {
-          billingAddress: billingAddrformValues,
-          homeAddress: formValues
-        } 
+  const updateCheckListItem = (obj) =>{
     if (window['BackOfficePortalCtrl']) {
       saveDataWithParam('BackOfficePortalCtrl', 'updateChecklistRequest', JSON.stringify(obj)).then(result => {
           if (result && result.status === 'Success') {
               getCheckListData();
           } else {
-              console.log('error')
+              console.log('error');
           }
           if (openCheckListDialog) {
             closeCheckListDialog();
           }
           })
         }
+  }
+
+  const saveCheckListItem = (formValue1,formValue2) => { 
+    switch(type){
+      case "Address" : {
+       let obj = { 
+        contractId: searchParams.get("contractId"),
+        checkListType:type,
+        contractCheckListId:contractCheckListId, 
+        billingAddress:  formValue2,
+        homeAddress: formValue1
+      }
+      updateCheckListItem(obj);
         break;
       }
       case "Date Time;Address" :{
-        // console.log(type);
+        let obj = { 
+          contractId: searchParams.get("contractId"),
+          checkListType:type,
+          contractCheckListId:contractCheckListId, 
+          pickupAddress:  formValue1,
+          pickupDetails : formValue2
+        }
+        updateCheckListItem(obj);
         break;
       }
       default: {
-
+          console.log("default case");
       }
     }
-  }
+  } 
 
     useEffect(() => {
       getCheckListData();
-    }, [])
+    },[])
 
     
   if(searchParams.get("checkListType") === "Pickup")
@@ -152,9 +164,9 @@ export default function CheckList() {
                               return (
                                 <TableCell key={row.displayOrder}>
                                 { row["taskAgentVerified"] === false ?
-                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Add</Button>|
-                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Verify</Button></>)
-                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType)}>View  </Button>)}
+                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType,row.contractCheckListId)}>Add</Button>|
+                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType,row.contractCheckListId)}>Verify</Button></>)
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType,row.contractCheckListId)}>View  </Button>)}
                                 </TableCell>
                               )
                             }
@@ -184,9 +196,10 @@ export default function CheckList() {
         {openCheckListDialog && (
           <CheckListModal
             type={type}
+            contractCheckListId={contractCheckListId}
             open={openCheckListDialog}
             handleClose={closeCheckListDialog}
-            handleSubmit={saveCheckList}
+            handleSubmit={saveCheckListItem}
           />
         )}
       </>
@@ -229,9 +242,9 @@ export default function CheckList() {
                               return (
                                 <TableCell key={row.displayOrder}>
                                 { row["taskAgentVerified"] === false ?
-                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Add</Button>|
-                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Verify</Button></>)
-                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType)}>View  </Button>)}
+                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType,row.contractCheckListId)}>Add</Button>|
+                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType,row.contractCheckListId)}>Verify</Button></>)
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType,row.contractCheckListId)}>View  </Button>)}
                                 </TableCell>
                               )
                             }
@@ -261,9 +274,10 @@ export default function CheckList() {
         {openCheckListDialog && (
           <CheckListModal
             type={type}
+            contractCheckListId={contractCheckListId}
             open={openCheckListDialog}
             handleClose={closeCheckListDialog}
-            handleSubmit={saveCheckList}
+            handleSubmit={saveCheckListItem}
           />
         )}
       </>
@@ -341,7 +355,7 @@ export default function CheckList() {
             type={type}
             open={openCheckListDialog}
             handleClose={closeCheckListDialog}
-            handleSubmit={saveCheckList}
+            handleSubmit={saveCheckListItem}
           />
         )}
       </>

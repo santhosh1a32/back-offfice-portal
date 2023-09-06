@@ -10,9 +10,9 @@ export const CHECKLIST = {
       "name": "Customer Handshake",
       "displayOrder": 1,
       "taskCustomerVerified": false,
-      "taskCustomerVerifiedDate": "31/12/2023",
       "taskAgentVerified": true,
-      "taskAgentVerifiedDate": "31/12/2023"
+      "contractCheckListId": "a1p5i0000014UJnAAM",
+      "contractId": "a1A5i000000rrcSEAQ"
     },
     {
       "checkListType": "Pickup",
@@ -24,9 +24,11 @@ export const CHECKLIST = {
       "name": "Advance Payment Verification",
       "displayOrder": 2,
       "taskCustomerVerified": true,
-      "taskCustomerVerifiedDate": "31/12/2023",
+      "taskCustomerVerifiedDate": 1692099300000,
       "taskAgentVerified": true,
-      "taskAgentVerifiedDate": "31/12/2023"
+      "taskAgentVerifiedDate": 1692099300000,
+      "contractCheckListId": "a1p5i0000014UJnAAM",
+      "contractId": "a1A5i000000rrcSEAQ"
     },
     {
       "checkListType": "Pickup",
@@ -38,9 +40,11 @@ export const CHECKLIST = {
       "name": "Mobile Number Verification",
       "displayOrder": 3,
       "taskCustomerVerified": true,
-      "taskCustomerVerifiedDate": "31/12/2023",
+      "taskCustomerVerifiedDate": " ",
       "taskAgentVerified": true,
-      "taskAgentVerifiedDate": "31/12/2023"
+      "taskAgentVerifiedDate": 1692099300000,
+      "contractCheckListId": "a1p5i0000014UJnAAM",
+      "contractId": "a1A5i000000rrcSEAQ"
     },
     {
       "checkListType": "Pickup",
@@ -54,7 +58,9 @@ export const CHECKLIST = {
       "taskCustomerVerified": true,
       "taskCustomerVerifiedDate": "31/12/2023",
       "taskAgentVerified": false,
-      "taskAgentVerifiedDate": "31/12/2023"
+      "taskAgentVerifiedDate": "31/12/2023",
+      "contractCheckListId": "a1p5i0000014UJnAAM",
+      "contractId": "a1A5i000000rrcSEAQ"
     },
     {
       "checkListType": "Pickup",
@@ -68,7 +74,9 @@ export const CHECKLIST = {
       "taskCustomerVerified": true,
       "taskCustomerVerifiedDate": "31/12/2023",
       "taskAgentVerified": true,
-      "taskAgentVerifiedDate": "31/12/2023"
+      "taskAgentVerifiedDate": "31/12/2023",
+      "contractCheckListId": "a1p5i0000014UJnAAM",
+      "contractId": "a1A5i000000rrcSEAQ"
     },
     {
       "checkListType": "Pickup",
@@ -103,13 +111,13 @@ export const CHECKLIST = {
     {
       "billingAddress":
       {
-      "state":"Karnataka",
-      "postalCode":"560001",
-      "countryIsoCode":"DE",
-      "city":"Bangalore",
-      "addressLine2":"MG Road",
-      "addressLine1":"232",
-      "relatedRecordId":""
+        "state":"Karnataka",
+        "postalCode":"560001",
+        "countryIsoCode":"IN",
+        "city":"Bangalore",
+        "addressLine2":"MG Road",
+        "addressLine1":"232",
+        "relatedRecordId":""
     },
       "homeAddress":{
         "state":"Karnataka",
@@ -121,5 +129,28 @@ export const CHECKLIST = {
         "relatedRecordId":""
       }
     }
-  ]
+  ],
+  "pickUpAddressDetails":{
+        "state":"Karnataka",
+        "postalCode":"560001",
+        "countryIsoCode":"IN",
+        "city":"Bangalore",
+        "addressLine2":"MG Road",
+        "addressLine1":"232",
+        "relatedRecordId":""
+  },
+  "result": {
+    "pickupDetails": {
+        "pickupDate": 1685577600000,
+        "pickupTime": ""
+    },
+    "pickupAddress": {
+        "addressLine1": "232",
+        "addressLine2": "MG Road",
+        "city": "Bangalore",
+        "countryIsoCode": "DE",
+        "postalCode": "560001",
+        "state": "Karnataka"
+    }
+}
 }
