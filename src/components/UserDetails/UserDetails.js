@@ -23,7 +23,7 @@ import { useSearchParams, useNavigate, createSearchParams } from 'react-router-d
 import { Button } from '@mui/material';
 import PauseSubscriptionModal from './PauseSubscriptionModal';
 import CancelSubscriptionModal from './CancelSubscriptionModal';
-import ManageContractModal from './ManageContractModal';
+// import ManageContractModal from './ManageContractModal';
 import InfoBanner from '../common/InfoBanner/InfoBanner';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
@@ -31,6 +31,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import PauseCircleOutlinedIcon from '@mui/icons-material/PauseCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
+import UpcomingContractConfirm from './UpcomingContractConfirm';
 
 import dayjs from 'dayjs';
 
@@ -46,6 +47,7 @@ const UserDetails = () => {
     const [openPauseDialog, setPauseDialog] = React.useState(false);
     const [openCancelDialog, setCancelDialog] = React.useState(false);
     const [openMangeContractDialog, setManageContractDialog] = React.useState(false);
+    const [activeContractVersionId, setActiveContractVersionId] = React.useState();
     const [snackBarConfig, setSnackbarConfig] = React.useState({
         openToast: false,
         vertical: 'top',
@@ -56,15 +58,35 @@ const UserDetails = () => {
     const navigate = useNavigate();
 
     const openCheckList = () =>{
-        navigate({ pathname:"/checkList", search:createSearchParams({ contractId:"a1A5i000000rrcS", contractVersionId:"80000328", checkListType:"Pickup" }).toString()})
+        const activeContractVersion = getActiveContractVersionDetails();
+        const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
+        navigate({ pathname:"/checkList", search:createSearchParams({ contractId:searchParams.get("contractId"), contractVersionId:activeContractVersionId, checkListType:"Pickup" }).toString()})
     }
 
     const deliveryCheckList = () =>{
-        navigate({ pathname:"/checkList", search:createSearchParams({ contractId:"a1A5i000000rrcS", contractVersionId:"80000328", checkListType:"Delivery" }).toString()})
+        const activeContractVersion = getActiveContractVersionDetails();
+        const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
+        navigate({ pathname:"/checkList", search:createSearchParams({ contractId:searchParams.get("contractId"), contractVersionId:activeContractVersionId, checkListType:"Delivery" }).toString()})
     }
 
     const collectionCheckList = () =>{
-        navigate({ pathname:"/checkList", search:createSearchParams({ contractId:"a1A5i000000rrcS", contractVersionId:"80000328", checkListType:"Collection" }).toString()})
+        const activeContractVersion = getActiveContractVersionDetails();
+        const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
+        navigate({ pathname:"/checkList", search:createSearchParams({ contractId:searchParams.get("contractId"), contractVersionId:activeContractVersionId, checkListType:"Collection" }).toString()})
+    }
+
+    const goToManageContract = () => {
+        navigate({ pathname:"/manageContract", search:createSearchParams({ contractId:searchParams.get("contractId"), contractVersionId:activeContractVersionId }).toString()})
+    }
+
+    const navigateToManageContract = () => {
+        const isUpcomingVersionPresent = contractVersion.filter(item => item.headerStatus === 'Upcoming');
+        console.log(isUpcomingVersionPresent);
+        if(isUpcomingVersionPresent && isUpcomingVersionPresent.length) {
+            setManageContractDialog(true);
+        }else {
+            goToManageContract();
+        }
     }
 
     const { openToast, vertical, horizontal, severity, toastMessage } = snackBarConfig;
@@ -187,6 +209,12 @@ const UserDetails = () => {
     }
 
     React.useEffect(() => {
+        const activeContractVersion = getActiveContractVersionDetails();
+        const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
+        setActiveContractVersionId(activeContractVersionId);
+    },[contractDetails])
+
+    React.useEffect(() => {
         getContractDetails();
     }, [])
 
@@ -205,10 +233,14 @@ const UserDetails = () => {
                     <ChecklistOutlinedIcon/>
                     <span style={{ marginLeft: '6px' }}>Collection Checklist</span>
                 </Button>
-                <Button size='small' variant="outlined" className='action-btn' onClick={() => setManageContractDialog(true)}>
+                {/* <Button size='small' variant="outlined" className='action-btn' onClick={() => setManageContractDialog(true)}>
                     <SettingsOutlinedIcon />
                     <span style={{ marginLeft: '6px' }}>Manage Contract</span>
-                </Button>   
+                </Button>    */}
+                <Button size='small' variant="outlined" className='action-btn' onClick={() => navigateToManageContract()}>
+                    <SettingsOutlinedIcon />
+                    <span style={{ marginLeft: '6px' }}>Manage Contract</span>
+                </Button>
                 <Button size='small' variant="contained" className='action-btn' onClick={() => setPauseDialog(true)}>
                     <PauseCircleOutlinedIcon />
                     <span style={{ marginLeft: '6px' }}>Pause Subscription</span>
@@ -307,12 +339,13 @@ const UserDetails = () => {
                 />
             )}
             {openMangeContractDialog && (
-                <ManageContractModal
-                    open={openMangeContractDialog}
-                    contractVersionDetails={getActiveContractVersionDetails()}
-                    handleClose={closeManageContractDialog}
-                    handleSubmit={submitManageContract}
-                />
+                <UpcomingContractConfirm open={openMangeContractDialog} handleClose={closeManageContractDialog} handleSubmit={goToManageContract} />
+                // <ManageContractModal
+                //     open={openMangeContractDialog}
+                //     contractVersionDetails={getActiveContractVersionDetails()}
+                //     handleClose={closeManageContractDialog}
+                //     handleSubmit={submitManageContract}
+                // />
             )}
             <Snackbar
                 anchorOrigin={{ vertical, horizontal }}

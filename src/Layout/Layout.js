@@ -20,6 +20,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../components/Home/Home';
 import UserDetails from '../components/UserDetails/UserDetails';
 import CheckList from '../components/Checklist/CheckList';
+import ManageContract from '../components/ManageContract/ManageContract';
 
 const drawerWidth = 240;
 
@@ -152,6 +153,7 @@ export default function Dashboard() {
               <Route path="/" element={<Home />} />
               <Route path="/details" element={<UserDetails />} />
               <Route path="/checkList" element={<CheckList />} />
+              <Route path="/manageContract" element={<ManageContract />} />
               {/* <Route path="*" element={<Home />} /> */}
             </Routes>
           </Container>

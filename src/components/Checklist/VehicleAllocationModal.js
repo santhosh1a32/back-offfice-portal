@@ -8,20 +8,33 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Radio, RadioGroup, FormControlLabel } from '@mui/material';
 
 const rows = [
-    { id: 1, vehicleModel: 'Tesla Model Y', registrationPlate: 'MUC 7632', transmission: 'Automatic', color: 'White', 'registrationDate': '01/08/2020', dealer: 'Test Dealer' },
-    { id: 2, vehicleModel: 'Audi Model Y', registrationPlate: 'MUC 7632', transmission: 'Automatic', color: 'White', 'registrationDate': '01/08/2020', dealer: 'Test Dealer' },
-    { id: 3, vehicleModel: 'Benz Model Y', registrationPlate: 'MUC 7632', transmission: 'Automatic', color: 'White', 'registrationDate': '01/08/2020', dealer: 'Test Dealer' },
-    { id: 4, vehicleModel: 'Amazda Model Y', registrationPlate: 'MUC 7632', transmission: 'Automatic', color: 'White', 'registrationDate': '01/08/2020', dealer: 'Test Dealer' },
-    { id: 5, vehicleModel: 'Tesla Model D', registrationPlate: 'MUC 7632', transmission: 'Automatic', color: 'White', 'registrationDate': '01/08/2020', dealer: 'Test Dealer' },
+    { vehicleId: 1, name: 'Tesla Model Y', registrationPlate: 'MUC 7632', transmission: 'Automatic', exteriorColor: 'White', 'registrationDate': '01/08/2020', providerName: 'Test Dealer' },
+    { vehicleId: 2, name: 'Audi Model Y', registrationPlate: 'MUC 7632', transmission: 'Automatic', exteriorColor: 'White', 'registrationDate': '01/08/2020', providerName: 'Test Dealer' },
+    { vehicleId: 3, name: 'Benz Model Y', registrationPlate: 'MUC 7632', transmission: 'Automatic', exteriorColor: 'White', 'registrationDate': '01/08/2020', providerName: 'Test Dealer' },
+    { vehicleId: 4, name: 'Amazda Model Y', registrationPlate: 'MUC 7632', transmission: 'Automatic', exteriorColor: 'White', 'registrationDate': '01/08/2020', providerName: 'Test Dealer' },
+    { vehicleId: 5, name: 'Tesla Model D', registrationPlate: 'MUC 7632', transmission: 'Automatic', exteriorColor: 'White', 'registrationDate': '01/08/2020', providerName: 'Test Dealer' },
     // Add more rows as needed
 ];
 
-export default function VehicleAllocationModal({ open, handleClose }) {
+export default function VehicleAllocationModal({ open, handleClose, vehicleDetails= [], handleSubmit }) {
     const [selectedItem, setSelectedItem] = React.useState(null);
+    const [availableOptions, setAvailableOptions] = React.useState([])
 
     const handleRadioChange = (event) => {
         setSelectedItem(event.target.value);
     };
+    React.useEffect(() => {
+        if (window['BackOfficePortalCtrl']) {
+            setAvailableOptions(vehicleDetails);
+            vehicleDetails.forEach(item => {
+                if(item.selected) {
+                    setSelectedItem(item.vehicleId);
+                }
+            })
+        }else {
+            setAvailableOptions(rows)
+        }
+    },[vehicleDetails])
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
             <DialogTitle>Vehicle Allocation</DialogTitle>
@@ -40,22 +53,22 @@ export default function VehicleAllocationModal({ open, handleClose }) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.id}>
+                            {availableOptions.length && availableOptions.map((row) => (
+                                <TableRow key={row.vehicleId}>
                                     <TableCell>
                                         <RadioGroup value={selectedItem} onChange={handleRadioChange}>
                                             <FormControlLabel
-                                                value={row.id.toString()}
+                                                value={row.vehicleId.toString()}
                                                 control={<Radio />}
                                             />
                                         </RadioGroup>
                                     </TableCell>
-                                    <TableCell>{row.vehicleModel}</TableCell>
+                                    <TableCell>{row.name}</TableCell>
                                     <TableCell>{row.registrationPlate}</TableCell>
                                     <TableCell>{row.transmission}</TableCell>
-                                    <TableCell>{row.color}</TableCell>
+                                    <TableCell>{row.exteriorColor}</TableCell>
                                     <TableCell>{row.registrationDate}</TableCell>
-                                    <TableCell>{row.dealer}</TableCell>
+                                    <TableCell>{row.providerName}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -64,7 +77,7 @@ export default function VehicleAllocationModal({ open, handleClose }) {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose}>Confirm</Button>
+                <Button onClick={() => handleSubmit(selectedItem)}>Confirm</Button>
             </DialogActions>
         </Dialog>
     )

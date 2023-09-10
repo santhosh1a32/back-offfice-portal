@@ -14,13 +14,14 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { getDataWithParam } from '../../DataService';
+import { getDataWithParam, saveDataWithParam } from '../../DataService';
 import { CHECKLIST } from "./checklistMockData";
 import CustomDatePicker from "../common/CustomDatePicker";
 import countries from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json"
 import MileageCaptureModal from "./MileageCaptureModal";
 import VehicleAllocationModal from './VehicleAllocationModal';
+import DrivingLicenseModal from "./DrivingLicenseModal";
 
 countries.registerLocale(enLocale);
 const countriesObj = countries.getNames("en", { select: "official" });
@@ -31,12 +32,24 @@ const countriesArr = Object.entries(countriesObj).map(([key, value]) => {
   }
 });
 
-export default function CheckListModal({ type, open, handleClose, handleSubmit }) {
+export default function CheckListModal({
+  contractCheckListId = '',
+  relatedRecordId,
+  type,
+  open,
+  handleClose,
+  handleSubmit
+}) {
   const [searchParams] = useSearchParams();
   const [formValues, setFormValues] = useState(CHECKLIST.addressDetails[0].homeAddress);
   const [billingAddrformValues, setbillingAddrFormValues] = useState(CHECKLIST.addressDetails[0].billingAddress);
   const [pickupAddrValues, setpickupAddrValues] = useState();
   const [checked, setChecked] = useState(false);
+  const [vehicleDetails, setVehicleDetails] = React.useState();
+  const [mileageDetails, setMileageDetails] = React.useState();
+  const [drivingLicenseDetails, setDrivingLicenseDetails] = React.useState([]);
+
+  const checkListType = searchParams.get("checkListType");
 
   const handleChange = (e) => {
     setChecked(e.target.checked);
@@ -60,30 +73,186 @@ export default function CheckListModal({ type, open, handleClose, handleSubmit }
     //console.log(billingAddrformValues);
   };
 
+  const confirmVehicleAllocation = (id) => {
+    let reqObj = {
+      contractId: searchParams.get("contractId"),
+      contractVersionId: searchParams.get("contractVersionId"),
+      checkListType: searchParams.get("checkListType"),
+      contractCheckListId,
+      vehicleId: id
+    }
+    saveDataWithParam('BackOfficePortalCtrl', 'confirmVehicleAllocation', JSON.stringify(reqObj)).then(result => {
+      console.log(result);
+      if (result && result.status === 'Success') {
+        handleClose();
+      }
+    })
+  }
+
+  const submitMileage = (mileage, fuelLevel, type) => {
+    let reqObj = {
+      contractId: searchParams.get("contractId"),
+      contractVersionId: searchParams.get("contractVersionId"),
+      checkListType: searchParams.get("checkListType"),
+      contractCheckListId,
+    }
+    if (relatedRecordId) {
+      reqObj.relatedRecordId = relatedRecordId;
+    }
+    if (type === 'start') {
+      reqObj.startFuelLevel = fuelLevel.toString();
+      reqObj.startMileage = mileage.toString();
+    } else {
+      reqObj.returnFuelLevel = fuelLevel.toString();
+      reqObj.returnMileage = mileage.toString();
+    }
+    saveDataWithParam('BackOfficePortalCtrl', 'updateMileageAndFuel', JSON.stringify(reqObj)).then(result => {
+      console.log(result);
+      if (result && result.status === 'Success') {
+        handleClose();
+      }
+    })
+  }
+
+  const getDrivingLicense = () => {
+    let reqObj = {
+      contractId: searchParams.get("contractId"),
+      contractVersionId: searchParams.get("contractVersionId"),
+      checkListType: searchParams.get("checkListType"),
+      contractCheckListId,
+    }
+    getDataWithParam('BackOfficePortalCtrl', 'getDrivingLicense', JSON.stringify(reqObj)).then(result => {
+      if (result && result.drivingLicenseDetails) {
+        setDrivingLicenseDetails(result.drivingLicenseDetails)
+      }
+    })
+  }
+
+  const updateChecklistRequest = (obj, status=null) => {
+    const tempObj = {
+      ...obj,
+      contractId: searchParams.get("contractId"),
+      contractVersionId: searchParams.get("contractVersionId"),
+      checkListType: searchParams.get("checkListType"),
+      contractCheckListId,
+    }
+    if (relatedRecordId) {
+      tempObj.relatedRecordId = relatedRecordId;
+    }
+    console.log('update req', tempObj);
+    saveDataWithParam('BackOfficePortalCtrl', 'updateChecklistRequest', JSON.stringify(tempObj)).then(result => {
+      console.log(result);
+      if (result && result.status === 'Success' && !status) {
+        handleClose();
+      }
+      if (status) {
+        getDrivingLicense()
+      }
+    })
+  }
+
+  const updateTaskStatus = () => {
+    updateChecklistRequest({
+      taskStatus: 'Verified',
+      jsonData: {
+        drivingLicenseDetails: drivingLicenseDetails
+      }
+    })
+  }
+
   useEffect(() => {
+    console.log('id here', contractCheckListId)
     var obj = { contractId: searchParams.get("contractId"), contractVersionId: searchParams.get("contractVersionId"), checkListType: searchParams.get("checkListType") }
     if (window['BackOfficePortalCtrl']) {
-      getDataWithParam('BackOfficePortalCtrl', 'returnCheckListDetails', JSON.stringify(obj)).then(result => {
-        console.log(result);
-      })
-    }
-  })
+      // let reqObj = {...obj};
+      // if(relatedRecordId) {
+      //   reqObj.relatedRecordId = relatedRecordId;
+      // }
+      // getDataWithParam('BackOfficePortalCtrl', 'returnCheckListDetails', JSON.stringify(reqObj)).then(result => {
+      //   console.log(result);
+      // })
+      if (type === 'Vehicle Allocation') {
+        let reqObj = {
+          ...obj,
+          contractCheckListId,
+        }
+        if (relatedRecordId) {
+          reqObj.relatedRecordId = relatedRecordId;
+        }
+        getDataWithParam('BackOfficePortalCtrl', 'getAvailableVehicles', JSON.stringify(reqObj)).then(result => {
+          console.log(result);
+          setVehicleDetails(result.VehicleDetails || []);
+        })
+      }
+      if (type === 'Driving License') {
+        getDrivingLicense()
+      }
+      if (type === 'Fuel & Mileage' && relatedRecordId) {
+        let reqObj = {
+          ...obj,
+          contractCheckListId,
+          relatedRecordId
+        }
+        getDataWithParam('BackOfficePortalCtrl', 'returnMileageAndFuel', JSON.stringify(reqObj)).then(result => {
+          console.log(result);
+          if (result && result.MileageAndFuelDetails) {
+            let obj = {
+              mileage: checkListType === 'Delivery' ? result.MileageAndFuelDetails.startMileage : result.MileageAndFuelDetails.returnMileage,
+              fuelLevel: checkListType === 'Delivery' ? result.MileageAndFuelDetails.startFuel : result.MileageAndFuelDetails.returnFuel
+            }
+            setMileageDetails(obj);
+          }
+        })
+      }
 
-  if (type === 'Capture start mileage & fuel level') {
+    }
+  }, [])
+
+  if (type === 'Fuel & Mileage' && checkListType === 'Delivery') {
     return (
       <MileageCaptureModal
         open={open}
         handleClose={handleClose}
+        handleSubmit={submitMileage}
         mileageLabel='Start Mileage'
         fuelLevelLabel='Start Fuel Level'
+        type='start'
+        mileageData={mileageDetails}
+      />
+    )
+  }
+  if (type === 'Fuel & Mileage' && checkListType === 'Collection') {
+    return (
+      <MileageCaptureModal
+        open={open}
+        handleClose={handleClose}
+        handleSubmit={submitMileage}
+        mileageLabel='Return Mileage'
+        fuelLevelLabel='Return Fuel Level'
+        type='return'
+        mileageData={mileageDetails}
       />
     )
   }
   if (type === 'Vehicle Allocation') {
     return (
       <VehicleAllocationModal
+        vehicleDetails={vehicleDetails}
         open={open}
         handleClose={handleClose}
+        handleSubmit={confirmVehicleAllocation}
+      />
+    )
+  }
+
+  if (type === 'Driving License') {
+    return (
+      <DrivingLicenseModal
+        open={open}
+        drivingLicenseDetails={drivingLicenseDetails}
+        handleClose={handleClose}
+        handleSubmit={updateChecklistRequest}
+        updateTaskStatus={updateTaskStatus}
       />
     )
   }

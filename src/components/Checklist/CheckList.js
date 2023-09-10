@@ -42,12 +42,17 @@ export default function CheckList() {
   const [checkList, setCheckList] = useState(CHECKLIST);
   const [openCheckListDialog, setCheckListDialog] = useState(false);
   const [type,setTypeData] = useState("");
+  const [currentSelectedRowId, setSelectedRow] = React.useState('');
+  const [relatedRecordId, setRelatedRecordId] = React.useState();
         
     const closeCheckListDialog = () => {
         setCheckListDialog(false);
+        getCheckListData();
     };
 
-    const showCheckListModal = (type) => {
+    const showCheckListModal = (type, contractCheckListId, relatedRecordId=null) => {
+            setRelatedRecordId(relatedRecordId)
+            setSelectedRow(contractCheckListId)
             setTypeData(type)
             setCheckListDialog(true);
         };
@@ -55,7 +60,11 @@ export default function CheckList() {
     const getCheckListData = () => {
       var obj = { contractId: searchParams.get("contractId"),contractVersionId:searchParams.get("contractVersionId"),checkListType:searchParams.get("checkListType") }
       if (window['BackOfficePortalCtrl']) {
-          getDataWithParam('BackOfficePortalCtrl', 'returnCheckListDetails', JSON.stringify(obj)).then(result => {
+          let reqObj = {...obj};
+          if(relatedRecordId) {
+            reqObj.relatedRecordId = relatedRecordId;
+          }
+          getDataWithParam('BackOfficePortalCtrl', 'returnCheckListDetails', JSON.stringify(reqObj)).then(result => {
               console.log(result);
               setCheckList(result);
           })
@@ -123,9 +132,9 @@ export default function CheckList() {
                               return (
                                 <TableCell key={row.displayOrder}>
                                 { row["taskAgentVerified"] === false ?
-                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Add</Button>|
-                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Verify</Button></>)
-                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType)}>View  </Button>)}
+                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId)}>Add</Button>|
+                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId)}>Verify</Button></>)
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId, row.relatedRecordId)}>View  </Button>)}
                                 </TableCell>
                               )
                             }
@@ -158,6 +167,8 @@ export default function CheckList() {
             open={openCheckListDialog}
             handleClose={closeCheckListDialog}
             handleSubmit={saveCheckList}
+            contractCheckListId={currentSelectedRowId}
+            relatedRecordId={relatedRecordId}
           />
         )}
       </>
@@ -200,9 +211,9 @@ export default function CheckList() {
                               return (
                                 <TableCell key={row.displayOrder}>
                                 { row["taskAgentVerified"] === false ?
-                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name)}>Add</Button>|
-                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name)}>Verify</Button></>)
-                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name)}>View  </Button>)}
+                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name, row.contractCheckListId)}>Add</Button>|
+                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name, row.contractCheckListId)}>Verify</Button></>)
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name, row.contractCheckListId, row.relatedRecordId)}>View  </Button>)}
                                 </TableCell>
                               )
                             }
@@ -235,6 +246,8 @@ export default function CheckList() {
             open={openCheckListDialog}
             handleClose={closeCheckListDialog}
             handleSubmit={saveCheckList}
+            contractCheckListId={currentSelectedRowId}
+            relatedRecordId={relatedRecordId}
           />
         )}
       </>
@@ -278,9 +291,9 @@ export default function CheckList() {
                               return (
                                 <TableCell key={row.displayOrder}>
                                 {  row["taskAgentVerified"] === false ?
-                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Add</Button>|
-                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType)}>Verify</Button></>)
-                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType)}>View  </Button>)}
+                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId)}>Add</Button>|
+                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId)}>Verify</Button></>)
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId, row.relatedRecordId)}>View  </Button>)}
                                 </TableCell>
                               )
                             }
@@ -313,6 +326,8 @@ export default function CheckList() {
             open={openCheckListDialog}
             handleClose={closeCheckListDialog}
             handleSubmit={saveCheckList}
+            contractCheckListId={currentSelectedRowId}
+            relatedRecordId={relatedRecordId}
           />
         )}
       </>
