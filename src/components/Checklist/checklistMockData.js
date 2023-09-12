@@ -1,6 +1,7 @@
 export const CHECKLIST = {
   "CheckListDetails": [
     {
+      "contractCheckListId": 12345,
       "checkListType": "Pickup",
       "inputType": null,
       "taskAgentVerifiedByName": "AgentName",
@@ -12,9 +13,11 @@ export const CHECKLIST = {
       "taskCustomerVerified": false,
       "taskCustomerVerifiedDate": "31/12/2023",
       "taskAgentVerified": true,
-      "taskAgentVerifiedDate": "31/12/2023"
+      "taskAgentVerifiedDate": "31/12/2023",
+      "relatedRecordId": "a0N5i000006xB3ZEHU"
     },
     {
+      "contractCheckListId": 12346,
       "checkListType": "Pickup",
       "inputType": null,
       "taskAgentVerifiedByName": "AgentName",
@@ -26,9 +29,11 @@ export const CHECKLIST = {
       "taskCustomerVerified": true,
       "taskCustomerVerifiedDate": "31/12/2023",
       "taskAgentVerified": true,
-      "taskAgentVerifiedDate": "31/12/2023"
+      "taskAgentVerifiedDate": "31/12/2023",
+      "relatedRecordId": "a0N5i000006xB3ZEGU"
     },
     {
+      "contractCheckListId": 12347,
       "checkListType": "Pickup",
       "inputType": "Mobile Number",
       "taskAgentVerifiedByName": "AgentName",
@@ -40,9 +45,11 @@ export const CHECKLIST = {
       "taskCustomerVerified": true,
       "taskCustomerVerifiedDate": "31/12/2023",
       "taskAgentVerified": true,
-      "taskAgentVerifiedDate": "31/12/2023"
+      "taskAgentVerifiedDate": "31/12/2023",
+      "relatedRecordId": "a0N5i000006xB3ZEFU"
     },
     {
+      "contractCheckListId": 12348,
       "checkListType": "Pickup",
       "inputType": "Address",
       "taskAgentVerifiedByName": "ABC",
@@ -54,9 +61,11 @@ export const CHECKLIST = {
       "taskCustomerVerified": true,
       "taskCustomerVerifiedDate": "31/12/2023",
       "taskAgentVerified": false,
-      "taskAgentVerifiedDate": "31/12/2023"
+      "taskAgentVerifiedDate": "31/12/2023",
+      "relatedRecordId": "a0N5i000006xB3ZEEU"
     },
     {
+      "contractCheckListId": 12349,
       "checkListType": "Pickup",
       "inputType": "Date Time;Address",
       "taskAgentVerifiedByName": "AgentName",
@@ -68,9 +77,11 @@ export const CHECKLIST = {
       "taskCustomerVerified": true,
       "taskCustomerVerifiedDate": "31/12/2023",
       "taskAgentVerified": true,
-      "taskAgentVerifiedDate": "31/12/2023"
+      "taskAgentVerifiedDate": "31/12/2023",
+      "relatedRecordId": "a0N5i000006xB3ZEDU"
     },
     {
+      "contractCheckListId": 123410,
       "checkListType": "Pickup",
       "inputType": "Driving License",
       "taskAgentVerifiedByName": "AgentName",
@@ -82,9 +93,11 @@ export const CHECKLIST = {
       "taskCustomerVerified": true,
       "taskCustomerVerifiedDate": "31/12/2023",
       "taskAgentVerified": true,
-      "taskAgentVerifiedDate": "31/12/2023"
+      "taskAgentVerifiedDate": "31/12/2023",
+      "relatedRecordId": "a0N5i000006xB3ZECU"
     },
     {
+      "contractCheckListId": 123411,
       "checkListType": "Pickup",
       "inputType": "Vehicle Allocation",
       "taskAgentVerifiedByName": "AgentName",
@@ -96,30 +109,81 @@ export const CHECKLIST = {
       "taskCustomerVerified": true,
       "taskCustomerVerifiedDate": "31/12/2023",
       "taskAgentVerified": true,
-      "taskAgentVerifiedDate": "31/12/2023"
-    }
+      "taskAgentVerifiedDate": "31/12/2023",
+      "relatedRecordId": "a0N5i000006xB3ZEBU"
+    },
+    {
+      "contractCheckListId": 123412,
+      "displayOrder": 8,
+      "name": "Capture start mileage & fuel level",
+      "inputType": "Fuel & Mileage",
+      "description": "Capture the start mileage & start fuel level after taking the vehicle from the dealer and before handing over the car to the customer",
+      "taskStatus": "Pending",
+      "taskCustomerVerified": false,
+      "taskAgentVerified": false,
+      "checkListType": "Delivery",
+      "contractCheckListId": "a1p5i0000014VQ2AAM",
+      "contractId": "a1A5i000000rrcSEAQ",
+      "relatedRecordId": "a0N5i000006xB3ZEAU"
+    },
+    {
+      "displayOrder": 9,
+      "name": "Capture return mileage & fuel level",
+      "description": "Capture the start mileage & start fuel level after taking the vehicle from the dealer and before handing over the car to the customer",
+      "taskStatus": "Pending",
+      "taskAgentVerifiedByName": "Shiva Sudhakar",
+      "taskCustomerVerified": false,
+      "taskAgentVerified": false,
+      "inputType": "Fuel & Mileage",
+      "checkListType": "Collection",
+      "contractCheckListId": "a1p5i0000014VQMAA2",
+      "contractId": "a1A5i000000rrcSEAQ"
+    },
   ],
-  "addressDetails":[
+  "addressDetails": [
     {
       "billingAddress":
       {
-      "state":"Karnataka",
-      "postalCode":"560001",
-      "countryIsoCode":"DE",
-      "city":"Bangalore",
-      "addressLine2":"MG Road",
-      "addressLine1":"232",
-      "relatedRecordId":""
-    },
-      "homeAddress":{
-        "state":"Karnataka",
-        "postalCode":"560001",
-        "countryIsoCode":"IN",
-        "city":"Bangalore",
-        "addressLine2":"MG Road",
-        "addressLine1":"232",
-        "relatedRecordId":""
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "countryIsoCode": "DE",
+        "city": "Bangalore",
+        "addressLine2": "MG Road",
+        "addressLine1": "232",
+        "relatedRecordId": ""
+      },
+      "homeAddress": {
+        "state": "Karnataka",
+        "postalCode": "560001",
+        "countryIsoCode": "IN",
+        "city": "Bangalore",
+        "addressLine2": "MG Road",
+        "addressLine1": "232",
+        "relatedRecordId": ""
       }
     }
-  ]
+  ],
+  "pickUpAddressDetails": {
+    "state": "Karnataka",
+    "postalCode": "560001",
+    "countryIsoCode": "IN",
+    "city": "Bangalore",
+    "addressLine2": "MG Road",
+    "addressLine1": "232",
+    "relatedRecordId": ""
+  },
+  "result": {
+    "pickupDetails": {
+      "pickupDate": 1685577600000,
+      "pickupTime": ""
+    },
+    "pickupAddress": {
+      "addressLine1": "232",
+      "addressLine2": "MG Road",
+      "city": "Bangalore",
+      "countryIsoCode": "DE",
+      "postalCode": "560001",
+      "state": "Karnataka"
+    }
+  }
 }

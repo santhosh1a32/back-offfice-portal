@@ -75,7 +75,7 @@ export default function ManageExpProduct({
     const availableOptions = availableExpProducts.map(item => {
         return {
             ...item,
-            id: item.experinceProductId
+            id: item.experienceProductId
         }
     })
     const setSelection = (selection) => {

@@ -610,7 +610,8 @@ export const MANAGE_CONTRACT_DATA = {
       "netAmount": 90.00,
       "grossAmount": 99.00,
       "type": "Plan",
-      "planName": "Smart Plan"
+      "planName": "Smart Plan",
+      "planId": "a1b5i000005YinzAAC"
     },
     {
       "currency": "INR",
@@ -620,7 +621,8 @@ export const MANAGE_CONTRACT_DATA = {
       "netAmount": 80.00,
       "grossAmount": 89.00,
       "type": "Plan",
-      "planName": "Standard Plan"
+      "planName": "Standard Plan",
+      "planId": "a1b5i000005YivzAAC"
     }
   ],
   "selectedPlan": [
@@ -644,13 +646,15 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "SUV",
       "model": "Model Y",
       "make": "Tesla",
-      "productName": "Base_Product_Tesla_Model_Y"
+      "productName": "Base_Product_Tesla_Model_Y",
+      "productId": "a0I5i00000FPjanEAD"
     },
     {
       "bodyType": "Sedan",
       "model": "3 Series",
       "make": "BMW",
-      "productName": "Base_Product_BMW_3_Series"
+      "productName": "Base_Product_BMW_3_Series",
+      "productId": "a0I5i00000FAjanEAD"
     },
     {
       "currency": "INR",
@@ -660,7 +664,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "SUV",
       "model": "X3",
       "make": "BMW",
-      "productName": "BMW X3"
+      "productName": "BMW X3",
+      "productId": "a0I5i00000DPjanEAD"
     },
     {
       "currency": "INR",
@@ -670,7 +675,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "Hatch Back",
       "model": "E-208",
       "make": "Peugeot",
-      "productName": "Peugeot E-208 GT"
+      "productName": "Peugeot E-208 GT",
+      "productId": "a0I5i00000FPjaAEAD"
     },
     {
       "currency": "INR",
@@ -680,7 +686,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "SUV",
       "model": "Taverse",
       "make": "Chevrolet",
-      "productName": "Chevrolet Taverse 1LT"
+      "productName": "Chevrolet Taverse 1LT",
+      "productId": "a0I5i00000FPjaBEAD"
     },
     {
       "currency": "INR",
@@ -690,7 +697,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "SUV",
       "model": "Blazer",
       "make": "Chevrolet",
-      "productName": "Chevrolet Blazer 2LT AWD"
+      "productName": "Chevrolet Blazer 2LT AWD",
+      "productId": "a0I5i00000FPjaCEAD"
     },
     {
       "currency": "INR",
@@ -700,7 +708,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "SUV",
       "model": "Q2",
       "make": "Audi",
-      "productName": "Audi Q2 Advanced"
+      "productName": "Audi Q2 Advanced",
+      "productId": "a0I5i00000FPjaCEAD"
     },
     {
       "currency": "INR",
@@ -710,7 +719,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "SUV",
       "model": "X5 M",
       "make": "BMW",
-      "productName": "BMW X5 M Automobile"
+      "productName": "BMW X5 M Automobile",
+      "productId": "a0I5i00000FPjaDEAD"
     },
     {
       "currency": "INR",
@@ -720,7 +730,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "Sedan",
       "model": "A6",
       "make": "Audi",
-      "productName": "Audi A6 Avant"
+      "productName": "Audi A6 Avant",
+      "productId": "a0I5i00000FPjaEEAD"
     },
     {
       "currency": "INR",
@@ -730,7 +741,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "Truck",
       "model": "1500",
       "make": "Ram",
-      "productName": "Ram 1500 Big Horn/Lone Star"
+      "productName": "Ram 1500 Big Horn/Lone Star",
+      "productId": "a0I5i00000FPjaFEAD"
     },
     {
       "currency": "INR",
@@ -740,7 +752,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "Small Sedan/ Hatch back",
       "model": "A3",
       "make": "Audi",
-      "productName": "Audi A3 Limousine"
+      "productName": "Audi A3 Limousine",
+      "productId": "a0I5i00000FPjaGEAD"
     },
     {
       "currency": "INR",
@@ -750,7 +763,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "Truck",
       "model": "Sierra 1500",
       "make": "GMC",
-      "productName": "GMC Sierra 1500 Short Box Elevation"
+      "productName": "GMC Sierra 1500 Short Box Elevation",
+      "productId": "a0I5i00000FPjaHEAD"
     },
     {
       "currency": "INR",
@@ -760,7 +774,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "Sedan",
       "model": "A5",
       "make": "Audi",
-      "productName": "Audi A5 Sportback"
+      "productName": "Audi A5 Sportback",
+      "productId": "a0I5i00000FPjaIEAD"
     },
     {
       "currency": "INR",
@@ -770,7 +785,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "Small Sedan/ Hatch back",
       "model": "Picanto",
       "make": "KIA",
-      "productName": "KIA Picanto Vision"
+      "productName": "KIA Picanto Vision",
+      "productId": "a0I5i00000FPjaJEAD"
     },
     {
       "currency": "INR",
@@ -780,7 +796,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "Truck",
       "model": "Silverado 1500",
       "make": "Chevrolet",
-      "productName": "Chevrolet Silverado 1500"
+      "productName": "Chevrolet Silverado 1500",
+      "productId": "a0I5i00000FPjaKEAD"
     },
     {
       "currency": "INR",
@@ -790,7 +807,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "SUV",
       "model": "Grand Cherokee",
       "make": "Jeep",
-      "productName": "Jeep Grand Cherokee"
+      "productName": "Jeep Grand Cherokee",
+      "productId": "a0I5i00000FPjaLEAD"
     },
     {
       "currency": "INR",
@@ -800,7 +818,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "SUV",
       "model": "Wagoneer L",
       "make": "Jeep",
-      "productName": "Jeep Wagoneer L"
+      "productName": "Jeep Wagoneer L",
+      "productId": "a0I5i00000FPjaMEAD"
     },
     {
       "currency": "INR",
@@ -810,7 +829,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "SUV",
       "model": "Pathfinder",
       "make": "Nissan",
-      "productName": "Nissan Pathfinder"
+      "productName": "Nissan Pathfinder",
+      "productId": "a0I5i00000FPjaOEAD"
     },
     {
       "currency": "INR",
@@ -820,153 +840,8 @@ export const MANAGE_CONTRACT_DATA = {
       "bodyType": "SUV",
       "model": "SQ5",
       "make": "Audi",
-      "productName": "Audi SQ5"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 130.00,
-      "netAmount": 530.00,
-      "grossAmount": 660.00,
-      "bodyType": "SUV",
-      "model": "X1",
-      "make": "BMW",
-      "productName": "BMW X1"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 309.00,
-      "netAmount": 1161.00,
-      "grossAmount": 1470.00,
-      "bodyType": "SUV",
-      "model": "X5",
-      "make": "BMW",
-      "productName": "BMW X5"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 412.00,
-      "netAmount": 1548.00,
-      "grossAmount": 1960.00,
-      "bodyType": "SUV",
-      "model": "X7",
-      "make": "BMW",
-      "productName": "BMW X7"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 122.00,
-      "netAmount": 458.00,
-      "grossAmount": 580.00,
-      "bodyType": "Small Sedan/ Hatch back",
-      "model": "Electric",
-      "make": "MINI",
-      "productName": "MINI Electric"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 122.00,
-      "netAmount": 458.00,
-      "grossAmount": 580.00,
-      "bodyType": "SUV",
-      "model": "Compass",
-      "make": "Jeep",
-      "productName": "Jeep Compass"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 97.00,
-      "netAmount": 363.00,
-      "grossAmount": 460.00,
-      "bodyType": "SUV",
-      "model": "HS",
-      "make": "MG",
-      "productName": "MG HS"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 126.00,
-      "netAmount": 474.00,
-      "grossAmount": 600.00,
-      "bodyType": "Station Wagon",
-      "model": "6",
-      "make": "Mazda",
-      "productName": "Mazda 6"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 118.00,
-      "netAmount": 442.00,
-      "grossAmount": 560.00,
-      "bodyType": "Small Sedan/ Hatch back",
-      "model": "A1",
-      "make": "Audi",
-      "productName": "Audi A1"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 294.00,
-      "netAmount": 1106.00,
-      "grossAmount": 1400.00,
-      "bodyType": "Sedan",
-      "model": "Corolla",
-      "make": "Toyota",
-      "productName": "Toyota Corolla"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 305.00,
-      "netAmount": 1145.00,
-      "grossAmount": 1450.00,
-      "bodyType": "Sedan",
-      "model": "Camry",
-      "make": "Toyota",
-      "productName": "Toyota Camry"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 378.00,
-      "netAmount": 1422.00,
-      "grossAmount": 1800.00,
-      "bodyType": "Truck",
-      "model": "Acadia",
-      "make": "GMC",
-      "productName": "GMC Acadia"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 168.00,
-      "netAmount": 632.00,
-      "grossAmount": 800.00,
-      "bodyType": "Sedan",
-      "model": "3",
-      "make": "Mazda",
-      "productName": "Mazda 3"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 840.00,
-      "netAmount": 3160.00,
-      "grossAmount": 4000.00,
-      "bodyType": "SUV",
-      "model": "Sport",
-      "make": "Range Rover",
-      "productName": "Range Rover Sport"
-    },
-    {
-      "currency": "INR",
-      "taxAmount": 91.00,
-      "netAmount": 339.00,
-      "grossAmount": 430.00,
-      "bodyType": "Sedan",
-      "model": "Focus",
-      "make": "Ford",
-      "productName": "Ford Focus"
-    },
-    {
-      "bodyType": "Compact sedan",
-      "model": "GT",
-      "make": "Nissan",
-      "productName": "Nissan GT test"
+      "productName": "Audi SQ5",
+      "productId": "a0I5i00000FPjaPEAD"
     }
   ],
   "selectedProduct": [
