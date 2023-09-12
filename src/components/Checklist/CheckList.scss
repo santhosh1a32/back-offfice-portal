@@ -11,6 +11,7 @@
 
 .form-modal {
     min-height: 300px;
+    min-width: 400px;
     .header-text {
     font-weight: 600;
     margin: 20px 0 10px 0;
@@ -31,6 +32,10 @@
         width:230px;
         margin: 0 50px 10px 0;
     }
+    .select-pickup{
+        width:195px;
+        margin: 0 50px 10px 0;
+    }
     .input-text{
         width: 230px;
         margin: 0 50px 10px 0;
@@ -41,11 +46,21 @@
            // padding: 9px 14px;
             margin-right: 50px;
             width: 230px !important;
+            label{
+                line-height: 1em;
+            }
+            input {
+                height: 0.7em !important;
+                padding: 16px 15px 14px 5px
+            }
         }
     }
 }
 .form-field{
     margin-right: 10px !important;
+}
+.pickup-form{
+    margin-left: 5%;
 }
 
 .width-80 {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate, createSearchParams } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { Button} from "@mui/material";
@@ -8,7 +8,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
 import "./CheckList.scss";
@@ -39,11 +38,17 @@ const checkListColumns = [
 
 export default function CheckList() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [checkList, setCheckList] = useState(CHECKLIST);
   const [openCheckListDialog, setCheckListDialog] = useState(false);
   const [type,setTypeData] = useState("");
   const [currentSelectedRowId, setSelectedRow] = React.useState('');
   const [relatedRecordId, setRelatedRecordId] = React.useState();
+  const [buttonEnable, setButtonEnable] = useState(false);
+
+    const openContract = () =>{
+      navigate({ pathname:"/details", search:createSearchParams({ contractId:"a1A5i000000rrcS" }).toString()})
+    }
         
     const closeCheckListDialog = () => {
         setCheckListDialog(false);
@@ -67,33 +72,72 @@ export default function CheckList() {
           getDataWithParam('BackOfficePortalCtrl', 'returnCheckListDetails', JSON.stringify(reqObj)).then(result => {
               console.log(result);
               setCheckList(result);
+              checkVerified();
           })
       }
      }
+     const completeCheckList = () => {
+      let obj = { "completionStatus" : "Completed" }
+      let contractChecklistIdList =[];
+      checkList.CheckListDetails.map(checkListItem => {
+          if(checkListItem.contractCheckListId)
+          contractChecklistIdList.push(JSON.stringify(checkListItem.contractCheckListId));
+      })
+      obj["contractChecklistIdList"] = contractChecklistIdList;
+      updateChecklistCompletionStatus(obj)
+      }
+  
+    const cancelCheckList = () => {
+      let obj = { "completionStatus" : "Cancelled" };
+      let contractChecklistIdList =[];
+      checkList.CheckListDetails.map(checkListItem => {
+          if(checkListItem.taskAgentVerified === true)
+          contractChecklistIdList.push(JSON.stringify(checkListItem.contractCheckListId));
+      })
+      obj["contractChecklistIdList"] = contractChecklistIdList;
+      console.log(obj);
+      updateChecklistCompletionStatus(obj);
+    }
+  
+    const updateChecklistCompletionStatus = (obj) =>{
+      if (window['BackOfficePortalCtrl']) {
+        getDataWithParam('BackOfficePortalCtrl', 'updateChecklistCompletionStatusRequest', JSON.stringify(obj)).then(result => {
+          openContract();
+        })
+    }    
+    }
 
-    const saveCheckList = (formValues,billingAddrformValues) => {
-      // console.log(formValues);
-      // console.log(billingAddrformValues);   
-      switch(type){
-        case "Address" : {
-         // console.log(type);
-          break;
-        }
-        case "Date Time;Address" :{
-         // console.log(type);
-          break;
-        }
-        default: {
-
+     const verifyCheckListItem = (contractCheckListId) => {
+      let obj = { 
+        contractId: searchParams.get("contractId"),
+        contractVersionId:searchParams.get("contractVersionId"),
+        checkListType:searchParams.get("checkListType"),
+        contractChekListId:contractCheckListId,
+        // relatedRecordId:,
+        taskStatus:"Verified",
+       }
+      if (window['BackOfficePortalCtrl']) {
+          getDataWithParam('BackOfficePortalCtrl', 'updateChecklistRequest', JSON.stringify(obj)).then(result => {
+            if (result && result.status === 'Success') {
+              console.log("success");
+          } else {
+              console.log('error')
+          }
+          })
         }
       }
-    }
+
+      const checkVerified = () => {
+        let verifiedItems = checkList.CheckListDetails.filter(item => item.taskAgentVerified === true);
+        if(verifiedItems.length === checkList.CheckListDetails.length)
+        setButtonEnable(true);
+      }
+
 
     useEffect(() => {
       getCheckListData();
     }, [])
 
-   { 
     if(searchParams.get("checkListType") === "Pickup")
     return (
       <>
@@ -102,8 +146,8 @@ export default function CheckList() {
           <Grid item xs={12}>
             <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
               <div className="button-grp">
-              <Button size="small" variant="contained" disabled > Complete Checklist </Button>
-              <Button size="small" variant="outlined" className="checklist-button"> Cancel Checklist </Button>
+              <Button size="small" variant="contained" disabled={!buttonEnable}  onClick={completeCheckList}> Complete Checklist </Button>
+              <Button size="small" variant="outlined" className="checklist-button" onClick={cancelCheckList}> Cancel Checklist </Button>
               </div>
             </Paper>
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -133,7 +177,7 @@ export default function CheckList() {
                                 <TableCell key={row.displayOrder}>
                                 { row["taskAgentVerified"] === false ?
                                  (<><Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId)}>Add</Button>|
-                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId)}>Verify</Button></>)
+                                 <Button variant="text" onClick={() => verifyCheckListItem(row["contractCheckListId"])}>Verify</Button></>)
                                  :(<Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId, row.relatedRecordId)}>View  </Button>)}
                                 </TableCell>
                               )
@@ -166,7 +210,6 @@ export default function CheckList() {
             type={type}
             open={openCheckListDialog}
             handleClose={closeCheckListDialog}
-            handleSubmit={saveCheckList}
             contractCheckListId={currentSelectedRowId}
             relatedRecordId={relatedRecordId}
           />
@@ -181,8 +224,8 @@ export default function CheckList() {
           <Grid item xs={12}>
             <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
               <div className="button-grp">
-              <Button size="small" variant="contained" disabled > Complete Checklist </Button>
-              <Button size="small" variant="outlined" className="checklist-button"> Cancel Checklist </Button>
+              <Button size="small" variant="contained" disabled={!buttonEnable}  onClick={completeCheckList}> Complete Checklist </Button>
+              <Button size="small" variant="outlined" className="checklist-button" onClick={cancelCheckList}> Cancel Checklist </Button>
               </div>
             </Paper>
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -212,7 +255,7 @@ export default function CheckList() {
                                 <TableCell key={row.displayOrder}>
                                 { row["taskAgentVerified"] === false ?
                                  (<><Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name, row.contractCheckListId)}>Add</Button>|
-                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name, row.contractCheckListId)}>Verify</Button></>)
+                                 <Button variant="text" onClick={() => verifyCheckListItem(row["contractCheckListId"])}>Verify</Button></>)
                                  :(<Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name, row.contractCheckListId, row.relatedRecordId)}>View  </Button>)}
                                 </TableCell>
                               )
@@ -245,7 +288,6 @@ export default function CheckList() {
             type={type}
             open={openCheckListDialog}
             handleClose={closeCheckListDialog}
-            handleSubmit={saveCheckList}
             contractCheckListId={currentSelectedRowId}
             relatedRecordId={relatedRecordId}
           />
@@ -261,8 +303,8 @@ export default function CheckList() {
           <Grid item xs={12}>
             <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
               <div className="button-grp">
-              <Button size="small" variant="contained" disabled > Complete Checklist </Button>
-              <Button size="small" variant="outlined" className="checklist-button"> Cancel Checklist </Button>
+              <Button size="small" variant="contained" disabled={!buttonEnable}  onClick={completeCheckList}> Complete Checklist </Button>
+              <Button size="small" variant="outlined" className="checklist-button" onClick={cancelCheckList}> Cancel Checklist </Button>
               </div>
             </Paper>
             <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -292,7 +334,7 @@ export default function CheckList() {
                                 <TableCell key={row.displayOrder}>
                                 {  row["taskAgentVerified"] === false ?
                                  (<><Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId)}>Add</Button>|
-                                 <Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId)}>Verify</Button></>)
+                                 <Button variant="text" onClick={() => verifyCheckListItem(row["contractCheckListId"])}>Verify</Button></>)
                                  :(<Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId, row.relatedRecordId)}>View  </Button>)}
                                 </TableCell>
                               )
@@ -325,7 +367,6 @@ export default function CheckList() {
             type={type}
             open={openCheckListDialog}
             handleClose={closeCheckListDialog}
-            handleSubmit={saveCheckList}
             contractCheckListId={currentSelectedRowId}
             relatedRecordId={relatedRecordId}
           />
@@ -333,5 +374,4 @@ export default function CheckList() {
       </>
       )
      }
-  }
 }
