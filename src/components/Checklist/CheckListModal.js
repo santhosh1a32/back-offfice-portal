@@ -22,6 +22,7 @@ import enLocale from "i18n-iso-countries/langs/en.json"
 import MileageCaptureModal from "./MileageCaptureModal";
 import VehicleAllocationModal from './VehicleAllocationModal';
 import DrivingLicenseModal from "./DrivingLicenseModal";
+import dayjs from "dayjs";
 
 countries.registerLocale(enLocale);
 const countriesObj = countries.getNames("en", { select: "official" });
@@ -43,7 +44,7 @@ export default function CheckListModal({
   const [searchParams] = useSearchParams();
   const [formValues, setFormValues] = useState(CHECKLIST.addressDetails[0].homeAddress);
   const [billingAddrformValues, setbillingAddrFormValues] = useState(CHECKLIST.addressDetails[0].billingAddress);
-  const [pickupAddrValues, setpickupAddrValues] = useState();
+  const [pickupAddrValues, setpickupAddrValues] = useState(CHECKLIST.result);
   const [checked, setChecked] = useState(false);
   const [vehicleDetails, setVehicleDetails] = React.useState();
   const [mileageDetails, setMileageDetails] = React.useState();
@@ -128,7 +129,7 @@ export default function CheckListModal({
     })
   }
 
-  const updateChecklistRequest = (obj, status=null) => {
+  const updateChecklistRequest = (obj, status = null) => {
     const tempObj = {
       ...obj,
       contractId: searchParams.get("contractId"),
@@ -156,6 +157,40 @@ export default function CheckListModal({
       taskStatus: 'Verified',
       jsonData: {
         drivingLicenseDetails: drivingLicenseDetails
+      }
+    })
+  }
+
+  const updateAddress = (formValues, billingAddrformValues) => {
+    updateChecklistRequest({
+      taskStatus: 'Verified',
+      jsonData: {
+        addressDetails: [{
+          homeAddress: formValues,
+          billingAddress: billingAddrformValues
+        }]
+      }
+    })
+  }
+
+  const updateDateAndPickUpAddress = (e, dateName) => {
+    console.log(e);
+    const obj = {...pickupAddrValues};
+    if(dateName) {
+      obj.pickupDetails.pickupDate = e;
+    }else if(e.target.name === 'pickupTime') {
+      obj.pickupDetails.pickupTime = e.target.value;
+    }else {
+      obj.pickupAddress[e.target.name] = e.target.value;
+    }
+    setpickupAddrValues(obj);
+  }
+
+  const submitPickuPAddress = () => {
+    updateChecklistRequest({
+      taskStatus: 'Verified',
+      jsonData: {
+        ...pickupAddrValues
       }
     })
   }
@@ -204,7 +239,31 @@ export default function CheckListModal({
           }
         })
       }
-
+      if (type === 'Address') {
+        let reqObj = {
+          ...obj,
+          contractCheckListId
+        }
+        getDataWithParam('BackOfficePortalCtrl', 'getHomeBillingAddress', JSON.stringify(reqObj)).then(result => {
+          console.log(result);
+          if (result && result.addressDetails && result.addressDetails.length) {
+            setFormValues(result.addressDetails[0].homeAddress);
+            setbillingAddrFormValues(result.addressDetails[0].billingAddress);
+          }
+        })
+      }
+      if (type === 'Date Time;Address') {
+        let reqObj = {
+          ...obj,
+          contractCheckListId
+        }
+        getDataWithParam('BackOfficePortalCtrl', 'getPickupDetails', JSON.stringify(reqObj)).then(result => {
+          console.log(result);
+          if (result) {
+            setpickupAddrValues(result);
+          }
+        })
+      }
     }
   }, [])
 
@@ -313,7 +372,7 @@ export default function CheckListModal({
           </form>
         </DialogContent>
         <DialogActions className="confirm-btn">
-          <Button onClick={handleSubmit(formValues, billingAddrformValues)}>Submit</Button>
+          <Button onClick={() => updateAddress(formValues, billingAddrformValues)}>Submit</Button>
         </DialogActions>
       </Dialog>
     );
@@ -337,12 +396,12 @@ export default function CheckListModal({
           <form>
             <DialogContentText className="header-text"> Pickup Address </DialogContentText>
             <div className="pickup">
-              <CustomDatePicker className="pickup-date" label="Pickup Date" disablePast={true} />
-              <TextField id="standard-city-input" name="pickupTime" label="Pickup Time" type="text" variant="standard" value={"9.00"} onChange={handleInputChange} />
+              <CustomDatePicker className="pickup-date" label="Pickup Date" value={dayjs(pickupAddrValues.pickupDetails.pickupDate)} disablePast={true} onChangeHandler={(val)=>updateDateAndPickUpAddress(val,'pickupDate')}/>
+              <TextField id="standard-pickup-time" name="pickupTime" label="Pickup Time" type="text" variant="standard" value={pickupAddrValues.pickupDetails.pickupTime} onChange={updateDateAndPickUpAddress} />
             </div>
             <FormControl sx={{ m: 2 }} variant="standard" className="select-country">
               <InputLabel id="demo-simple-select-label">Country</InputLabel>
-              <Select id="outlined-select-country" label="Country" name="countryIsoCode" value={"IN"} onChange={handleInputChange}>
+              <Select id="outlined-select-country" label="Country" name="countryIsoCode" value={pickupAddrValues.pickupAddress.countryIsoCode} onChange={updateDateAndPickUpAddress}>
                 {countriesArr.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
                     {option.label}
@@ -350,15 +409,15 @@ export default function CheckListModal({
                 ))}
               </Select>
             </FormControl>
-            <TextField id="standard-city-input" name="city" label="City" type="text" variant="standard" value={"Bangalore"} onChange={handleInputChange} />
-            <TextField id="standard-address-input" name="addressLine1" label="Address" className="input-text" type="text" variant="standard" value={formValues.addressLine1} onChange={handleInputChange} />
-            <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" value={formValues.state} onChange={handleInputChange} />
-            <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" className="input-text" type="text" variant="standard" value={formValues.addressLine2} onChange={handleInputChange} />
-            <TextField id="standard-pincode-input" name="pincode" label="PinCode" type="number" variant="standard" value={formValues.postalCode} onChange={handleInputChange} />
+            <TextField id="standard-city-input" name="city" label="City" type="text" variant="standard" value={pickupAddrValues.pickupAddress.city} onChange={updateDateAndPickUpAddress} />
+            <TextField id="standard-address-input" name="addressLine1" label="Address" className="input-text" type="text" variant="standard" value={pickupAddrValues.pickupAddress.addressLine1} onChange={updateDateAndPickUpAddress} />
+            <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" value={pickupAddrValues.pickupAddress.state} onChange={updateDateAndPickUpAddress} />
+            <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" className="input-text" type="text" variant="standard" value={pickupAddrValues.pickupAddress.addressLine2} onChange={updateDateAndPickUpAddress} />
+            <TextField id="standard-pincode-input" name="postalCode" label="PinCode" type="number" variant="standard" value={pickupAddrValues.pickupAddress.postalCode} onChange={updateDateAndPickUpAddress} />
           </form>
         </DialogContent>
         <DialogActions className="confirm-btn">
-          <Button>Submit</Button>
+          <Button onClick={submitPickuPAddress}>Submit</Button>
         </DialogActions>
       </Dialog>
     )
