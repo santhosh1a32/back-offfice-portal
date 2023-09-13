@@ -10,6 +10,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Checkbox from "@mui/material/Checkbox";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import "./CheckList.scss";
 import CheckListModal from "./CheckListModal";
 import { CHECKLIST } from "./checklistMockData";
@@ -45,6 +47,20 @@ export default function CheckList() {
   const [currentSelectedRowId, setSelectedRow] = React.useState('');
   const [relatedRecordId, setRelatedRecordId] = React.useState();
   const [buttonEnable, setButtonEnable] = useState(false);
+  const [snackBarState, setSnackBarState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'right',
+  });
+
+    const { vertical, horizontal, open } = snackBarState;
+    const handleClick = () => {
+      setSnackBarState({...snackBarState, open: true });
+    };
+
+    const handleClose = () => {
+      setSnackBarState({ ...snackBarState, open: false });
+    };
 
     const openContract = () =>{
       navigate({ pathname:"/details", search:createSearchParams({ contractId:"a1A5i000000rrcS" }).toString()})
@@ -116,10 +132,12 @@ export default function CheckList() {
         // relatedRecordId:,
         taskStatus:"Verified",
        }
+
       if (window['BackOfficePortalCtrl']) {
           getDataWithParam('BackOfficePortalCtrl', 'updateChecklistRequest', JSON.stringify(obj)).then(result => {
             if (result && result.status === 'Success') {
               console.log("success");
+			  handleClick();
           } else {
               console.log('error')
           }
@@ -143,6 +161,13 @@ export default function CheckList() {
       <>
         <Grid container spacing={3}>
           <SectionWithTitle title={"Pickup Checklist"}></SectionWithTitle>
+          <Snackbar
+            anchorOrigin={{ vertical, horizontal }}
+            open={open}
+            onClose={handleClose}
+            message="The CheckList Item is Verified!"
+            key={vertical + horizontal}
+          />
           <Grid item xs={12}>
             <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
               <div className="button-grp">
@@ -221,6 +246,13 @@ export default function CheckList() {
         <>
         <Grid container spacing={3}>
           <SectionWithTitle title={"Delivery Checklist"}></SectionWithTitle>
+          <Snackbar
+            anchorOrigin={{ vertical, horizontal }}
+            open={open}
+            onClose={handleClose}
+            message="The CheckList Item is Verified!"
+            key={vertical + horizontal}
+          />
           <Grid item xs={12}>
             <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
               <div className="button-grp">
@@ -300,6 +332,13 @@ export default function CheckList() {
         <>
         <Grid container spacing={3}>
           <SectionWithTitle title={"Collection Checklist"}></SectionWithTitle>
+          <Snackbar
+            anchorOrigin={{ vertical, horizontal }}
+            open={open}
+            onClose={handleClose}
+            message="The CheckList Item is Verified!"
+            key={vertical + horizontal}
+          />
           <Grid item xs={12}>
             <Paper sx={{ width: "100%", overflow: "hidden", minHeight:100 }}>
               <div className="button-grp">
