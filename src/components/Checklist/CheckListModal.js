@@ -121,6 +121,7 @@ export default function CheckListModal({
   }
 
   const updatePickUpAddress = (pickupAddrValues) => {
+    console.log(pickupAddrValues);
     updateChecklistRequest({
       taskStatus: 'Verified',
       jsonData: {
@@ -254,6 +255,7 @@ export default function CheckListModal({
     return (
       <AddressModal
       open={open}
+      contractCheckListId={contractCheckListId}
       handleClose={handleClose}
       handleSubmit={updateAddress}/>
     );
@@ -262,6 +264,7 @@ export default function CheckListModal({
     return (
       <PickupAddressModal
       open={open}
+      contractCheckListId={contractCheckListId}
       handleClose={handleClose}
       handleSubmit={updatePickUpAddress}/>
     )

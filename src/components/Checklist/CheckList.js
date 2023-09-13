@@ -97,7 +97,7 @@ export default function CheckList() {
       let contractChecklistIdList =[];
       checkList.CheckListDetails.map(checkListItem => {
           if(checkListItem.contractCheckListId)
-          contractChecklistIdList.push(JSON.stringify(checkListItem.contractCheckListId));
+          contractChecklistIdList.push(checkListItem.contractCheckListId);
       })
       obj["contractChecklistIdList"] = contractChecklistIdList;
       updateChecklistCompletionStatus(obj)
@@ -108,7 +108,7 @@ export default function CheckList() {
       let contractChecklistIdList =[];
       checkList.CheckListDetails.map(checkListItem => {
           if(checkListItem.taskAgentVerified === true)
-          contractChecklistIdList.push(JSON.stringify(checkListItem.contractCheckListId));
+          contractChecklistIdList.push(checkListItem.contractCheckListId);
       })
       obj["contractChecklistIdList"] = contractChecklistIdList;
       console.log(obj);

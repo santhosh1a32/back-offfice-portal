@@ -45,9 +45,9 @@ const pickupTime = [
   "21:00-22:00"
 ];
 
-export default function PickupAddressModal({open, handleClose, handleSubmit}){
+export default function PickupAddressModal({open, contractCheckListId, handleClose, handleSubmit}){
    const [searchParams] = useSearchParams();
-   const [pickupAddrValues, setpickupAddrValues] = useState(CHECKLIST.result);
+   const [pickupAddrValues, setpickupAddrValues] = useState({});
   
 
    const handleInputChange = (e) => {
@@ -59,23 +59,14 @@ export default function PickupAddressModal({open, handleClose, handleSubmit}){
     });
   };
 
-  // const handlePickupInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setpickupAddrValues({
-  //     ...pickupAddrValues,
-  //     [name]: value,
-  //   });
-  // };
-
   const getCheckListItem = () =>{
-    let obj = { contractId: searchParams.get("contractId"),checkListType:searchParams.get("checkListType"),contractCheckListId:searchParams.get("contractVersionId") }
+    let obj = { contractId: searchParams.get("contractId"),contractVersionId:searchParams.get("contractVersionId"),checkListType:searchParams.get("checkListType"),contractCheckListId:contractCheckListId }
     if (window['BackOfficePortalCtrl']) {
         getDataWithParam('BackOfficePortalCtrl', 'getPickupDetails', JSON.stringify(obj)).then(result => {
           setpickupAddrValues(result);
         })
     }
   }
-
 
   useEffect(() => {
     getCheckListItem();
@@ -102,7 +93,7 @@ export default function PickupAddressModal({open, handleClose, handleSubmit}){
             <CustomDatePicker className="pickup-date" label="Pickup Date" value={dayjs(pickupAddrValues.pickupDetails.pickupDate)} disablePast={false} onChangeHandler={handleInputChange} />  
             <FormControl sx={{ m: 2 }} variant="standard" className="select-pickup">
               <InputLabel id="demo-label">Pickup Time</InputLabel>
-                <Select id="outlined-select-pickuptime" label="PickupTime"  name="PickupTime" defaultValue={pickupAddrValues.pickupDetails.pickupTime} onChange={handleInputChange}>
+                <Select id="outlined-select-pickuptime" label="PickupTime"  name="PickupTime" value={pickupAddrValues.pickupDetails.pickupTime} onChange={handleInputChange}>
                 {pickupTime.map((option) => (
                 <MenuItem key={option} value={option}>
                   {option}
@@ -113,7 +104,7 @@ export default function PickupAddressModal({open, handleClose, handleSubmit}){
             </div>
             <FormControl sx={{ m: 2 }} variant="standard" className="select-country">
               <InputLabel id="demo-simple-select-label">Country</InputLabel>
-                <Select id="outlined-select-country" label="Country"  name="countryIsoCode" defaultValue={pickupAddrValues.pickupAddress.countryIsoCode} onChange={handleInputChange}>
+                <Select id="outlined-select-country" label="Country"  name="countryIsoCode" value={pickupAddrValues.pickupAddress.countryIsoCode} onChange={handleInputChange}>
                 {countriesArr.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
@@ -121,11 +112,11 @@ export default function PickupAddressModal({open, handleClose, handleSubmit}){
               ))}
             </Select>
             </FormControl>
-            <TextField id="standard-city-input" name="city" label="City" type="text" variant="standard" defaultValue={pickupAddrValues.pickupAddress.city} onChange={handleInputChange} /> 
-            <TextField id="standard-address-input" name="addressLine1" label="Address" className="input-text" type="text" variant="standard" defaultValue={pickupAddrValues.pickupAddress.addressLine1} onChange={handleInputChange}/>
-            <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" defaultValue={pickupAddrValues.pickupAddress.state} onChange={handleInputChange}/>      
-            <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" className="input-text" type="text" variant="standard" defaultValue={pickupAddrValues.pickupAddress.addressLine2} onChange={handleInputChange}/>
-            <TextField id="standard-pincode-input" name="pincode" label="PinCode" type="number"  variant="standard"  defaultValue={pickupAddrValues.pickupAddress.postalCode} onChange={handleInputChange}/>
+            <TextField id="standard-city-input" name="city" label="City" type="text" variant="standard" value={pickupAddrValues.pickupAddress.city} onChange={handleInputChange} /> 
+            <TextField id="standard-address-input" name="addressLine1" label="Address" className="input-text" type="text" variant="standard" value={pickupAddrValues.pickupAddress.addressLine1} onChange={handleInputChange}/>
+            <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" value={pickupAddrValues.pickupAddress.state} onChange={handleInputChange}/>      
+            <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" className="input-text" type="text" variant="standard" value={pickupAddrValues.pickupAddress.addressLine2} onChange={handleInputChange}/>
+            <TextField id="standard-pincode-input" name="pincode" label="PinCode" type="number"  variant="standard"  value={pickupAddrValues.pickupAddress.postalCode} onChange={handleInputChange}/>
           </form>
         </DialogContent>
         <DialogActions className="confirm-btn">
