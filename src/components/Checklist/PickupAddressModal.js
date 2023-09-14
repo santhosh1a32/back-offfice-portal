@@ -18,6 +18,9 @@ import enLocale from "i18n-iso-countries/langs/en.json";
 import dayjs from 'dayjs';
 import { CHECKLIST } from "./checklistMockData";
 import { getDataWithParam } from '../../DataService';
+// import {Elements} from '@stripe/react-stripe-js';
+// import {loadStripe} from '@stripe/stripe-js';
+// import {AddressElement} from '@stripe/react-stripe-js';
 
 countries.registerLocale(enLocale);
 const countriesObj = countries.getNames("en",{select:"official"});
@@ -27,6 +30,8 @@ const countriesArr = Object.entries(countriesObj).map(([key,value]) =>{
     value:key
   }
 });
+
+//const stripe = loadStripe('pk_test_51NVvNIF9yHeYvqmoh1W0EknueUAQmDS3HfSvWRltuOeqvuq3BpaLVNwShOibNDZtXfF1el1pj9FgzlmtTJGwWENd00wFhtToEY');
 
 const pickupTime = [
   "08:00-09:00",
@@ -47,16 +52,21 @@ const pickupTime = [
 
 export default function PickupAddressModal({open, contractCheckListId, handleClose, handleSubmit}){
    const [searchParams] = useSearchParams();
-   const [pickupAddrValues, setpickupAddrValues] = useState({});
+   const [pickupAddrValues, setpickupAddrValues] = useState(CHECKLIST.result);
   
 
-   const handleInputChange = (e) => {
+   const handleInputChange = (e,dateName) => {
     console.log(e);
-    const { name, value } =  e.target? e.target:e;
-    setpickupAddrValues({
-    ...pickupAddrValues,
-    [name]: value,
-    });
+    const obj = {...pickupAddrValues};
+    if(dateName === "pickupDate") {
+      obj.pickupDetails.pickupDate = e;
+    }else if(e.target.name === 'pickupTime') {
+      obj.pickupDetails.pickupTime = e.target.value;
+    }else {
+      obj.pickupAddress[e.target.name] = e.target.value;
+    }
+    setpickupAddrValues(obj);
+    console.log(pickupAddrValues);
   };
 
   const getCheckListItem = () =>{
@@ -90,10 +100,10 @@ export default function PickupAddressModal({open, contractCheckListId, handleClo
           <form>
             <DialogContentText className="header-text"> Pickup Address </DialogContentText>
             <div className="pickup">
-            <CustomDatePicker className="pickup-date" label="Pickup Date" value={dayjs(pickupAddrValues.pickupDetails.pickupDate)} disablePast={false} onChangeHandler={handleInputChange} />  
+            <CustomDatePicker className="pickup-date" label="Pickup Date" value={dayjs(pickupAddrValues.pickupDetails.pickupDate)} disablePast={true} onChangeHandler={(val)=>handleInputChange(val,'pickupDate')} />  
             <FormControl sx={{ m: 2 }} variant="standard" className="select-pickup">
               <InputLabel id="demo-label">Pickup Time</InputLabel>
-                <Select id="outlined-select-pickuptime" label="PickupTime"  name="PickupTime" value={pickupAddrValues.pickupDetails.pickupTime} onChange={handleInputChange}>
+                <Select id="outlined-select-pickuptime" label="PickupTime"  name="pickupTime" value={pickupAddrValues.pickupDetails.pickupTime} onChange={handleInputChange}>
                 {pickupTime.map((option) => (
                 <MenuItem key={option} value={option}>
                   {option}
@@ -114,9 +124,12 @@ export default function PickupAddressModal({open, contractCheckListId, handleClo
             </FormControl>
             <TextField id="standard-city-input" name="city" label="City" type="text" variant="standard" value={pickupAddrValues.pickupAddress.city} onChange={handleInputChange} /> 
             <TextField id="standard-address-input" name="addressLine1" label="Address" className="input-text" type="text" variant="standard" value={pickupAddrValues.pickupAddress.addressLine1} onChange={handleInputChange}/>
+            {/* <Elements stripe={stripe}>
+               <AddressElement options={{mode: 'shipping'}} />
+            </Elements> */}
             <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" value={pickupAddrValues.pickupAddress.state} onChange={handleInputChange}/>      
             <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" className="input-text" type="text" variant="standard" value={pickupAddrValues.pickupAddress.addressLine2} onChange={handleInputChange}/>
-            <TextField id="standard-pincode-input" name="pincode" label="PinCode" type="number"  variant="standard"  value={pickupAddrValues.pickupAddress.postalCode} onChange={handleInputChange}/>
+            <TextField id="standard-pincode-input" name="postalCode" label="PinCode" type="number"  variant="standard"  value={pickupAddrValues.pickupAddress.postalCode} onChange={handleInputChange}/>
           </form>
         </DialogContent>
         <DialogActions className="confirm-btn">

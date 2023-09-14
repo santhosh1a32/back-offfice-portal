@@ -86,7 +86,6 @@ export default function CheckList() {
             reqObj.relatedRecordId = relatedRecordId;
           }
           getDataWithParam('BackOfficePortalCtrl', 'returnCheckListDetails', JSON.stringify(reqObj)).then(result => {
-              console.log(result);
               setCheckList(result);
               checkVerified();
           })
@@ -94,10 +93,9 @@ export default function CheckList() {
      }
      const completeCheckList = () => {
       let obj = { "completionStatus" : "Completed" }
-      let contractChecklistIdList =[];
-      checkList.CheckListDetails.map(checkListItem => {
-          if(checkListItem.contractCheckListId)
-          contractChecklistIdList.push(checkListItem.contractCheckListId);
+      let contractChecklistIdList =  checkList.CheckListDetails.map(checkListItem =>{
+        if(checkListItem.contractCheckListId)
+        return checkListItem.contractCheckListId
       })
       obj["contractChecklistIdList"] = contractChecklistIdList;
       updateChecklistCompletionStatus(obj)
@@ -106,10 +104,10 @@ export default function CheckList() {
     const cancelCheckList = () => {
       let obj = { "completionStatus" : "Cancelled" };
       let contractChecklistIdList =[];
-      checkList.CheckListDetails.map(checkListItem => {
-          if(checkListItem.taskAgentVerified === true)
-          contractChecklistIdList.push(checkListItem.contractCheckListId);
-      })
+      for(const checkListItem  of checkList.CheckListDetails){
+        if(checkListItem.taskAgentVerified === true)
+        contractChecklistIdList.push(checkListItem.contractCheckListId);
+      }
       obj["contractChecklistIdList"] = contractChecklistIdList;
       console.log(obj);
       updateChecklistCompletionStatus(obj);

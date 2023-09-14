@@ -175,15 +175,15 @@ export const CHECKLIST = {
   "result": {
     "pickupDetails": {
       "pickupDate": 1685577600000,
-      "pickupTime": ""
+      "pickupTime": "10:00-11:00"
     },
     "pickupAddress": {
-      "addressLine1": "232",
-      "addressLine2": "MG Road",
-      "city": "Bangalore",
-      "countryIsoCode": "DE",
-      "postalCode": "560001",
-      "state": "Karnataka"
+      "addressLine1": "",
+      "addressLine2": "",
+      "city": "",
+      "countryIsoCode": "",
+      "postalCode": "",
+      "state": ""
     }
   }
 }
