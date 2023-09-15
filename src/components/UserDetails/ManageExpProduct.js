@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar} from '@mui/x-data-grid';
 
 const CustomChip = () => {
     return (
@@ -110,6 +110,15 @@ export default function ManageExpProduct({
         checkboxSelection
         rowSelectionModel={newSelection}
         onRowSelectionModelChange={(rowSelectionModel) => {setSelection(rowSelectionModel)}}
+        disableColumnFilter
+        disableColumnSelector
+        disableDensitySelector
+        slots={{ toolbar: GridToolbar }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter: true,
+          },
+        }}
       />
     </div>
   );

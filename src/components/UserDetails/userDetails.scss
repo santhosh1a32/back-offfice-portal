@@ -31,3 +31,12 @@
 .custom-date-picker {
     width: 100%;
 }
+
+#standard-basic-search{
+    float:right;
+}
+.search-field{
+    .MuiFormControl-root.MuiTextField-root{
+        float: right;
+    }
+}

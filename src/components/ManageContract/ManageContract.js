@@ -136,6 +136,8 @@ const ManageContract = ({ contractVersionDetails = [] }) => {
                         category: 'Base Product',
                         oldValue: manageContractData.selectedProduct.productName,
                         newValue: item.productName,
+                        oldPrice: manageContractData.selectedProduct.netAmount,
+                        newPrice: item.netAmount,
                         effectiveFrom: ''
                     }
                     if (tempModalData.length) {
@@ -166,6 +168,8 @@ const ManageContract = ({ contractVersionDetails = [] }) => {
                         category: 'Base Plan',
                         oldValue: manageContractData.selectedPlan[0].planName,
                         newValue: item.planName,
+                        oldPrice: manageContractData.selectedPlan[0].netAmount,
+                        newPrice: item.netAmount,
                         effectiveFrom: 'Today'
                     }
                     if (tempModalData.length) {
@@ -195,7 +199,10 @@ const ManageContract = ({ contractVersionDetails = [] }) => {
             const selectedOptions = [];
             availableExpProducts.forEach(item => {
                 if(data.includes(item.experienceProductId)){
-                    selectedOptions.push(item.experienceProductName);
+                    let experienceProduct = {}
+                    experienceProduct["experienceProductName"] = item.experienceProductName;
+                    experienceProduct["experienceProductPrice"] = item.netAmount;
+                    selectedOptions.push(experienceProduct);
                 }
             })
             // let obj = {
@@ -229,7 +236,10 @@ const ManageContract = ({ contractVersionDetails = [] }) => {
                 let obj = {
                     category: i === 0 ? 'Experience Product' : '',
                     oldValue: manageContractData.selectedExpProduct[i] && manageContractData.selectedExpProduct[i].experienceProductName ? manageContractData.selectedExpProduct[i].experienceProductName : '',
-                    newValue: selectedOptions[i] ? selectedOptions[i] : '',
+                    newValue: selectedOptions[i] ? selectedOptions[i].experienceProductName : '',
+                    newPrice: selectedOptions[i] ? selectedOptions[i].experienceProductPrice : '',
+                    oldPrice: manageContractData.selectedExpProduct[i] && manageContractData.selectedExpProduct[i].experienceProductName ? 
+                               manageContractData.selectedExpProduct[i].netAmount :'',
                     effectiveFrom: i === 0 ? 'Today' : ''
                 }
                 tempArr.push(obj);

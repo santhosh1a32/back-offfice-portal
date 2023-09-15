@@ -13,6 +13,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import CustomDatePicker from '../common/CustomDatePicker';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 // const rows = [
 //     {
@@ -51,6 +53,7 @@ export default function ConfirmContractModal({ open, handleClose, newData = [], 
                                 <TableCell>Category</TableCell>
                                 <TableCell>Old Value</TableCell>
                                 <TableCell>New Value</TableCell>
+                                <TableCell>New Price</TableCell>
                                 <TableCell>Effective From</TableCell>
                             </TableRow>
                         </TableHead>
@@ -65,6 +68,8 @@ export default function ConfirmContractModal({ open, handleClose, newData = [], 
                                     </TableCell>
                                     <TableCell>{row.oldValue}</TableCell>
                                     <TableCell>{row.newValue}</TableCell>
+                                    {row.newPrice>row.oldPrice?<TableCell>{row.newPrice} ({row.newPrice-row.oldPrice}<ArrowUpwardIcon/>)</TableCell>
+                                    :<TableCell>{row.newPrice} ({row.oldPrice-row.newPrice}<ArrowDownwardIcon/>)</TableCell>}
                                     <TableCell>{
                                         row.category === 'Base Product' ?
                                             <CustomDatePicker
