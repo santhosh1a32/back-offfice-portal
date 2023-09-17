@@ -59,7 +59,7 @@ export default function ConfirmContractModal({ open, handleClose, newData = [], 
                         </TableHead>
                         <TableBody>
                             {updatedData.map((row, index) => (
-                                <TableRow
+                                <TableRow id={(row.category === 'Experience Product' || row.category === '')?"exp-row":"row"}
                                     key={row.category + index}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
@@ -68,8 +68,10 @@ export default function ConfirmContractModal({ open, handleClose, newData = [], 
                                     </TableCell>
                                     <TableCell>{row.oldValue}</TableCell>
                                     <TableCell>{row.newValue}</TableCell>
-                                    {row.newPrice>row.oldPrice?<TableCell>{row.newPrice} ({row.newPrice-row.oldPrice}<ArrowUpwardIcon/>)</TableCell>
-                                    :<TableCell>{row.newPrice} ({row.oldPrice-row.newPrice}<ArrowDownwardIcon/>)</TableCell>}
+                                    {row.category !== ''?<TableCell>
+                                        {row.newPrice>row.oldPrice?<TableCell>{row.newPrice} ({row.newPrice-row.oldPrice}<ArrowUpwardIcon/>)</TableCell>:<TableCell>{row.newPrice} ({row.oldPrice-row.newPrice}<ArrowDownwardIcon/>)</TableCell>}
+                                    </TableCell>:''
+                                      }
                                     <TableCell>{
                                         row.category === 'Base Product' ?
                                             <CustomDatePicker
