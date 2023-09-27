@@ -282,7 +282,8 @@ const ManageContract = ({ contractVersionDetails = [] }) => {
             //     }
             // })
         }
-        console.log('temp data here', tempModalData)
+        console.log('temp data here', tempModalData);
+        setDataForModal(tempModalData);
     }
 
     const newSelectionHandler = (data, type) => {
