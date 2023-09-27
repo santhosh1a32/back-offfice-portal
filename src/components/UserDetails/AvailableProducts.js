@@ -30,7 +30,7 @@ export default function AvailableProducts({
     };
     const requestSearch = (e) => {
         setSearched(e.target.value);
-        const filteredRows = availableOptions.filter((row) => {
+        let filteredRows = availableOptions.filter((row) => {
           return row.productName.toLowerCase().includes(searched.toLowerCase());
         });
         setFilteredRows(filteredRows);
@@ -40,7 +40,10 @@ export default function AvailableProducts({
         if(newSelectionId) {
             setSelectedModal(newSelectionId)
         }
-    }, [newSelectionId])
+        if(availableOptions){
+            setFilteredRows(availableOptions)
+        }
+    }, [newSelectionId,availableOptions])
     return (
         <div style={{marginTop: '16px'}}>
             <Title>Available Options</Title>

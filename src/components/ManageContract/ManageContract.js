@@ -20,6 +20,7 @@ const AVAILABLE_PRODUCT_CONFIG = [
         label: 'BP Name',
         fieldName: 'productName'
     },
+
     {
         label: 'Gross Amount',
         fieldName: 'grossAmount'
@@ -128,8 +129,8 @@ const ManageContract = ({ contractVersionDetails = [] }) => {
     const setConfirmModalData = (data, type) => {
         let tempModalData = [...dataForModal];
         console.log('current data', manageContractData);
+    
         if (type === 'BP') {
-            // console.log(availableProducts);
             availableProducts.forEach(item => {
                 if (item.productId === data) {
                     let obj = {
@@ -161,7 +162,6 @@ const ManageContract = ({ contractVersionDetails = [] }) => {
             })
         }
         if (type === 'Plan') {
-            console.log(availablePlans);
             availablePlans.forEach(item => {
                 if (item.planId === data) {
                     let obj = {
@@ -238,12 +238,12 @@ const ManageContract = ({ contractVersionDetails = [] }) => {
                 //     newValStr += tempStr;
                 // }
                 console.log(manageContractData.selectedExpProduct[i]);
-                experienceProductOldPriceTotal = manageContractData.selectedExpProduct[i]?manageContractData.selectedExpProduct[i].netAmount:'';
+                experienceProductOldPriceTotal = manageContractData.selectedExpProduct[i]?experienceProductOldPriceTotal+manageContractData.selectedExpProduct[i].netAmount:'';
                 let obj = {
                     category: i === 0 ? 'Experience Product' : '',
                     oldValue: manageContractData.selectedExpProduct[i] && manageContractData.selectedExpProduct[i].experienceProductName ? manageContractData.selectedExpProduct[i].experienceProductName : '',
                     newValue: selectedOptions[i] ? selectedOptions[i].experienceProductName : '',
-                    newPrice: selectedOptions[i] ? selectedOptions[i].experienceProductPriceTotal: '',
+                    newPrice: experienceProductPriceTotal,
                     oldPrice: manageContractData.selectedExpProduct[i] && manageContractData.selectedExpProduct[i].experienceProductName ? 
                     experienceProductOldPriceTotal :'',
                     effectiveFrom: i === 0 ? 'Today' : ''
@@ -303,6 +303,7 @@ const ManageContract = ({ contractVersionDetails = [] }) => {
 
     const submitChanges = () => {
         console.log('data submitted', newSelection);
+        console.log(dataForModal);
         toggleConfirmModal(true);
     }
 
