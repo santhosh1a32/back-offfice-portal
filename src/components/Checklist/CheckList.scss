@@ -66,3 +66,9 @@
 .width-80 {
     width: 90% !important;
 }
+
+.MuiDataGrid-toolbarContainer{
+    .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary{
+        display: none;
+    }
+}
