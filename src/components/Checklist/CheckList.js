@@ -47,6 +47,7 @@ export default function CheckList() {
   const [currentSelectedRowId, setSelectedRow] = React.useState('');
   const [relatedRecordId, setRelatedRecordId] = React.useState();
   const [buttonEnable, setButtonEnable] = useState(false);
+  const [uuidData, setUUIDData] = React.useState({});
   const [snackBarState, setSnackBarState] = React.useState({
     open: false,
     vertical: 'top',
@@ -71,11 +72,17 @@ export default function CheckList() {
         getCheckListData();
     };
 
-    const showCheckListModal = (type, contractCheckListId, relatedRecordId=null) => {
+    const showCheckListModal = (type, contractCheckListId, relatedRecordId=null, row) => {
             setRelatedRecordId(relatedRecordId)
             setSelectedRow(contractCheckListId)
             setTypeData(type)
             setCheckListDialog(true);
+            const obj = {
+              checkListUUID: row.checkListUUID || null,
+              contractUUID: row.contractUUID || null,
+              customerUUID: row.customerUUID || null
+            }
+            setUUIDData(obj);
         };
           
     const getCheckListData = () => {
@@ -199,9 +206,9 @@ export default function CheckList() {
                               return (
                                 <TableCell key={row.displayOrder}>
                                 { row["taskAgentVerified"] === false ?
-                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId)}>Add</Button>|
+                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId, null, row)}>Add</Button>|
                                  <Button variant="text" onClick={() => verifyCheckListItem(row["contractCheckListId"])}>Verify</Button></>)
-                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId, row.relatedRecordId)}>View  </Button>)}
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId, row.relatedRecordId, row)}>View  </Button>)}
                                 </TableCell>
                               )
                             }
@@ -235,6 +242,7 @@ export default function CheckList() {
             handleClose={closeCheckListDialog}
             contractCheckListId={currentSelectedRowId}
             relatedRecordId={relatedRecordId}
+            uuidData={uuidData}
           />
         )}
       </>
@@ -284,9 +292,9 @@ export default function CheckList() {
                               return (
                                 <TableCell key={row.displayOrder}>
                                 { row["taskAgentVerified"] === false ?
-                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name, row.contractCheckListId)}>Add</Button>|
+                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name, row.contractCheckListId, null, row)}>Add</Button>|
                                  <Button variant="text" onClick={() => verifyCheckListItem(row["contractCheckListId"])}>Verify</Button></>)
-                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name, row.contractCheckListId, row.relatedRecordId)}>View  </Button>)}
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType || row.name, row.contractCheckListId, row.relatedRecordId, row)}>View  </Button>)}
                                 </TableCell>
                               )
                             }
@@ -320,6 +328,7 @@ export default function CheckList() {
             handleClose={closeCheckListDialog}
             contractCheckListId={currentSelectedRowId}
             relatedRecordId={relatedRecordId}
+            uuidData={uuidData}
           />
         )}
       </>
@@ -370,9 +379,9 @@ export default function CheckList() {
                               return (
                                 <TableCell key={row.displayOrder}>
                                 {  row["taskAgentVerified"] === false ?
-                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId)}>Add</Button>|
+                                 (<><Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId, null, row)}>Add</Button>|
                                  <Button variant="text" onClick={() => verifyCheckListItem(row["contractCheckListId"])}>Verify</Button></>)
-                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId, row.relatedRecordId)}>View  </Button>)}
+                                 :(<Button variant="text" onClick={() => showCheckListModal(row.inputType, row.contractCheckListId, row.relatedRecordId, row)}>View  </Button>)}
                                 </TableCell>
                               )
                             }
@@ -406,6 +415,7 @@ export default function CheckList() {
             handleClose={closeCheckListDialog}
             contractCheckListId={currentSelectedRowId}
             relatedRecordId={relatedRecordId}
+            uuidData={uuidData}
           />
         )}
       </>

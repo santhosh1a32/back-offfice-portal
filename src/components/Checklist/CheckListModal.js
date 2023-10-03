@@ -12,7 +12,8 @@ export default function CheckListModal({
   relatedRecordId,
   type,
   open,
-  handleClose
+  handleClose,
+  uuidData
 }) {
   const [searchParams] = useSearchParams();
   const [vehicleDetails, setVehicleDetails] = React.useState();
@@ -27,7 +28,8 @@ export default function CheckListModal({
       contractVersionId: searchParams.get("contractVersionId"),
       checkListType: searchParams.get("checkListType"),
       contractCheckListId,
-      vehicleId: id
+      vehicleId: id,
+      ...uuidData
     }
     saveDataWithParam('BackOfficePortalCtrl', 'confirmVehicleAllocation', JSON.stringify(reqObj)).then(result => {
       console.log(result);
@@ -43,6 +45,7 @@ export default function CheckListModal({
       contractVersionId: searchParams.get("contractVersionId"),
       checkListType: searchParams.get("checkListType"),
       contractCheckListId,
+      ...uuidData
     }
     if (relatedRecordId) {
       reqObj.relatedRecordId = relatedRecordId;
@@ -83,6 +86,7 @@ export default function CheckListModal({
       contractVersionId: searchParams.get("contractVersionId"),
       checkListType: searchParams.get("checkListType"),
       contractCheckListId,
+      ...uuidData
     }
     if (relatedRecordId) {
       tempObj.relatedRecordId = relatedRecordId;
