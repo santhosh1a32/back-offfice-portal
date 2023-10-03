@@ -55,7 +55,7 @@ export default function PickupAddressModal({open, contractCheckListId, handleClo
    const [pickupAddrValues, setpickupAddrValues] = useState(CHECKLIST.result);
     // const options = {  autocomplete:{
     //   mode:'google_maps_api',
-    //   apiKey:'AIzaSyBMOR-ps0vgfG16DoizCpDkxBTRFnpZWXE'
+    //   apiKey:'apikey'
     // } };
 
    const handleInputChange = (e,dateName) => {
