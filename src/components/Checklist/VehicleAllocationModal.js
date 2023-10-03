@@ -96,6 +96,7 @@ function stableSort(array, comparator) {
 export default function VehicleAllocationModal({ open, handleClose, vehicleDetails= [], handleSubmit }) {
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [availableOptions, setAvailableOptions] = React.useState(rows);
+    const [filteredOptions, setFilteredOptions] = React.useState(rows);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('name');
     const [searched, setSearched] = React.useState("");
@@ -115,29 +116,20 @@ export default function VehicleAllocationModal({ open, handleClose, vehicleDetai
 
     const visibleRows = React.useMemo(
         () =>
-          stableSort(availableOptions, getComparator(order, orderBy)),
-        [order, orderBy,availableOptions],
+          stableSort(filteredOptions, getComparator(order, orderBy)),
+        [order, orderBy,filteredOptions],
       );
     
     const requestSearch = (e) => {
         setSearched(e.target.value);
-        console.log(searched);
-       console.log(rows);
-        if(e.target.value === ""){
-            setAvailableOptions(rows);
-        }
-        else{
         let filteredRows = availableOptions.filter((row) => {
             return row.name.toLowerCase().includes(e.target.value.toLowerCase());
         });
-      //  console.log(filteredRows);
-        setAvailableOptions(filteredRows);
-        }
+        setFilteredOptions(filteredRows);
     };
 
 
     React.useEffect(() => {
-        let count = 0;
         if (window['BackOfficePortalCtrl']) {
             setAvailableOptions(vehicleDetails);
             vehicleDetails.forEach(item => {
@@ -146,8 +138,6 @@ export default function VehicleAllocationModal({ open, handleClose, vehicleDetai
                 }
             })
         }else {
-            count++;
-            console.log("..........available options........."+count);
             setAvailableOptions(rows)
         }
     },[])

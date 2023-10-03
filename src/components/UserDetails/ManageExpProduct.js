@@ -82,6 +82,7 @@ export default function ManageExpProduct({
         // setNewSelection(selection);
         onNewSelection(selection)
     }
+    
     React.useEffect(() => {
       setNewSelection(newSelectionData);
     }, [newSelectionData])
@@ -95,18 +96,28 @@ export default function ManageExpProduct({
           setNewSelection(tempSelection);
         }
     },[])
-    const columns = getColumns(currentSelection)
+    const data = getColumns(currentSelection);
+
+    const columns = React.useMemo(
+      () =>
+        data.map((col) =>
+           col = {...col,sortable:false,filterable: false }
+        ),
+      [data]
+    );
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ width: '100%' }}>
       <DataGrid
         rows={availableOptions}
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 100},
           },
         }}
         pageSizeOptions={[5, 10]}
+        hideFooterPagination={true} 
+        disableColumnMenu
         checkboxSelection
         rowSelectionModel={newSelection}
         onRowSelectionModelChange={(rowSelectionModel) => {setSelection(rowSelectionModel)}}
