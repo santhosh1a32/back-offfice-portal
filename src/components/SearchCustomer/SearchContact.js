@@ -58,7 +58,7 @@ const SearchCustomer = () => {
   return (
     <div>
       <header>
-        <div style={{ width: 400 }}>
+        <div className="search-input" style={{ width: 400 }}>
           <ReactSearchAutocomplete
             items={items}
             onSearch={handleOnSearch}

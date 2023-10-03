@@ -31,7 +31,7 @@ const countriesArr = Object.entries(countriesObj).map(([key,value]) =>{
   }
 });
 
-//const stripe = loadStripe('pk_test_51NVvNIF9yHeYvqmoh1W0EknueUAQmDS3HfSvWRltuOeqvuq3BpaLVNwShOibNDZtXfF1el1pj9FgzlmtTJGwWENd00wFhtToEY');
+// const stripe = loadStripe('pk_test_51NVvNIF9yHeYvqmoh1W0EknueUAQmDS3HfSvWRltuOeqvuq3BpaLVNwShOibNDZtXfF1el1pj9FgzlmtTJGwWENd00wFhtToEY');
 
 const pickupTime = [
   "08:00-09:00",
@@ -53,7 +53,10 @@ const pickupTime = [
 export default function PickupAddressModal({open, contractCheckListId, handleClose, handleSubmit}){
    const [searchParams] = useSearchParams();
    const [pickupAddrValues, setpickupAddrValues] = useState(CHECKLIST.result);
-  
+    // const options = {  autocomplete:{
+    //   mode:'google_maps_api',
+    //   apiKey:'AIzaSyBMOR-ps0vgfG16DoizCpDkxBTRFnpZWXE'
+    // } };
 
    const handleInputChange = (e,dateName) => {
     console.log(e);
@@ -125,14 +128,22 @@ export default function PickupAddressModal({open, contractCheckListId, handleClo
             <TextField id="standard-city-input" name="city" label="City" type="text" variant="standard" value={pickupAddrValues.pickupAddress.city} onChange={handleInputChange} /> 
             <TextField id="standard-address-input" name="addressLine1" label="Address" className="input-text" type="text" variant="standard" value={pickupAddrValues.pickupAddress.addressLine1} onChange={handleInputChange}/>
             {/* <Elements stripe={stripe}>
-               <AddressElement options={{mode: 'shipping'}} />
+             <AddressElement options={{
+              mode: "shipping",
+              autocomplete: {
+                mode: "google_maps_api",
+                apiKey: "AIzaSyBMOR-ps0vgfG16DoizCpDkxBTRFnpZWXE",
+              },
+            }} /> 
             </Elements> */}
             <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" value={pickupAddrValues.pickupAddress.state} onChange={handleInputChange}/>      
             <TextField id="standard-address2-input" name="addressLine2" label="Address Line 2" className="input-text" type="text" variant="standard" value={pickupAddrValues.pickupAddress.addressLine2} onChange={handleInputChange}/>
             <TextField id="standard-pincode-input" name="postalCode" label="PinCode" type="number"  variant="standard"  value={pickupAddrValues.pickupAddress.postalCode} onChange={handleInputChange}/>
           </form>
         </DialogContent>
-        <DialogActions className="confirm-btn">
+        {/* <DialogActions className="confirm-btn"> */}
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={()=>handleSubmit(pickupAddrValues)}>Submit</Button>
         </DialogActions>
       </Dialog>

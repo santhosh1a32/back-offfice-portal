@@ -27,7 +27,7 @@ export default function Products({ bpDetails, title='Base Product' }) {
   return (
     <React.Fragment>
       <Title>{title}</Title>
-      <Table size="small">
+      <Table size="small" className='bck-office-table'>
         <TableHead>
           <TableRow>
             <TableCell>BP Id</TableCell>

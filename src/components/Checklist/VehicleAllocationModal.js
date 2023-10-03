@@ -7,6 +7,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import { visuallyHidden } from '@mui/utils';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Radio, RadioGroup, FormControlLabel, TableSortLabel } from '@mui/material';
 
 const rows = [
@@ -95,6 +98,7 @@ export default function VehicleAllocationModal({ open, handleClose, vehicleDetai
     const [availableOptions, setAvailableOptions] = React.useState(rows);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('name');
+    const [searched, setSearched] = React.useState("");
 
     const handleRadioChange = (event) => {
         setSelectedItem(event.target.value);
@@ -112,11 +116,28 @@ export default function VehicleAllocationModal({ open, handleClose, vehicleDetai
     const visibleRows = React.useMemo(
         () =>
           stableSort(availableOptions, getComparator(order, orderBy)),
-        [order, orderBy],
+        [order, orderBy,availableOptions],
       );
     
+    const requestSearch = (e) => {
+        setSearched(e.target.value);
+        console.log(searched);
+       console.log(rows);
+        if(e.target.value === ""){
+            setAvailableOptions(rows);
+        }
+        else{
+        let filteredRows = availableOptions.filter((row) => {
+            return row.name.toLowerCase().includes(e.target.value.toLowerCase());
+        });
+      //  console.log(filteredRows);
+        setAvailableOptions(filteredRows);
+        }
+    };
+
 
     React.useEffect(() => {
+        let count = 0;
         if (window['BackOfficePortalCtrl']) {
             setAvailableOptions(vehicleDetails);
             vehicleDetails.forEach(item => {
@@ -125,13 +146,17 @@ export default function VehicleAllocationModal({ open, handleClose, vehicleDetai
                 }
             })
         }else {
+            count++;
+            console.log("..........available options........."+count);
             setAvailableOptions(rows)
         }
-    },[vehicleDetails])
+    },[])
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
             <DialogTitle>Vehicle Allocation</DialogTitle>
             <DialogContent>
+            <div className='search-field'><TextField id="standard-basic-search"  InputProps={{ startAdornment: ( <InputAdornment position="start"> <SearchIcon /> </InputAdornment> ), }} variant="standard" 
+             placeholder="Search here" value={searched} onChange={requestSearch}/></div>
                 <TableContainer>
                     <Table>
                         <TableHead>
