@@ -278,14 +278,16 @@ const UserDetails = () => {
                                             {`${contract.contractVersionNumber ? contract.contractVersionNumber : ''} - (${contract.startDate} - ${contract.endDate || ''})`}
                                         </Typography>
                                         {contract.headerStatus && contract.headerStatus !== 'Inactive' && (
-                                            <span className='ml-10'><Chip label={contract.headerStatus} color={contract.headerStatus === 'Upcoming' ? 'warning' : 'success'} /></span>
+                                            <span className='ml-10'>
+                                                <Chip variant="outlined" label={contract.headerStatus} color={contract.headerStatus === 'Upcoming' ? 'warning' : 'success'} className={contract.headerStatus === 'Upcoming' ? 'chip-warning' : 'chip-success'} />
+                                            </span>
                                         )}
                                     </AccordionSummary>
                                     <AccordionDetails>
                                         {/* Product Details */}
                                         {contract.contractVersion_BP && (
                                             <Grid item xs={12}>
-                                                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                                                <Paper  className="contract-details" sx={{ p: 2}}>
                                                     <Products bpDetails={contract.contractVersion_BP} />
                                                 </Paper>
                                             </Grid>
@@ -294,7 +296,7 @@ const UserDetails = () => {
                                         {/* Plan Details */}
                                         {contract.contractVersion_Plan && (
                                             <Grid item xs={12}>
-                                                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                                                <Paper className="contract-details" sx={{ p: 2 }}>
                                                     <Plan planDetails={contract.contractVersion_Plan} />
                                                 </Paper>
                                             </Grid>
@@ -302,7 +304,7 @@ const UserDetails = () => {
                                         {/* Experience Product Details */}
                                         {contract.contractVersion_EP && (
                                             <Grid item xs={12}>
-                                                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                                                <Paper className="contract-details" sx={{ p: 2}}>
                                                     <ExpProduct expDetails={contract.contractVersion_EP} />
                                                 </Paper>
                                             </Grid>

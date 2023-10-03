@@ -11,7 +11,7 @@ import AvailableProducts from '../UserDetails/AvailableProducts';
 import Plan from '../UserDetails/Plan';
 import ManageExpProduct from '../UserDetails/ManageExpProduct';
 import { useSearchParams } from "react-router-dom";
-import { Button } from '@mui/material';
+import { Button, Paper } from '@mui/material';
 import ConfirmContractModal from './ConfirmContractModal';
 import dayjs from 'dayjs';
 
@@ -355,9 +355,10 @@ const ManageContract = ({ contractVersionDetails = [] }) => {
     }, [])
     return (
         <React.Fragment>
-            <div>
+            <Paper>
+            <div className='manage-contract'>
                 <Button size="small" variant="outlined" className="action-btn" onClick={() => submitChanges()} >
-                    <span style={{ marginLeft: '6px' }}>Submit Changes</span>
+                    <span className="button-txt">Submit Changes</span>
                 </Button>
             </div>
             <Box sx={{ width: '100%' }}>
@@ -409,6 +410,7 @@ const ManageContract = ({ contractVersionDetails = [] }) => {
                     handleSubmit={submitManageContract} 
                 />
             )}
+            </Paper>
         </React.Fragment>
     )
 }

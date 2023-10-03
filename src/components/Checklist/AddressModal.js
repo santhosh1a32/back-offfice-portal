@@ -130,7 +130,9 @@ export default function AddressModal({open, contractCheckListId, handleClose, ha
           </div>)}
         </form>
       </DialogContent>
-      <DialogActions className="confirm-btn">
+      {/* <DialogActions className="confirm-btn"> */}
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={()=>handleSubmit(formValues,billingAddrformValues)}>Submit</Button>
       </DialogActions>
     </Dialog>

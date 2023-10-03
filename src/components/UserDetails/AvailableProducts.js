@@ -48,7 +48,7 @@ export default function AvailableProducts({
         <div style={{marginTop: '16px'}}>
             <Title>Available Options</Title>
              {primaryField === 'productId' ?<div className='search-field'><TextField id="standard-basic-search"  InputProps={{ startAdornment: ( <InputAdornment position="start"> <SearchIcon /> </InputAdornment> ), }} variant="standard" 
-             placeholder="Search here" value={searched} onChange={requestSearch} onTouch/></div>
+             placeholder="Search here" value={searched} onChange={requestSearch}/></div>
                :''}
              {/* <SearchBar availableOptions={availableOptions} handleOnSelect={filterResults}/> */}
             <Table size="small">

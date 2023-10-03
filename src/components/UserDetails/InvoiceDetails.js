@@ -22,7 +22,7 @@ const columns = [
   {
     field: "billingPeriod",
     label: "Billing Period",
-    minWidth: 170,
+    minWidth: 150,
     align: "right",
     format: (params) =>
       `(${new Date(params.periodStartDate).toLocaleDateString()} - ${new Date(
@@ -32,20 +32,20 @@ const columns = [
   {
     field: "amountPaid",
     label: "Amount",
-    minWidth: 100,
+    minWidth: 150,
     align: "right",
     format: (params) => `${params.amountPaid} ${params.currency}`,
   },
   {
     field: "status",
     label: "Status",
-    minWidth: 100,
+    minWidth: 150,
     align: "right",
   },
   {
     field: "last4CardNumber",
     label: "Card Detail",
-    minWidth: 100,
+    minWidth: 150,
     align: "right",
     format: (params) =>
       `Card ending in ${params.paymentDetails.last4CardNumber}`,
@@ -53,7 +53,7 @@ const columns = [
   {
     field: "invoiceUrl",
     label: "",
-    minWidth: 170,
+    minWidth: 150,
     align: "right",
     format: (params) => (
       <a href={params.invoiceUrl} download="PDF-document" target="_blank" rel="noopener noreferrer" >
@@ -72,14 +72,13 @@ export default function InvoiceDetails({ invoiceDetails }) {
       <Grid item xs={12} className="section">
         <SectionWithTitle title={"Invoice Details"}></SectionWithTitle>
         <Paper sx={{ width: "100%", overflow: "hidden", marginTop: "10px" }}>
-          <TableContainer sx={{ maxHeight: 300 }}>
+          <TableContainer sx={{ maxHeight: 300 }} className="bck-office-table">
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
                 <TableRow>
                   {columns.map((column) => (
                     <TableCell
                       key={column.field}
-                      align={column.align}
                       style={{ minWidth: column.minWidth }}
                     >
                       {column.label}

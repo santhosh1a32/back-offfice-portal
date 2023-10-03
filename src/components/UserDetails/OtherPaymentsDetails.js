@@ -14,7 +14,7 @@ import { CONTRACT_DETAILS } from "./mockData";
 
 
 const columns = [
-  { field: "invoiceNumber", label: "Invoice Number", minWidth: 170 },
+  { field: "invoiceNumber", label: "Invoice Number", minWidth: 100 },
   { field: "invoiceDate", label: "Invoice Date", minWidth: 100 },
   {
     field: "billingReason",
@@ -41,14 +41,13 @@ export default function OtherPaymentsDetails({otherPayments}){
         <Grid item xs={12} className="section">
           <SectionWithTitle title={"Other Payment Details"}></SectionWithTitle>
           <Paper sx={{ width: "100%", overflow: "hidden", marginTop: "10px" }}>
-            <TableContainer sx={{ maxHeight: 300 }}>
+            <TableContainer sx={{ maxHeight: 300 }} className="bck-office-table">
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
                   <TableRow>
                     {columns.map((column) => (
                       <TableCell
                         key={column.field}
-                        align={column.align}
                         style={{ minWidth: column.minWidth }}
                       >
                         {column.label}

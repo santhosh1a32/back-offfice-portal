@@ -9,6 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 //import TablePagination from '@mui/material/TablePagination';
 import TableRow from "@mui/material/TableRow";
+import Chip from '@mui/material/Chip';
 import SectionWithTitle from "../common/SectionWithTitle";
 import './DriverDetails.scss';
 import { DRIVER_DETAILS } from './driverMockData';
@@ -23,15 +24,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-/**<Chip
-        color="success"
-        label={
-          <span>
-            <b>Status:</b> Completed
-          </span>
-        }
-        icon={<Check fontSize="small" />} */
-
 const columns = [
   { id: "firstName", label: "First Name", minWidth: 150 },
   { id: "lastName", label: "Last Name", minWidth: 150 },
@@ -40,14 +32,13 @@ const columns = [
     id: "startDate",
     label: "Start Date",
     minWidth: 170,
-    align: "right",
-    // format: (value) => value.toLocaleString("en-US"),
+    align: "left",
   },
   {
     id: "endDate",
     label: "End Date",
     minWidth: 170,
-    align: "right",
+    align: "left",
     format: (value) => {
       new Date(value).toLocaleDateString();
       console.log(new Date(value).toLocaleDateString());
@@ -57,14 +48,13 @@ const columns = [
     id: "licenseCheck",
     label: "License Check",
     minWidth: 170,
-    align: "right",
+    align: "left",
   },
   {
     id: "status",
     label: "Status",
     minWidth: 170,
     align: "center",
-    // format: (value) => value.toFixed(2),
   },
 ];
 
@@ -91,19 +81,11 @@ export default function DriverDetails() {
         <SectionWithTitle title={"Driver Details"}></SectionWithTitle>
         <Paper sx={{ width: "100%", overflow: "hidden", marginTop: "10px" }}>
           <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
+            <Table stickyHeader aria-label="sticky table" className='bck-office-table'>
               <TableHead>
                 <TableRow>
                   {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{
-                        minWidth: column.minWidth,
-                        fontSize: 14,
-                        fontWeight: 600,
-                      }}
-                    >
+                    <TableCell align={column.align}>
                       {column.label}
                     </TableCell>
                   ))}
@@ -118,7 +100,17 @@ export default function DriverDetails() {
                       tabIndex={-1}
                       key={row.driverId}
                     >
-                      {columns.map((column) => {
+                      <TableCell>{row.firstName}</TableCell>
+                      <TableCell>{row.lastName}</TableCell>
+                      <TableCell>{row.type}</TableCell>
+                      <TableCell align="left">{row.startDate}</TableCell>
+                      <TableCell align="left">{row.endDate}</TableCell>
+                      <TableCell align="left">{row.licenseCheck}</TableCell>
+                      <TableCell align="center">
+                      <Chip variant="outlined" label={row.status} color={row.status === 'Pending' ? 'warning' : 'success'} 
+                      className={row.status === 'Pending' ? 'chip-warning' : 'chip-success'} />
+                      </TableCell>
+                      {/* {columns.map((column) => {
                         const value = row[column.id];
                         return (
                           <TableCell
@@ -131,7 +123,7 @@ export default function DriverDetails() {
                               : value}
                           </TableCell>
                         );
-                      })}
+                      })} */}
                     </TableRow>
                   );
                 })}

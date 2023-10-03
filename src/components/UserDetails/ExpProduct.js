@@ -46,7 +46,7 @@ export default function ExpProduct({expDetails= []}) {
   return (
     <React.Fragment>
       <Title>Experience Product</Title>
-      <Table size="small">
+      <Table size="small" className='bck-office-table'>
         <TableHead>
           <TableRow>
             <TableCell>EP Id</TableCell>

@@ -10,7 +10,7 @@ export default function Plan({planDetails=[]}) {
   return (
     <React.Fragment>
       <Title>Plan Details</Title>
-      <Table size="small">
+      <Table size="small" className='bck-office-table'>
         <TableHead>
           <TableRow>
             <TableCell>Plan Id</TableCell>
