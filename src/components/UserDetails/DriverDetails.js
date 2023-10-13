@@ -58,8 +58,8 @@ const columns = [
   },
 ];
 
-export default function DriverDetails() {
-  const [driverDetails, setDriverDetails] = useState(DRIVER_DETAILS);
+export default function DriverDetails(props) {
+  const [driverDetails, setDriverDetails] = useState(DRIVER_DETAILS.driverDetails);
 
   // useEffect(() => {
   //   var obj = { contractId: searchParams.get("contractId") };
@@ -74,6 +74,12 @@ export default function DriverDetails() {
   //     });
   //   }
   // }, [searchParams]);
+
+  React.useEffect(()=> {
+    if(props && props.driverDetails) {
+      setDriverDetails(props.driverDetails);
+    }
+  },[props.driverDetails])
 
   return (
     <Grid container spacing={3}>
@@ -92,7 +98,7 @@ export default function DriverDetails() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {driverDetails.driverDetails.map((row) => {
+                {driverDetails.map((row) => {
                   return (
                     <TableRow
                       hover
@@ -100,15 +106,15 @@ export default function DriverDetails() {
                       tabIndex={-1}
                       key={row.driverId}
                     >
-                      <TableCell>{row.firstName}</TableCell>
-                      <TableCell>{row.lastName}</TableCell>
-                      <TableCell>{row.type}</TableCell>
-                      <TableCell align="left">{row.startDate}</TableCell>
-                      <TableCell align="left">{row.endDate}</TableCell>
-                      <TableCell align="left">{row.licenseCheck}</TableCell>
+                      <TableCell>{row.driverFristName}</TableCell>
+                      <TableCell>{row.driverLastName}</TableCell>
+                      <TableCell>{row.driverType}</TableCell>
+                      <TableCell align="left">{row.driverStartDate}</TableCell>
+                      <TableCell align="left">{row.driverEndDate}</TableCell>
+                      <TableCell align="left">{row.driverLicenseStatus}</TableCell>
                       <TableCell align="center">
-                      <Chip variant="outlined" label={row.status} color={row.status === 'Pending' ? 'warning' : 'success'} 
-                      className={row.status === 'Pending' ? 'chip-warning' : 'chip-success'} />
+                      <Chip variant="outlined" label={row.driverStatus} color={row.driverStatus === 'Pending' ? 'warning' : 'success'} 
+                      className={row.driverStatus === 'Pending' ? 'chip-warning' : 'chip-success'} />
                       </TableCell>
                       {/* {columns.map((column) => {
                         const value = row[column.id];

@@ -32,6 +32,8 @@ import PauseCircleOutlinedIcon from '@mui/icons-material/PauseCircleOutlined';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
 import UpcomingContractConfirm from './UpcomingContractConfirm';
+import DontPauseModal from './DontPauseModal';
+import DontCancelModal from './DontCancelModal'
 
 import dayjs from 'dayjs';
 
@@ -46,8 +48,11 @@ const UserDetails = () => {
     const [searchParams] = useSearchParams();
     const [openPauseDialog, setPauseDialog] = React.useState(false);
     const [openCancelDialog, setCancelDialog] = React.useState(false);
+    const [openDontPauseDialog, setDontPauseDialog] = React.useState(false);
+    const [openDontCancelDialog, setDontCancelDialog] = React.useState(false);
     const [openMangeContractDialog, setManageContractDialog] = React.useState(false);
     const [activeContractVersionId, setActiveContractVersionId] = React.useState();
+    const [driverDetails, setDriverDetails] = React.useState([]);
     const [snackBarConfig, setSnackbarConfig] = React.useState({
         openToast: false,
         vertical: 'top',
@@ -98,9 +103,16 @@ const UserDetails = () => {
     const closePauseDialog = () => {
         setPauseDialog(false);
     }
+    const closeDontPauseDialog = () => {
+        setDontPauseDialog(false)
+    }
 
     const closeCancelDialog = () => {
         setCancelDialog(false);
+    }
+
+    const closeDontCancelDialog = () => {
+        setDontCancelDialog(false);
     }
 
     const closeManageContractDialog = () => {
@@ -156,8 +168,14 @@ const UserDetails = () => {
                 if (openPauseDialog) {
                     closePauseDialog();
                 }
+                if(openDontPauseDialog) {
+                    closeDontPauseDialog();
+                }
                 if (openCancelDialog) {
                     closeCancelDialog();
+                }
+                if(openDontCancelDialog) {
+                    closeDontCancelDialog();
                 }
                 if(openMangeContractDialog) {
                     closeManageContractDialog();
@@ -177,6 +195,30 @@ const UserDetails = () => {
             newVersionEndDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null, //Optional
             comments: ""
         }
+        if(contractDetails.contractUUID) {
+            obj.contractUUID = contractDetails.contractUUID;
+        }
+        if(contractVersion && contractVersion.length && contractVersion[0].contractVersionUUID && contractVersion[0].headerStatus === 'Upcoming'){
+            obj.upcomingContractVersionUUID = contractVersion[0].contractVersionUUID;
+        }
+        changeContract(obj);
+        setSnackbarConfig({ ...snackBarConfig, open: true, toastMessage: 'Contract Updated Successfully' });
+    }
+    const dontPauseSubscription = () => {
+        const activeContractVersion = getActiveContractVersionDetails();
+        const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
+        const obj = {
+            contractChangeRequestType: "Don't Pause",
+            contractId: contractDetails.contractId, //mandatory
+            contractVersionId: activeContractVersionId, //mandatory
+            comments: ""
+        }
+        if(contractDetails.contractUUID) {
+            obj.contractUUID = contractDetails.contractUUID;;
+        }
+        if(contractVersion && contractVersion.length && contractVersion[0].contractVersionUUID && contractVersion[0].headerStatus === 'Upcoming'){
+            obj.upcomingContractVersionUUID = contractVersion[0].contractVersionUUID;
+        }
         changeContract(obj);
         setSnackbarConfig({ ...snackBarConfig, open: true, toastMessage: 'Contract Updated Successfully' });
     }
@@ -191,7 +233,32 @@ const UserDetails = () => {
             newVersionEndDate: dayjs(endDate).format('YYYY-MM-DD'), //mandatory
             comments: ""
         }
+        if(contractDetails.contractUUID) {
+            obj.contractUUID = contractDetails.contractUUID;;
+        }
+        if(contractVersion && contractVersion.length && contractVersion[0].contractVersionUUID && contractVersion[0].headerStatus === 'Upcoming'){
+            obj.upcomingContractVersionUUID = contractVersion[0].contractVersionUUID;
+        }
         changeContract(obj);
+    }
+
+    const dontCancelSubscription = () => {
+        const activeContractVersion = getActiveContractVersionDetails();
+        const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
+        const obj = {
+            contractChangeRequestType: "Don't Cancel",
+            contractId: contractDetails.contractId, //mandatory
+            contractVersionId: activeContractVersionId, //mandatory
+            comments: ""
+        }
+        if(contractDetails.contractUUID) {
+            obj.contractUUID = contractDetails.contractUUID;;
+        }
+        if(contractVersion && contractVersion.length && contractVersion[0].contractVersionUUID && contractVersion[0].headerStatus === 'Upcoming'){
+            obj.upcomingContractVersionUUID = contractVersion[0].contractVersionUUID;
+        }
+        changeContract(obj);
+        setSnackbarConfig({ ...snackBarConfig, open: true, toastMessage: 'Contract Updated Successfully' });
     }
 
     const submitManageContract = (data) => {
@@ -208,10 +275,24 @@ const UserDetails = () => {
         changeContract(obj);
     }
 
+    const getDriverDetails = () => {
+         var obj = { contractId: searchParams.get("contractId") }
+        if (window['BackOfficePortalCtrl']) {
+            getDataWithParam('BackOfficePortalCtrl', 'getDriverDetails', JSON.stringify(obj)).then(result => {
+                console.log('Driver details' , result, '<=========');
+                if(result && result.registeredDrivers && result.registeredDrivers.length) {
+                    setDriverDetails(result.registeredDrivers);
+                }
+                // updateContractDetails(result);
+            })
+        }
+    }
+
     React.useEffect(() => {
         const activeContractVersion = getActiveContractVersionDetails();
         const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
         setActiveContractVersionId(activeContractVersionId);
+        getDriverDetails();
     },[contractDetails])
 
     React.useEffect(() => {
@@ -223,16 +304,16 @@ const UserDetails = () => {
             <div className='action-block'>
                 <Button size="small" variant="outlined" className="action-btn" onClick={() => openCheckList()} >
                     <ChecklistOutlinedIcon/>
-                    <span style={{ marginLeft: '6px' }}>Pickup Checklist</span>
+                    <span style={{ marginLeft: '6px' }}>Checklist</span>
                 </Button>
-                <Button size="small" variant="outlined" className="action-btn" onClick={() => deliveryCheckList()} >
+                {/* <Button size="small" variant="outlined" className="action-btn" onClick={() => deliveryCheckList()} >
                     <ChecklistOutlinedIcon/>
                     <span style={{ marginLeft: '6px' }}>Delivery Checklist</span>
                 </Button>
                 <Button size="small" variant="outlined" className="action-btn" onClick={() => collectionCheckList()} >
                     <ChecklistOutlinedIcon/>
                     <span style={{ marginLeft: '6px' }}>Collection Checklist</span>
-                </Button>
+                </Button> */}
                 {/* <Button size='small' variant="outlined" className='action-btn' onClick={() => setManageContractDialog(true)}>
                     <SettingsOutlinedIcon />
                     <span style={{ marginLeft: '6px' }}>Manage Contract</span>
@@ -241,14 +322,30 @@ const UserDetails = () => {
                     <SettingsOutlinedIcon />
                     <span style={{ marginLeft: '6px' }}>Manage Contract</span>
                 </Button>
-                <Button size='small' variant="contained" className='action-btn' onClick={() => setPauseDialog(true)}>
-                    <PauseCircleOutlinedIcon />
-                    <span style={{ marginLeft: '6px' }}>Pause Subscription</span>
-                </Button>
-                <Button size='small' variant="contained" color="error" className='action-btn' onClick={() => setCancelDialog(true)}>
-                    <CancelOutlinedIcon />
-                    <span style={{ marginLeft: '6px' }}>Cancel Subscription</span>
-                </Button>
+                {contractVersion && contractVersion.length && contractVersion[0].isUpcomingPause && (
+                    <Button size='small' variant="contained" className='action-btn' onClick={() => setDontPauseDialog(true)}>
+                        <PauseCircleOutlinedIcon />
+                        <span style={{ marginLeft: '6px' }}>Don't Pause</span>
+                    </Button>
+                )}
+                {contractVersion && contractVersion.length && !contractVersion[0].isUpcomingPause && (
+                    <Button size='small' variant="contained" className='action-btn' onClick={() => setPauseDialog(true)}>
+                        <PauseCircleOutlinedIcon />
+                        <span style={{ marginLeft: '6px' }}>Pause Subscription</span>
+                    </Button>
+                )}
+                {tempContractDetails && tempContractDetails.contractEndDate === 'Unlimited' && (
+                    <Button size='small' variant="contained" color="error" className='action-btn' onClick={() => setCancelDialog(true)}>
+                        <CancelOutlinedIcon />
+                        <span style={{ marginLeft: '6px' }}>Cancel Subscription</span>
+                    </Button>
+                )}
+                {tempContractDetails && tempContractDetails.contractEndDate !== 'Unlimited' && (
+                    <Button size='small' variant="contained" color="error" className='action-btn' onClick={() => setDontCancelDialog(true)}>
+                        <CancelOutlinedIcon />
+                        <span style={{ marginLeft: '6px' }}>Don't Cancel</span>
+                    </Button>
+                )}
                 {/* Info Banner */}
 
             </div>
@@ -320,7 +417,7 @@ const UserDetails = () => {
 
 
             </Grid>
-            <DriverDetails />
+            <DriverDetails driverDetails={driverDetails}/>
 
             <InvoiceDetails invoiceDetails={contractDetails.Invoices} />
 
@@ -348,6 +445,20 @@ const UserDetails = () => {
                 //     handleClose={closeManageContractDialog}
                 //     handleSubmit={submitManageContract}
                 // />
+            )}
+            {openDontPauseDialog && (
+                <DontPauseModal 
+                    open={openDontPauseDialog}
+                    handleClose={closeDontPauseDialog}
+                    handleSubmit={dontPauseSubscription}
+                />
+            )}
+            {openDontCancelDialog && (
+                <DontCancelModal
+                    open={openDontPauseDialog}
+                    handleClose={closeDontCancelDialog}
+                    handleSubmit={dontCancelSubscription}
+                />
             )}
             <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
