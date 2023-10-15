@@ -25,37 +25,13 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const columns = [
-  { id: "firstName", label: "First Name", minWidth: 150 },
-  { id: "lastName", label: "Last Name", minWidth: 150 },
-  { id: "type", label: "Type", minWidth: 70 },
-  {
-    id: "startDate",
-    label: "Start Date",
-    minWidth: 170,
-    align: "left",
-  },
-  {
-    id: "endDate",
-    label: "End Date",
-    minWidth: 170,
-    align: "left",
-    format: (value) => {
-      new Date(value).toLocaleDateString();
-      console.log(new Date(value).toLocaleDateString());
-    },
-  },
-  {
-    id: "licenseCheck",
-    label: "License Check",
-    minWidth: 170,
-    align: "left",
-  },
-  {
-    id: "status",
-    label: "Status",
-    minWidth: 170,
-    align: "center",
-  },
+  { id: "firstName", label: "First Name",
+  format: (params) => `${params.driverFristName} ${params.driverLastName}`},
+  { id: "type", label: "Type" },
+  { id: "startDate", label: "Start Date", align: "left", },
+  { id: "endDate", label: "End Date", align: "left", format: (value) => { new Date(value).toLocaleDateString(); console.log(new Date(value).toLocaleDateString()); }, },
+  { id: "licenseCheck", label: "License Check", align: "left", },
+  { id: "status", label: "Status" }
 ];
 
 export default function DriverDetails(props) {
@@ -106,15 +82,15 @@ export default function DriverDetails(props) {
                       tabIndex={-1}
                       key={row.driverId}
                     >
-                      <TableCell>{row.driverFristName}</TableCell>
-                      <TableCell>{row.driverLastName}</TableCell>
+                      <TableCell>{row.driverFristName}{row.driverLastName}</TableCell>
                       <TableCell>{row.driverType}</TableCell>
                       <TableCell align="left">{row.driverStartDate}</TableCell>
                       <TableCell align="left">{row.driverEndDate}</TableCell>
                       <TableCell align="left">{row.driverLicenseStatus}</TableCell>
-                      <TableCell align="center">
-                      <Chip variant="outlined" label={row.driverStatus} color={row.driverStatus === 'Pending' ? 'warning' : 'success'} 
-                      className={row.driverStatus === 'Pending' ? 'chip-warning' : 'chip-success'} />
+                      <TableCell className={row.driverStatus === 'Pending' ? 'warning' : 'success'}>
+                      {/* <Chip variant="outlined" label={row.driverStatus} color={row.driverStatus === 'Pending' ? 'warning' : 'success'} 
+                      className={row.driverStatus === 'Pending' ? 'chip-warning' : 'chip-success'} /> */}
+                      {row.driverStatus}
                       </TableCell>
                       {/* {columns.map((column) => {
                         const value = row[column.id];

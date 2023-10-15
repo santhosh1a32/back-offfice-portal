@@ -10,6 +10,7 @@ import SectionWithTitle from '../common/SectionWithTitle';
 import DriverDetails from "./DriverDetails";
 import InvoiceDetails from "./InvoiceDetails";
 import OtherPaymentsDetails from "./OtherPaymentsDetails";
+import ContractContactDetails from './ContractContactDetails';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -53,6 +54,9 @@ const UserDetails = () => {
     const [openMangeContractDialog, setManageContractDialog] = React.useState(false);
     const [activeContractVersionId, setActiveContractVersionId] = React.useState();
     const [driverDetails, setDriverDetails] = React.useState([]);
+    const [invoiceDetails, setInvoiceDetails] = React.useState([]);
+    const [otherPaymentsDetails, setOtherPaymentsDetails] = React.useState([]);
+    const [contractContactDetails, setContractContactDetails] = React.useState([]);
     const [snackBarConfig, setSnackbarConfig] = React.useState({
         openToast: false,
         vertical: 'top',
@@ -279,11 +283,42 @@ const UserDetails = () => {
          var obj = { contractId: searchParams.get("contractId") }
         if (window['BackOfficePortalCtrl']) {
             getDataWithParam('BackOfficePortalCtrl', 'getDriverDetails', JSON.stringify(obj)).then(result => {
-                console.log('Driver details' , result, '<=========');
                 if(result && result.registeredDrivers && result.registeredDrivers.length) {
                     setDriverDetails(result.registeredDrivers);
                 }
-                // updateContractDetails(result);
+            })
+        }
+    }
+    
+    const getInvoiceDetails = () => {
+        var obj = { contractId: searchParams.get("contractId") }
+        if (window['BackOfficePortalCtrl']) {
+           getDataWithParam('BackOfficePortalCtrl', 'getInvoiceDetails', JSON.stringify(obj)).then(result => {
+               if(result && result.invoiceDetails && result.invoiceDetails.length) {
+                   setInvoiceDetails(result.invoiceDetails);
+               }
+           })
+       }
+   }
+   
+   const getOtherPaymentsDetails = () => {
+        var obj = { contractId: searchParams.get("contractId") }
+        if (window['BackOfficePortalCtrl']) {
+            getDataWithParam('BackOfficePortalCtrl', 'getOtherPayments', JSON.stringify(obj)).then(result => {
+                if(result && result.otherPaymentDetails) {
+                    setOtherPaymentsDetails(result.otherPaymentDetails);
+                }
+            })
+        }
+    }
+
+    const getContractContacts = () => {
+        var obj = { contractId: searchParams.get("contractId") }
+        if (window['BackOfficePortalCtrl']) {
+            getDataWithParam('BackOfficePortalCtrl', 'getContractContacts', JSON.stringify(obj)).then(result => {
+                if(result && result.contractContactDetails) {
+                    setContractContactDetails(result.contractContactDetails);
+                }
             })
         }
     }
@@ -293,6 +328,9 @@ const UserDetails = () => {
         const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
         setActiveContractVersionId(activeContractVersionId);
         getDriverDetails();
+        getInvoiceDetails();
+        getOtherPaymentsDetails();
+        getContractContacts();
     },[contractDetails])
 
     React.useEffect(() => {
@@ -417,11 +455,14 @@ const UserDetails = () => {
 
 
             </Grid>
+
+            <ContractContactDetails contractContactDetails={contractContactDetails} />                           
+
             <DriverDetails driverDetails={driverDetails}/>
 
-            <InvoiceDetails invoiceDetails={contractDetails.Invoices} />
+            <InvoiceDetails invoiceDetails={invoiceDetails} />
 
-            <OtherPaymentsDetails otherPayments={contractDetails.otherPayments}/>
+            <OtherPaymentsDetails otherPayments={otherPaymentsDetails}/>
             {openPauseDialog && (
                 <PauseSubscriptionModal
                     open={openPauseDialog}

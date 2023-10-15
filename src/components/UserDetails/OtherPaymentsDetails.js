@@ -12,26 +12,24 @@ import SectionWithTitle from "../common/SectionWithTitle";
 import "./DriverDetails.scss";
 import { CONTRACT_DETAILS } from "./mockData";
 
-
 const columns = [
-  { field: "invoiceNumber", label: "Invoice Number", minWidth: 100 },
-  { field: "invoiceDate", label: "Invoice Date", minWidth: 100 },
-  {
-    field: "billingReason",
-    label: "Billing Reason",
-    minWidth: 100,
-  },
-  {
-    field: "amountPaid",
-    label: "Amount",
-    minWidth: 100,
-    format: (params) => `${params.amountPaid} ${params.currency}`,
-  },
-  {
-    field: "collectionMethod",
-    label: "Collection Method",
-    minWidth: 100,
-  },
+  { field: "otherPaymentDateTime", label: "Date", minWidth: 100 },
+  { field: "otherPaymentType", label: "Payment Type", minWidth: 100 },
+  { field: "otherPaymentAmount", label: "Payment Amount", minWidth: 100},
+  { field: "otherPaymentStatus", label: "Payment Status", minWidth: 100},
+  { field: "otherPaymentFailureReason", label: "Payment Failure Reason", minWidth: 100},
+  
+  // {
+  //   field: "amountPaid",
+  //   label: "Amount",
+  //   minWidth: 100,
+  //   format: (params) => `${params.amountPaid} ${params.currency}`,
+  // },
+  // {
+  //   field: "collectionMethod",
+  //   label: "Collection Method",
+  //   minWidth: 100,
+  // },
 ];
 
 export default function OtherPaymentsDetails({otherPayments}){
@@ -56,7 +54,7 @@ export default function OtherPaymentsDetails({otherPayments}){
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {/* {otherPayments.map((row) => {
+                  {otherPayments.map((row) => {
                     return (
                       <TableRow
                         hover
@@ -74,7 +72,7 @@ export default function OtherPaymentsDetails({otherPayments}){
                         })}
                       </TableRow>
                     );
-                  })} */}
+                  })}
                 </TableBody>
               </Table>
             </TableContainer>

@@ -48,44 +48,59 @@ const rows = [
   //   212.79,
   // ),
 ];
-
+const columns = [
+  { field: "fullName", label: "Customer Name"},
+  { field: "email", label: "Customer Email"},
+  { field: "contractNumber", label: "Contract Number"},
+  { field: "contractType", label: "Contract Type"},
+  { field: "startDate", label: "Start Date"},
+  { field: "endDate", label: "End Date"},
+  { field: "status", label: "Status"},
+  { field: "subStatus", label: "Sub Status"},
+  { field: "createdDate", label: "Contract Created Date"}
+]
 function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Orders() {
+export default function Orders({allContractDetails}) {
   let navigate = useNavigate();
-  const onClickHandle = () => {
-    navigate('/details?contractId=a1A5i000000rrcS');
+
+  const onClickHandle = (contractId) => {
+    console.log(contractId);
+    navigate('/details?contractId='+contractId);
   }
+  
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
-      <Table size="small">
+      <Title>Contracts</Title>
+      <Table size="small" className="bck-office-table">
         <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Customer Name</TableCell>
-            <TableCell>Contract Type</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
-          </TableRow>
+        <TableRow>
+            {columns.map((column) => (
+              <TableCell sx={{whiteSpace:'nowrap'}}
+                key={column.field}
+              >
+                {column.label}
+              </TableCell>
+            ))}
+        </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id} onClick={onClickHandle} style={{cursor: 'pointer'}}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
+          {allContractDetails.map((row) => (
+            <TableRow key={row.contractId} onClick={() => onClickHandle(row.contractId)} style={{cursor: 'pointer'}}>
+              {columns.map(column => (
+                          <TableCell key={column.field}>
+                            {row[column.field]}
+                          </TableCell>
+                      ))}
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
+      {/* <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
         See more orders
-      </Link>
+      </Link> */}
     </React.Fragment>
   );
 }

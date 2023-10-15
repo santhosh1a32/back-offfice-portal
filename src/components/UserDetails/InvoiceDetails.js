@@ -19,54 +19,58 @@ import "./DriverDetails.scss";
 const columns = [
   { field: "invoiceNumber", label: "Invoice Number", minWidth: 170 },
   { field: "invoiceDate", label: "Invoice Date", minWidth: 100 },
-  {
-    field: "billingPeriod",
-    label: "Billing Period",
-    minWidth: 150,
-    align: "right",
-    format: (params) =>
-      `(${new Date(params.periodStartDate).toLocaleDateString()} - ${new Date(
-        params.periodEndDate
-      ).toLocaleDateString()})`,
-  },
-  {
-    field: "amountPaid",
-    label: "Amount",
-    minWidth: 150,
-    align: "right",
-    format: (params) => `${params.amountPaid} ${params.currency}`,
-  },
-  {
-    field: "status",
-    label: "Status",
-    minWidth: 150,
-    align: "right",
-  },
-  {
-    field: "last4CardNumber",
-    label: "Card Detail",
-    minWidth: 150,
-    align: "right",
-    format: (params) =>
-      `Card ending in ${params.paymentDetails.last4CardNumber}`,
-  },
-  {
-    field: "invoiceUrl",
-    label: "",
-    minWidth: 150,
-    align: "right",
-    format: (params) => (
-      <a href={params.invoiceUrl} download="PDF-document" target="_blank" rel="noopener noreferrer" >
+  { field: "invoiceType", label: "Invoice Type", minWidth: 100 },
+  { field: "invoiceDue", label: "Invoice Due", minWidth: 100 },
+  { field: "invoicePaid", label: "Invoice Paid", minWidth: 100 },
+  { field: "invoiceRemaining", label: "Invoice Remaining", minWidth: 100 },
+  { field: "invoiceStatus", label: "Invoice Status", minWidth: 100 }
+  
+  // {
+  //   field: "billingPeriod",
+  //   label: "Billing Period",
+  //   minWidth: 150,
+  //   align: "right",
+  //   format: (params) =>
+  //     `(${new Date(params.periodStartDate).toLocaleDateString()} - ${new Date(
+  //       params.periodEndDate
+  //     ).toLocaleDateString()})`,
+  // },
+  // {
+  //   field: "amountPaid",
+  //   label: "Amount",
+  //   minWidth: 150,
+  //   align: "right",
+  //   format: (params) => `${params.amountPaid} ${params.currency}`,
+  // },
+  // {
+  //   field: "status",
+  //   label: "Status",
+  //   minWidth: 150,
+  //   align: "right",
+  // },
+  // {
+  //   field: "last4CardNumber",
+  //   label: "Card Detail",
+  //   minWidth: 150,
+  //   align: "right",
+  //   format: (params) =>
+  //     `Card ending in ${params.paymentDetails.last4CardNumber}`,
+  // },
+  // {
+  //   field: "invoiceUrl",
+  //   label: "",
+  //   minWidth: 150,
+  //   align: "right",
+  //   format: (params) => (
+  //     <a href={params.invoiceUrl} download="PDF-document" target="_blank" rel="noopener noreferrer" >
        
-        <Button variant="outlined"> <DownloadIcon/>Invoice PDF</Button>
-      </a>  
-    ),
-  },
+  //       <Button variant="outlined"> <DownloadIcon/>Invoice PDF</Button>
+  //     </a>  
+  //   ),
+  // },
 ];
 
 export default function InvoiceDetails({ invoiceDetails }) {
-  // const [invoiceDetails, setInvoices] = useState(PAYMENT_DETAILS);
-
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} className="section">
@@ -87,7 +91,7 @@ export default function InvoiceDetails({ invoiceDetails }) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {/* {invoiceDetails.map((row) => {
+                {invoiceDetails.map((row) => {
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       {columns.map((column) => {
@@ -101,7 +105,7 @@ export default function InvoiceDetails({ invoiceDetails }) {
                       })}
                     </TableRow>
                   );
-                })} */}
+                })}
               </TableBody>
             </Table>
           </TableContainer>

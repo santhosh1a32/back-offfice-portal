@@ -5,8 +5,23 @@ import Paper from '@mui/material/Paper';
 // import Deposits from './Deposits';
 import Orders from './Orders';
 import SearchCustomer from '../SearchCustomer/SearchContact';
+import { getDataWithParam } from '../../DataService';
 
 const Home = () => {
+    const[allContractDetails,setAllContractDetails] = React.useState([]);
+
+    React.useEffect(() =>{
+        var obj = { contractId: '' }
+        if (window['BackOfficePortalCtrl']) {
+            getDataWithParam('BackOfficePortalCtrl', 'getAllContracts',JSON.stringify(obj)).then(result => {
+                console.log('Get All Contracts details' , result, '<=========');
+                if(result && result.allContractDetails) {
+                    setAllContractDetails(result.allContractDetails);
+                }
+            })
+        }
+    },[])
+
     return (
         <Grid container spacing={3}>
             <SearchCustomer />
@@ -39,7 +54,7 @@ const Home = () => {
             {/* Recent Orders */}
             <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                    <Orders />
+                    <Orders allContractDetails={allContractDetails}/>
                 </Paper>
             </Grid>
         </Grid>
