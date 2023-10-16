@@ -13,7 +13,8 @@ export default function CheckListModal({
   type,
   open,
   handleClose,
-  uuidData
+  uuidData,
+  upcomingContractVersionId=''
 }) {
   const [searchParams] = useSearchParams();
   const [vehicleDetails, setVehicleDetails] = React.useState();
@@ -71,6 +72,7 @@ export default function CheckListModal({
       contractVersionId: searchParams.get("contractVersionId"),
       checkListType: searchParams.get("checkListType"),
       contractCheckListId,
+      upcomingContractVersionId
     }
     getDataWithParam('BackOfficePortalCtrl', 'getDrivingLicense', JSON.stringify(reqObj)).then(result => {
       if (result && result.drivingLicenseDetails) {
@@ -86,6 +88,7 @@ export default function CheckListModal({
       contractVersionId: searchParams.get("contractVersionId"),
       checkListType: searchParams.get("checkListType"),
       contractCheckListId,
+      upcomingContractVersionId,
       ...uuidData
     }
     if (relatedRecordId) {
@@ -150,6 +153,7 @@ export default function CheckListModal({
         let reqObj = {
           ...obj,
           contractCheckListId,
+          upcomingContractVersionId
         }
         if (relatedRecordId) {
           reqObj.relatedRecordId = relatedRecordId;
@@ -166,7 +170,8 @@ export default function CheckListModal({
         let reqObj = {
           ...obj,
           contractCheckListId,
-          relatedRecordId
+          relatedRecordId,
+          upcomingContractVersionId
         }
         getDataWithParam('BackOfficePortalCtrl', 'returnMileageAndFuel', JSON.stringify(reqObj)).then(result => {
           console.log(result);

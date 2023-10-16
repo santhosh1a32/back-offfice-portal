@@ -10,7 +10,7 @@ import SectionWithTitle from '../common/SectionWithTitle';
 import DriverDetails from "./DriverDetails";
 import InvoiceDetails from "./InvoiceDetails";
 import OtherPaymentsDetails from "./OtherPaymentsDetails";
-import ContractContactDetails from './ContractContactDetails';
+// import ContractContactDetails from './ContractContactDetails';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -68,8 +68,10 @@ const UserDetails = () => {
 
     const openCheckList = () =>{
         const activeContractVersion = getActiveContractVersionDetails();
+        const upcomingContractVersion = getUpcomingContractVersionDetails();
+        const upcomingContractVersionId = upcomingContractVersion && upcomingContractVersion.length ? upcomingContractVersion[0].contractVersionId: '';
         const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
-        navigate({ pathname:"/checkList", search:createSearchParams({ contractId:searchParams.get("contractId"), contractVersionId:activeContractVersionId, checkListType:"Pickup" }).toString()})
+        navigate({ pathname:"/checkList", search:createSearchParams({ contractId:searchParams.get("contractId"), contractVersionId:activeContractVersionId, checkListType:"Pickup", upcomingContractVersionId: upcomingContractVersionId }).toString()})
     }
 
     const deliveryCheckList = () =>{
@@ -159,6 +161,10 @@ const UserDetails = () => {
 
     const getActiveContractVersionDetails = () => {
         return contractVersion.filter(item => item.status === 'Active');
+    }
+
+    const getUpcomingContractVersionDetails = () => {
+        return contractVersion.filter(item => item.status === 'Upcoming');
     }
 
     const changeContract = (obj) => {
@@ -456,7 +462,7 @@ const UserDetails = () => {
 
             </Grid>
 
-            <ContractContactDetails contractContactDetails={contractContactDetails} />                           
+            {/* <ContractContactDetails contractContactDetails={contractContactDetails} />                            */}
 
             <DriverDetails driverDetails={driverDetails}/>
 

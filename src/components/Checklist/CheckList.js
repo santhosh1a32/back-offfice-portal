@@ -48,6 +48,7 @@ export default function CheckList() {
   const [relatedRecordId, setRelatedRecordId] = React.useState();
   const [buttonEnable, setButtonEnable] = useState(false);
   const [uuidData, setUUIDData] = React.useState({});
+  const upcomingContractVersionId = searchParams.get("upcomingContractVersionId");
   const [snackBarState, setSnackBarState] = React.useState({
     open: false,
     vertical: 'top',
@@ -134,6 +135,7 @@ export default function CheckList() {
         contractVersionId:searchParams.get("contractVersionId"),
         checkListType:searchParams.get("checkListType"),
         contractChekListId:contractCheckListId,
+        upcomingContractVersionId,
         // relatedRecordId:,
         taskStatus:"Verified",
        }
@@ -243,6 +245,7 @@ export default function CheckList() {
             contractCheckListId={currentSelectedRowId}
             relatedRecordId={relatedRecordId}
             uuidData={uuidData}
+            upcomingContractVersionId={upcomingContractVersionId}
           />
         )}
       </>
@@ -329,6 +332,7 @@ export default function CheckList() {
             contractCheckListId={currentSelectedRowId}
             relatedRecordId={relatedRecordId}
             uuidData={uuidData}
+            upcomingContractVersionId={upcomingContractVersionId}
           />
         )}
       </>
@@ -416,6 +420,7 @@ export default function CheckList() {
             contractCheckListId={currentSelectedRowId}
             relatedRecordId={relatedRecordId}
             uuidData={uuidData}
+            upcomingContractVersionId={upcomingContractVersionId}
           />
         )}
       </>
