@@ -19,6 +19,7 @@ import { CHECKLIST } from "./checklistMockData";
 import CustomDatePicker from "../common/CustomDatePicker";
 import countries from "i18n-iso-countries";
 import enLocale from "i18n-iso-countries/langs/en.json";
+import dayjs from 'dayjs';
 
 countries.registerLocale(enLocale);
 const countriesObj = countries.getNames("en",{select:"official"});
@@ -31,15 +32,39 @@ const countriesArr = Object.entries(countriesObj).map(([key,value]) =>{
 
 export default function DeliveryAddressModal({open, contractCheckListId,upcomingContractVersionId, handleClose, handleSubmit}){
   const [searchParams] = useSearchParams();
-  const [deliveryAddress, setDeliveryAddress] = React.useState({ "addressLine1": "", "city": "", "countryIsoCode": "DE", "postalCode": "", "state": ""});
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setDeliveryAddress({
-      ...deliveryAddress,
-      [name]: value,
-    });
-  console.log(deliveryAddress);
+  const [deliveryAddress, setDeliveryAddress] = React.useState({ "addressLine1": "", "addressLine2": "", "city": "", "countryIsoCode": "DE", "postalCode": "", "state": ""});
+  const [deliveryDateTime, setDeliveryDateTime] = React.useState({deliveryDate: '', deliveryTime: ''});
+  const timeFrames = [
+    "08:00-09:00",
+    "09:00-10:00",
+    "10:00-11:00",
+    "11:00-12:00",
+    "12:00-13:00",
+    "13:00-14:00",
+    "14:00-15:00",
+    "15:00-16:00",
+    "16:00-17:00",
+    "17:00-18:00",
+    "18:00-19:00",
+    "19:00-20:00",
+    "20:00-21:00",
+    "21:00-22:00"
+  ];
+  const handleInputChange = (e, type) => {
+    if (type === 'deliveryDate') {
+      const timeDate = {...deliveryDateTime, deliveryDate: e}
+      setDeliveryDateTime(timeDate)
+    } else if(e.target.name === 'deliveryTime') {
+      const timeDate = {...deliveryDateTime, deliveryTime: e.target.value}
+      setDeliveryDateTime(timeDate)
+    } else {
+      const { name, value } = e.target;
+      setDeliveryAddress({
+        ...deliveryAddress,
+        [name]: value,
+      });
+      console.log(deliveryAddress);
+    }
   };
  
   const getCheckListItem = () =>{
@@ -48,8 +73,25 @@ export default function DeliveryAddressModal({open, contractCheckListId,upcoming
         getDataWithParam('BackOfficePortalCtrl', 'getDeliveryAddress', JSON.stringify(obj)).then(result => {
             console.log(result);
             setDeliveryAddress(result.deliveryAddress);
+            console.log('develivery date ===> ', dayjs(result.deliveryDate))
+            setDeliveryDateTime({
+              ...deliveryDateTime,
+              deliveryDate: result.deliveryDate ? dayjs(result.deliveryDate) : '',
+              deliveryTime: result.deliveryTime ? result.deliveryTime : ''
+            })
         })
     }
+  }
+
+  const updateDeliveryAddress = () => {
+    handleSubmit({
+      jsonData: {
+        deliveryAddress: {
+          ...deliveryAddress
+        },
+        ...deliveryDateTime
+      }
+    }) 
   }
 
   React.useEffect(() => {
@@ -71,7 +113,26 @@ export default function DeliveryAddressModal({open, contractCheckListId,upcoming
           <CloseIcon />
       </IconButton>
       <DialogContent>
-      <DialogContentText className="header-text"> Delivery Address </DialogContentText>
+            <DialogContentText className="header-text"> Delivery Address </DialogContentText>
+            <div className="pickup">
+              <CustomDatePicker className="pickup-date" label="Delivery Date" value={dayjs(deliveryDateTime.deliveryDate)} disablePast={true} onChangeHandler={(val) => handleInputChange(val, 'deliveryDate')} />
+              {/* <FormControl sx={{ m: 2 }} variant="standard" className="select-pickup">
+                <InputLabel id="demo-label">Delivery Time</InputLabel>
+                <Select id="outlined-select-pickuptime" label="Delivery Time" name="deliveryTime" value={deliveryDateTime.deliveryTime} onChange={handleInputChange}>
+                  {timeFrames.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl> */}
+              <TextField id="standard-address-input" name="deliveryTime" label="Delivery Time" className="input-text" type="text" variant="standard" value={deliveryDateTime.deliveryTime} onChange={handleInputChange}/>
+            </div>
+            <TextField id="standard-address-input" name="addressLine1" label="Address Line 1" className="input-text" type="text" variant="standard" value={deliveryAddress.addressLine1} onChange={handleInputChange}/>
+            <TextField id="standard-address-input2" name="addressLine2" label="Address Line 2" className="input-text" type="text" variant="standard" value={deliveryAddress.addressLine2} onChange={handleInputChange}/>
+            <TextField id="standard-city-input" name="city" label="City" type="text"variant="standard" value={deliveryAddress.city} onChange={handleInputChange}  defaultValue={''}/> 
+            <TextField id="standardba-pincode-input" name="postalCode" label="PinCode" type="number"  variant="standard"  value={deliveryAddress.postalCode} onChange={handleInputChange}/>
+            <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" value={deliveryAddress.state} onChange={handleInputChange}/>      
             <FormControl sx={{ m:2}} variant="standard" className="select-country"  >
                 <InputLabel id="demo-simple-select-label">Country</InputLabel>
                 <Select id="outlined-select-country" label="Country" name="countryIsoCode" value={deliveryAddress.countryIsoCode} defaultValue={'DE'} onChange={handleInputChange}>
@@ -82,14 +143,10 @@ export default function DeliveryAddressModal({open, contractCheckListId,upcoming
                 ))}
             </Select>
           </FormControl>
-          <TextField id="standard-city-input" name="city" label="City" type="text"variant="standard" value={deliveryAddress.city} onChange={handleInputChange}  defaultValue={''}/> 
-          <TextField id="standard-address-input" name="addressLine1" label="Address" className="input-text" type="text" variant="standard" value={deliveryAddress.addressLine1} onChange={handleInputChange}/>
-          <TextField id="standard-state-input" name="state" label="State" type="text" variant="standard" value={deliveryAddress.state} onChange={handleInputChange}/>      
-          <TextField id="standardba-pincode-input" name="postalCode" label="PinCode" type="number"  variant="standard"  value={deliveryAddress.postalCode} onChange={handleInputChange}/>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button>Submit</Button>
+        <Button onClick={updateDeliveryAddress}>Confirm</Button>
       </DialogActions>
     </Dialog>
        );

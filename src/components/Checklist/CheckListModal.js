@@ -244,7 +244,7 @@ export default function CheckListModal({
       contractCheckListId={contractCheckListId}
       upcomingContractVersionId={upcomingContractVersionId}
       handleClose={handleClose}
-      handleSubmit={updateAddress}/>
+      handleSubmit={updateChecklistRequest}/>
     );
   }
   // else if (type === "Date Time;Address" && label === "collection_date_delivery_address_verification") {
