@@ -140,7 +140,7 @@ export default function VehicleAllocationModal({ open, handleClose, vehicleDetai
         }else {
             setAvailableOptions(rows)
         }
-    },[])
+    },[vehicleDetails])
     return (
         <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="md">
             <DialogTitle>Vehicle Allocation</DialogTitle>

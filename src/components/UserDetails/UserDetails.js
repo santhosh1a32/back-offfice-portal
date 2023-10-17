@@ -10,7 +10,7 @@ import SectionWithTitle from '../common/SectionWithTitle';
 import DriverDetails from "./DriverDetails";
 import InvoiceDetails from "./InvoiceDetails";
 import OtherPaymentsDetails from "./OtherPaymentsDetails";
-// import ContractContactDetails from './ContractContactDetails';
+import ContractContactDetails from './ContractContactDetails';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -462,7 +462,7 @@ const UserDetails = () => {
 
             </Grid>
 
-            {/* <ContractContactDetails contractContactDetails={contractContactDetails} />                            */}
+            <ContractContactDetails contractContactDetails={contractContactDetails} />                           
 
             <DriverDetails driverDetails={driverDetails}/>
 

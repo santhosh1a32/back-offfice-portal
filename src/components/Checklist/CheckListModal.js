@@ -6,6 +6,8 @@ import VehicleAllocationModal from './VehicleAllocationModal';
 import DrivingLicenseModal from "./DrivingLicenseModal";
 import PickupAddressModal from "./PickupAddressModal";
 import AddressModal from "./AddressModal";
+import CollectionAddress from './CollectionAddressModal';
+import DeliveryAddressModal from "./DelliveryAddressModal";
 
 export default function CheckListModal({
   contractCheckListId = '',
@@ -184,31 +186,6 @@ export default function CheckListModal({
           }
         })
       }
-      // if (type === 'Address') {
-      //   let reqObj = {
-      //     ...obj,
-      //     contractCheckListId
-      //   }
-      //   getDataWithParam('BackOfficePortalCtrl', 'getHomeBillingAddress', JSON.stringify(reqObj)).then(result => {
-      //     console.log(result);
-      //     if (result && result.addressDetails && result.addressDetails.length) {
-      //       sethomeAddrValues(result.addressDetails[0].homeAddress);
-      //       setbillingAddrFormValues(result.addressDetails[0].billingAddress);
-      //     }
-      //   })
-      // }
-      // if (type === 'Date Time;Address') {
-      //   let reqObj = {
-      //     ...obj,
-      //     contractCheckListId
-      //   }
-      //   getDataWithParam('BackOfficePortalCtrl', 'getPickupDetails', JSON.stringify(reqObj)).then(result => {
-      //     console.log(result);
-      //     if (result) {
-      //       setpickupAddrValues(result);
-      //     }
-      //   })
-      // }
     }
   }, [])
 
@@ -260,22 +237,24 @@ export default function CheckListModal({
       />
     )
   }
-  if (type === "Address") {
+  if (type === "Date Time;Address") {
     return (
-      <AddressModal
+      <DeliveryAddressModal
       open={open}
       contractCheckListId={contractCheckListId}
+      upcomingContractVersionId={upcomingContractVersionId}
       handleClose={handleClose}
       handleSubmit={updateAddress}/>
     );
   }
-  else if (type === "Date Time;Address") {
-    return (
-      <PickupAddressModal
-      open={open}
-      contractCheckListId={contractCheckListId}
-      handleClose={handleClose}
-      handleSubmit={updatePickUpAddress}/>
-    )
-  }
+  // else if (type === "Date Time;Address" && label === "collection_date_delivery_address_verification") {
+  //   return (
+  //     <CollectionAddress
+  //     open={open}
+  //     contractCheckListId={contractCheckListId}
+  //     upcomingContractVersionId={upcomingContractVersionId}
+  //     handleClose={handleClose}
+  //     handleSubmit={updatePickUpAddress}/>
+  //   )
+  // }
 }

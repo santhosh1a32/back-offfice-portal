@@ -24,7 +24,6 @@ const Home = () => {
 
     return (
         <Grid container spacing={3}>
-            <SearchCustomer />
             {/* Chart */}
             {/* <Grid item xs={12} md={8} lg={9}>
                 <Paper
@@ -54,6 +53,7 @@ const Home = () => {
             {/* Recent Orders */}
             <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                    <SearchCustomer />
                     <Orders allContractDetails={allContractDetails}/>
                 </Paper>
             </Grid>
