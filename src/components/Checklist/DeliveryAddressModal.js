@@ -126,12 +126,12 @@
                     ))}
                   </Select>
                 </FormControl> */}
-                <TextField id="standard-address-input" name="deliveryTime" label="Delivery Time" type="text" variant="standard" value={deliveryDateTime.deliveryTime} onChange={handleInputChange}/>
+                <TextField id="standard-address-input" name="deliveryTime" label="Delivery Time" type="text" className="input-text-2" variant="standard" value={deliveryDateTime.deliveryTime} onChange={handleInputChange}/>
               </div>
               <TextField id="standard-address-input" name="addressLine1" label="Address Line 1" className="input-text" type="text" variant="standard" value={deliveryAddress.addressLine1} onChange={handleInputChange}/>
-              <TextField id="standard-address-input2" name="addressLine2" label="Address Line 2" type="text" variant="standard" value={deliveryAddress.addressLine2} onChange={handleInputChange}/>
+              <TextField id="standard-address-input2" name="addressLine2" label="Address Line 2" className="input-text-2"  type="text" variant="standard" value={deliveryAddress.addressLine2} onChange={handleInputChange}/>
               <TextField id="standard-city-input" name="city" label="City" type="text" className="input-text" variant="standard" value={deliveryAddress.city} onChange={handleInputChange}  defaultValue={''}/> 
-              <TextField id="standardba-pincode-input" name="postalCode" label="PinCode" type="number" variant="standard"  value={deliveryAddress.postalCode} onChange={handleInputChange}/>
+              <TextField id="standardba-pincode-input" name="postalCode" label="PinCode" type="number" className="input-text-2" variant="standard"  value={deliveryAddress.postalCode} onChange={handleInputChange}/>
               <TextField id="standard-state-input" name="state" label="State" type="text" className="input-text" variant="standard" value={deliveryAddress.state} onChange={handleInputChange}/>      
               <FormControl sx={{ m:2}} variant="standard" className="select-country">
                   <InputLabel id="demo-simple-select-label">Country</InputLabel>
