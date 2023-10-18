@@ -7,7 +7,7 @@ import DrivingLicenseModal from "./DrivingLicenseModal";
 import PickupAddressModal from "./PickupAddressModal";
 import AddressModal from "./AddressModal";
 import CollectionAddress from './CollectionAddressModal';
-import DeliveryAddressModal from "./DelliveryAddressModal";
+import DeliveryAddressModal from "./DeliveryAddressModal";
 
 export default function CheckListModal({
   contractCheckListId = '',

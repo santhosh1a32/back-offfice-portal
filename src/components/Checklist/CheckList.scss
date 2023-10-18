@@ -29,23 +29,26 @@
         margin-left: 5%;
         }
     .select-country{
-        width:230px;
-        margin: 0 50px 10px 0;
+        width:202px;
+        margin: 0;
     }
     .select-pickup{
         width:195px;
         margin: 0 50px 10px 0;
     }
     .input-text{
-        width: 230px;
+       // width: 230px;
         margin: 0 50px 10px 0;
     }
     .pickup{
         display: flex;
+        margin-bottom: 2%;
         .custom-date-picker{
            // padding: 9px 14px;
-            margin-right: 50px;
-            width: 230px !important;
+            // margin-right: 50px;
+            // width: 230px !important;
+            margin-right: 45px;
+            width: 200px!important;
             label{
                 line-height: 1em;
             }
@@ -60,7 +63,7 @@
     margin-right: 10px !important;
 }
 .pickup-form{
-    margin-left: 5%;
+    margin-left: 7%;
 }
 
 .width-80 {

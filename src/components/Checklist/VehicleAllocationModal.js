@@ -95,8 +95,8 @@ function stableSort(array, comparator) {
 
 export default function VehicleAllocationModal({ open, handleClose, vehicleDetails= [], handleSubmit }) {
     const [selectedItem, setSelectedItem] = React.useState(null);
-    const [availableOptions, setAvailableOptions] = React.useState(rows);
-    const [filteredOptions, setFilteredOptions] = React.useState(rows);
+    const [availableOptions, setAvailableOptions] = React.useState([]);
+    const [filteredOptions, setFilteredOptions] = React.useState([]);
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('name');
     const [searched, setSearched] = React.useState("");
@@ -132,6 +132,7 @@ export default function VehicleAllocationModal({ open, handleClose, vehicleDetai
     React.useEffect(() => {
         if (window['BackOfficePortalCtrl']) {
             setAvailableOptions(vehicleDetails);
+            setFilteredOptions(vehicleDetails);
             vehicleDetails.forEach(item => {
                 if(item.selected) {
                     setSelectedItem(item.vehicleId);
