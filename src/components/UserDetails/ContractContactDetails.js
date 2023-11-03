@@ -10,13 +10,16 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import SectionWithTitle from "../common/SectionWithTitle";
 
 const columns = [
-    { field: "contactContractId", label: "Contract Id", minWidth: 170 },
-    { field: "contactBillingAddress", label: "Billing Address", minWidth: 170 },
-    { field: "contactHomeAddress", label: "Home Address", minWidth: 100 },
+    { field: "contactContractId", label: "Contract Id", minWidth: 50 },
+    { field: "contactBillingAddress", label: "Billing Address", minWidth: 150 },
+    { field: "contactHomeAddress", label: "Home Address", minWidth: 150 },
+    { field: "homeAddressVerificationStatus", label: "Address Status", minWidth: 100 },   
     { field: "contactMobile", label: "Mobile", minWidth: 100 },
+    { field: "mobileVerificationStatus", label: "Mobile Status", minWidth: 100 },    
     { field: "contactValidFrom", label: "Valid From", minWidth: 100 },
     { field: "contactValidTo", label: "Valid To", minWidth: 100 },
     { field: "contactVerificationStatus", label: "Status", minWidth: 100 }

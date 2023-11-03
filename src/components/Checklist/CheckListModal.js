@@ -13,6 +13,7 @@ export default function CheckListModal({
   contractCheckListId = '',
   relatedRecordId,
   type,
+  label,
   open,
   handleClose,
   uuidData,
@@ -189,7 +190,7 @@ export default function CheckListModal({
     }
   }, [])
 
-  if (type === 'Fuel & Mileage' && checkListType === 'Delivery') {
+  if (label === 'capture_start_mileage_fuel_level') {
     return (
       <MileageCaptureModal
         open={open}
@@ -202,7 +203,7 @@ export default function CheckListModal({
       />
     )
   }
-  if (type === 'Fuel & Mileage' && checkListType === 'Collection') {
+  if (label === 'Fuel & Mileage') {
     return (
       <MileageCaptureModal
         open={open}
@@ -215,7 +216,7 @@ export default function CheckListModal({
       />
     )
   }
-  if (type === 'Vehicle Allocation') {
+  if (label === 'vehicle_allocation') {
     return (
       <VehicleAllocationModal
         vehicleDetails={vehicleDetails}
@@ -226,7 +227,7 @@ export default function CheckListModal({
     )
   }
 
-  if (type === 'Driving License') {
+  if (label === 'driving_license_verification') {
     return (
       <DrivingLicenseModal
         open={open}
@@ -237,7 +238,7 @@ export default function CheckListModal({
       />
     )
   }
-  if (type === "Date Time;Address") {
+  if (label === "delivery_date_delivery_address_verification") {
     return (
       <DeliveryAddressModal
       open={open}
@@ -247,7 +248,7 @@ export default function CheckListModal({
       handleSubmit={updateChecklistRequest}/>
     );
   }
-  // else if (type === "Date Time;Address" && label === "collection_date_delivery_address_verification") {
+  // else if (label === "customer_handshake") {
   //   return (
   //     <CollectionAddress
   //     open={open}

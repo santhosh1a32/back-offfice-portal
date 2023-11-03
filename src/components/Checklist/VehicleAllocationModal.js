@@ -123,7 +123,9 @@ export default function VehicleAllocationModal({ open, handleClose, vehicleDetai
     const requestSearch = (e) => {
         setSearched(e.target.value);
         let filteredRows = availableOptions.filter((row) => {
-            return row.name.toLowerCase().includes(e.target.value.toLowerCase());
+            return row.name.toLowerCase().includes(e.target.value.toLowerCase()) || 
+                row.transmission.toLowerCase().includes(e.target.value.toLowerCase()) ||
+                row.providerName.toLowerCase().includes(e.target.value.toLowerCase());
         });
         setFilteredOptions(filteredRows);
     };

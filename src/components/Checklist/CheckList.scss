@@ -1,9 +1,24 @@
-.button-grp{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding-top: 2%;
+
+.checklist {
+    width: 100%;
+    overflow: hidden;
+    min-height:100; 
+    .button-grp{
+        // display:flex;
+        // justify-content:center;
+        // align-items:center;
+        float: right;
+        margin-right: 3%;
+        margin-top: -4%;
+    }
+    h4{
+        margin-left: 1rem;
+    }
+    .checklist-conmplete{
+        margin-right: 1rem;
+    }
 }
+
 
 .checklist-button{
     margin-left: 70px !important;
@@ -50,7 +65,7 @@
            // padding: 9px 14px;
             // margin-right: 50px;
             // width: 230px !important;
-            margin-right: 45px;
+            margin-right: 48px;
             width: 240px!important;
             label{
                 line-height: 1em;
