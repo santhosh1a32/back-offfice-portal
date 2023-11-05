@@ -169,19 +169,21 @@ export default function CheckListModal({
       if (type === 'Driving License') {
         getDrivingLicense()
       }
-      if (type === 'Fuel & Mileage' && relatedRecordId) {
+      if (type === 'Fuel & Mileage') {
         let reqObj = {
           ...obj,
-          contractCheckListId,
-          relatedRecordId,
+          contractCheckListId,  
           upcomingContractVersionId
+        }
+        if (relatedRecordId) {
+          reqObj.relatedRecordId = relatedRecordId;
         }
         getDataWithParam('BackOfficePortalCtrl', 'returnMileageAndFuel', JSON.stringify(reqObj)).then(result => {
           console.log(result);
-          if (result && result.MileageAndFuelDetails) {
+          if (result) {
             let obj = {
-              mileage: checkListType === 'Delivery' ? result.MileageAndFuelDetails.startMileage : result.MileageAndFuelDetails.returnMileage,
-              fuelLevel: checkListType === 'Delivery' ? result.MileageAndFuelDetails.startFuel : result.MileageAndFuelDetails.returnFuel
+              mileage: label === 'capture_start_mileage_fuel_level' ? result.startMileage : result.MileageAndFuelDetails.returnMileage,
+              fuelLevel: label === 'capture_start_mileage_fuel_level' ? result.startFuelLevel : result.MileageAndFuelDetails.returnFuel
             }
             setMileageDetails(obj);
           }

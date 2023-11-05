@@ -47,7 +47,7 @@ export default function CheckList() {
   const [type,setTypeData] = useState("");
   const [label,setLabel] = useState("");
   const [currentSelectedRowId, setSelectedRow] = React.useState('');
-  const [relatedRecordId, setRelatedRecordId] = React.useState();
+  const [relatedRecordId, setRelatedRecordId] = React.useState(null);
   const [buttonEnable, setButtonEnable] = useState(false);
   const [uuidData, setUUIDData] = React.useState({});
   const upcomingContractVersionId = searchParams.get("upcomingContractVersionId");
@@ -83,12 +83,12 @@ export default function CheckList() {
         verifyCheckListItem(contractCheckListId,row);
       }
       else{
-        showCheckListModal(type, label, contractCheckListId, relatedRecordId=null, row);
+        showCheckListModal(type, label, contractCheckListId, relatedRecordId, row);
       }
     }
 
-    const showCheckListModal = (type, label, contractCheckListId, relatedRecordId=null, row) => {
-            setRelatedRecordId(relatedRecordId)
+    const showCheckListModal = (type, label, contractCheckListId, relatedRecordId, row) => {
+            setRelatedRecordId(relatedRecordId || null);
             setSelectedRow(contractCheckListId)
             setTypeData(type)
             setLabel(label);
@@ -110,6 +110,7 @@ export default function CheckList() {
           }
           getDataWithParam('BackOfficePortalCtrl', 'returnCheckListDetails', JSON.stringify(reqObj)).then(result => {
               setCheckList(result.CheckListDetails);
+              
              // checkVerified();
           })
       }
