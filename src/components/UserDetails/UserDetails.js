@@ -34,7 +34,8 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
 import UpcomingContractConfirm from './UpcomingContractConfirm';
 import DontPauseModal from './DontPauseModal';
-import DontCancelModal from './DontCancelModal'
+import DontCancelModal from './DontCancelModal';
+import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 
 import dayjs from 'dayjs';
 
@@ -57,6 +58,8 @@ const UserDetails = () => {
     const [invoiceDetails, setInvoiceDetails] = React.useState([]);
     const [otherPaymentsDetails, setOtherPaymentsDetails] = React.useState([]);
     const [contractContactDetails, setContractContactDetails] = React.useState([]);
+    const [pauseCancelReasons, setPauseCancelReasons] = React.useState();
+    const [contractChangeRequestType, setContractChangeRequestType] = React.useState();
     const [snackBarConfig, setSnackbarConfig] = React.useState({
         openToast: false,
         vertical: 'top',
@@ -171,6 +174,7 @@ const UserDetails = () => {
         if (window['BackOfficePortalCtrl']) {
             getDataWithoutParam('BackOfficePortalCtrl', 'getPauseCancelReasons').then(result => {
                 console.log(result);
+                setPauseCancelReasons(result.pauseReasons);
                 // updateContractDetails(result);
             })
         }
@@ -203,18 +207,33 @@ const UserDetails = () => {
         }
     }
 
-    const pauseSubscription = (startDate, endDate = '') => {
+    const pauseContract = (changeRequestType,contractType) => {
+        console.log("In Edit Contract");
+       // if(contractType === "Paused"){
+        if(contractType){
+        setContractChangeRequestType(changeRequestType);
+        setPauseDialog(true);
+        }
+        else{
+            navigateToManageContract();  
+        }
+       // }
+       // pauseSubscription()
+    }
+    const pauseSubscription = (startDate, endDate = '', pauseReason) => {
+        console.log(pauseReason);
         const activeContractVersion = getActiveContractVersionDetails();
         const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
         const upcomingContractVersion = getUpcomingContractVersionDetails();
         const upcomingContractVersionId = upcomingContractVersion && upcomingContractVersion.length ? upcomingContractVersion[0].contractVersionId: '';
         const obj = {
-            contractChangeRequestType: "Pause Subscription",
+            contractChangeRequestType: contractChangeRequestType,
             contractId: contractDetails.contractId, //mandatory
             contractVersionId: activeContractVersionId, //mandatory
             newVersionStartDate: dayjs(startDate).format('YYYY-MM-DD'),
             newVersionEndDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null, //Optional
-            comments: ""
+            comments: "",
+            pauseReasonId:pauseReason
         }
         if(contractDetails.contractUUID) {
             obj.contractUUID = contractDetails.contractUUID;
@@ -391,7 +410,7 @@ const UserDetails = () => {
                     </Button>
                 )}
                 {contractVersion && contractVersion.length && !contractVersion[0].isUpcomingPause && (
-                    <Button size='small' variant="contained" className='action-btn' onClick={() => setPauseDialog(true)}>
+                    <Button size='small' variant="contained" className='action-btn' onClick={() => pauseContract("Pause Subscription",true)}>
                         <PauseCircleOutlinedIcon />
                         <span style={{ marginLeft: '6px' }}>Pause Subscription</span>
                     </Button>
@@ -436,10 +455,12 @@ const UserDetails = () => {
                                         <Typography>
                                             {`${contract.contractVersionNumber ? contract.contractVersionNumber : ''} - (${contract.startDate} - ${contract.endDate || ''})`}
                                         </Typography>
-                                        {contract.headerStatus && contract.headerStatus !== 'Inactive' && (
+                                        {contract.headerStatus && contract.headerStatus !== 'Inactive' && (<>             
                                             <span className='ml-10'>
                                                 <Chip variant="outlined" label={contract.headerStatus} color={contract.headerStatus === 'Upcoming' ? 'warning' : 'success'} className={contract.headerStatus === 'Upcoming' ? 'chip-warning' : 'chip-success'} />
                                             </span>
+                                            {contract.headerStatus === 'Upcoming' && <EditTwoToneIcon onClick={()=>pauseContract("Edit Pause",contract.isUpcomingPause)}/>}
+                                            </>
                                         )}
                                     </AccordionSummary>
                                     <AccordionDetails>
@@ -492,6 +513,7 @@ const UserDetails = () => {
                     open={openPauseDialog}
                     handleClose={closePauseDialog}
                     handleSubmit={pauseSubscription}
+                    pauseCancelReasons={pauseCancelReasons}
                 />
             )}
             {openCancelDialog && (
