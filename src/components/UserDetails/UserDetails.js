@@ -19,7 +19,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { CONTRACT_DETAILS } from './mockData';
 import Chip from '@mui/material/Chip';
-import { getDataWithParam, saveDataWithParam } from '../../DataService';
+import { getDataWithParam, saveDataWithParam, getDataWithoutParam } from '../../DataService';
 import { useSearchParams, useNavigate, createSearchParams } from 'react-router-dom';
 import { Button } from '@mui/material';
 import PauseSubscriptionModal from './PauseSubscriptionModal';
@@ -167,6 +167,15 @@ const UserDetails = () => {
         return contractVersion.filter(item => item.status === 'Upcoming');
     }
 
+    const getPauseCancelReasons = () => {
+        if (window['BackOfficePortalCtrl']) {
+            getDataWithoutParam('BackOfficePortalCtrl', 'getPauseCancelReasons').then(result => {
+                console.log(result);
+                // updateContractDetails(result);
+            })
+        }
+    }
+
     const changeContract = (obj) => {
         if (window['BackOfficePortalCtrl']) {
             saveDataWithParam('BackOfficePortalCtrl', 'contractChangeRequest', JSON.stringify(obj)).then(result => {
@@ -197,6 +206,8 @@ const UserDetails = () => {
     const pauseSubscription = (startDate, endDate = '') => {
         const activeContractVersion = getActiveContractVersionDetails();
         const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
+        const upcomingContractVersion = getUpcomingContractVersionDetails();
+        const upcomingContractVersionId = upcomingContractVersion && upcomingContractVersion.length ? upcomingContractVersion[0].contractVersionId: '';
         const obj = {
             contractChangeRequestType: "Pause Subscription",
             contractId: contractDetails.contractId, //mandatory
@@ -210,6 +221,12 @@ const UserDetails = () => {
         }
         if(contractVersion && contractVersion.length && contractVersion[0].contractVersionUUID && contractVersion[0].headerStatus === 'Upcoming'){
             obj.upcomingContractVersionUUID = contractVersion[0].contractVersionUUID;
+        }
+        if(activeContractVersionId && activeContractVersion[0].contractVersionUUID){
+            obj.contractVersionUUID = activeContractVersion[0].contractVersionUUID;
+        }
+        if(upcomingContractVersionId) {
+            obj.upcomingContractVersionId = upcomingContractVersionId;
         }
         changeContract(obj);
         setSnackbarConfig({ ...snackBarConfig, open: true, toastMessage: 'Contract Updated Successfully' });
@@ -337,6 +354,7 @@ const UserDetails = () => {
         getInvoiceDetails();
         getOtherPaymentsDetails();
         getContractContacts();
+        getPauseCancelReasons();
     },[contractDetails])
 
     React.useEffect(() => {
