@@ -174,7 +174,7 @@ const UserDetails = () => {
         if (window['BackOfficePortalCtrl']) {
             getDataWithoutParam('BackOfficePortalCtrl', 'getPauseCancelReasons').then(result => {
                 console.log(result);
-                setPauseCancelReasons(result.pauseReasons);
+                setPauseCancelReasons(result);
                 // updateContractDetails(result);
             })
         }
@@ -269,13 +269,14 @@ const UserDetails = () => {
         setSnackbarConfig({ ...snackBarConfig, open: true, toastMessage: 'Contract Updated Successfully' });
     }
 
-    const cancelSubscription = (endDate) => {
+    const cancelSubscription = (endDate, cancelReason) => {
         const activeContractVersion = getActiveContractVersionDetails();
         const activeContractVersionId = activeContractVersion && activeContractVersion.length ? activeContractVersion[0].contractVersionId : '';
         const obj = {
             contractChangeRequestType: "Cancel Subscription",
             contractId: contractDetails.contractId, //mandatory
             contractVersionId: activeContractVersionId, //mandatory
+            cancelReasonId: cancelReason,
             newVersionEndDate: dayjs(endDate).format('YYYY-MM-DD'), //mandatory
             comments: ""
         }
@@ -513,7 +514,7 @@ const UserDetails = () => {
                     open={openPauseDialog}
                     handleClose={closePauseDialog}
                     handleSubmit={pauseSubscription}
-                    pauseCancelReasons={pauseCancelReasons}
+                    pauseCancelReasons={pauseCancelReasons.pauseReasons}
                 />
             )}
             {openCancelDialog && (
@@ -522,6 +523,7 @@ const UserDetails = () => {
                     handleClose={closeCancelDialog}
                     showPauseModal={showPauseModal}
                     handleSubmit={cancelSubscription}
+                    cancelReasons={pauseCancelReasons.cancelReasons}
                 />
             )}
             {openMangeContractDialog && (
