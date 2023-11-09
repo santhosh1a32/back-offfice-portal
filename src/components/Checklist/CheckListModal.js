@@ -4,8 +4,6 @@ import { getDataWithParam, saveDataWithParam } from '../../DataService';
 import MileageCaptureModal from "./MileageCaptureModal";
 import VehicleAllocationModal from './VehicleAllocationModal';
 import DrivingLicenseModal from "./DrivingLicenseModal";
-import PickupAddressModal from "./PickupAddressModal";
-import AddressModal from "./AddressModal";
 import CollectionAddress from './CollectionAddressModal';
 import DeliveryAddressModal from "./DeliveryAddressModal";
 
@@ -182,8 +180,8 @@ export default function CheckListModal({
           console.log(result);
           if (result) {
             let obj = {
-              mileage: label === 'capture_start_mileage_fuel_level' ? result.startMileage : result.MileageAndFuelDetails.returnMileage,
-              fuelLevel: label === 'capture_start_mileage_fuel_level' ? result.startFuelLevel : result.MileageAndFuelDetails.returnFuel
+              mileage: label === 'capture_start_mileage_fuel_level' ? result.startMileage : result.returnMileage,
+              fuelLevel: label === 'capture_start_mileage_fuel_level' ? result.startFuelLevel : result.returnFuel
             }
             setMileageDetails(obj);
           }
@@ -205,7 +203,7 @@ export default function CheckListModal({
       />
     )
   }
-  if (label === 'Fuel & Mileage') {
+  if (label === 'capture_end_mileage_fuel_level') {
     return (
       <MileageCaptureModal
         open={open}
@@ -250,14 +248,14 @@ export default function CheckListModal({
       handleSubmit={updateChecklistRequest}/>
     );
   }
-  // else if (label === "customer_handshake") {
-  //   return (
-  //     <CollectionAddress
-  //     open={open}
-  //     contractCheckListId={contractCheckListId}
-  //     upcomingContractVersionId={upcomingContractVersionId}
-  //     handleClose={handleClose}
-  //     handleSubmit={updatePickUpAddress}/>
-  //   )
-  // }
+  else if (label === "collection_date_address_verification") {
+    return (
+      <CollectionAddress
+      open={open}
+      contractCheckListId={contractCheckListId}
+      upcomingContractVersionId={upcomingContractVersionId}
+      handleClose={handleClose}
+      handleSubmit={updateChecklistRequest}/>
+    )
+  }
 }

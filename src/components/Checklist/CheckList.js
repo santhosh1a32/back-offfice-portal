@@ -18,6 +18,7 @@ import { CHECKLIST } from "./checklistMockData";
 import SectionWithTitle from '../common/SectionWithTitle';
 import { getDataWithParam } from '../../DataService';
 import { Checklist } from "@mui/icons-material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const columns = [
   { field: "displayOrder", label: "Sl. No", minWidth: 50 },
@@ -162,7 +163,7 @@ export default function CheckList() {
           getDataWithParam('BackOfficePortalCtrl', 'updateChecklistRequest', JSON.stringify(obj)).then(result => {
             if (result && result.status === 'Success') {
               console.log("success");
-			  handleClick();
+			        handleClick();
           } else {
               console.log('error')
           }
@@ -185,6 +186,10 @@ export default function CheckList() {
     return (
       <>
         <Grid container spacing={3}>
+        <Button size="small" variant="outlined" className="action-btn" onClick={()=>navigate(-1)} sx={{marginLeft: '1.5rem',marginTop: '1rem'}}>
+                    <ArrowBackIcon/>
+                    <span style={{ marginLeft: '6px' }}>Back</span>
+                </Button>
           {/* <SectionWithTitle title={"Pickup Checklist"}></SectionWithTitle> */}
           <Snackbar
             anchorOrigin={{ vertical, horizontal }}
@@ -197,11 +202,11 @@ export default function CheckList() {
             <Grid item xs={12}>
             <Paper className="checklist">
             <h4>{Value.toUpperCase()}</h4>
-              <div className="button-grp">
-              <Button size="small" variant="contained" disabled={!buttonEnable}  onClick={completeCheckList} className="checklist-conmplete"> Complete </Button>
+              {/* <div className="button-grp">
+              <Button size="small" variant="contained" disabled={!buttonEnable}  onClick={completeCheckList} className="checklist-conmplete"> Complete </Button> */}
               {/* <Button size="small" variant="contained" disabled={this.checkVerified()} onClick={completeCheckList} className="checklist-conmplete"> Complete </Button> */}
-              <Button size="small" variant="outlined" onClick={cancelCheckList}> Cancel  </Button>
-              </div>
+              {/* <Button size="small" variant="outlined" onClick={cancelCheckList}> Cancel  </Button>
+              </div> */}
            
            
             <TableContainer>
@@ -228,7 +233,7 @@ export default function CheckList() {
                            {column.field === "taskCustomerVerified" ||
                            column.field === "taskAgentVerified" ? (
                              <Checkbox disabled checked={row[column.field]} />
-                           ) : ( column.field === "actionLink"?<Button onClick={() => verifyCheckList(row.inputType, row.label, row.contractCheckListId, row.relatedRecordId, row)}>{row[column.field]}</Button>:
+                           ) : ( column.field === "actionLink"?<Button disabled={row.actionLink === ""} onClick={() => verifyCheckList(row.inputType, row.label, row.contractCheckListId, row.relatedRecordId, row)}>{row[column.field]}</Button>:
                             row[column.field] 
                            )
                           }

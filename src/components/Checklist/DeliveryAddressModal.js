@@ -153,10 +153,3 @@
 
   }
 
-  /**            "deliveryAddress": {
-                  "addressLine1": "25 Nordallee",
-                  "city": "München-Flughafen",
-                  "countryIsoCode": "DE",
-                  "postalCode": "85356",
-                  "state": "BY"
-              } */

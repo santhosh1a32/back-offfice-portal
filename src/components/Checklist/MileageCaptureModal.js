@@ -78,7 +78,7 @@ export default function MileageCaptureModal({
             <DialogTitle>Subscribe</DialogTitle>
             <DialogContent>
                 <DialogContentText style={{ marginBottom: '8px' }}>
-                    Please enter Start Mileage and Start Fuel Level
+                    Please enter {mileageLabel} and {fuelLevelLabel}
                 </DialogContentText>
                 <div style={{ marginBottom: '6px' }}>
                     <TextField
