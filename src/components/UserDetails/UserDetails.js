@@ -388,18 +388,6 @@ const UserDetails = () => {
                     <ChecklistOutlinedIcon/>
                     <span style={{ marginLeft: '6px' }}>Checklist</span>
                 </Button>
-                {/* <Button size="small" variant="outlined" className="action-btn" onClick={() => deliveryCheckList()} >
-                    <ChecklistOutlinedIcon/>
-                    <span style={{ marginLeft: '6px' }}>Delivery Checklist</span>
-                </Button>
-                <Button size="small" variant="outlined" className="action-btn" onClick={() => collectionCheckList()} >
-                    <ChecklistOutlinedIcon/>
-                    <span style={{ marginLeft: '6px' }}>Collection Checklist</span>
-                </Button> */}
-                {/* <Button size='small' variant="outlined" className='action-btn' onClick={() => setManageContractDialog(true)}>
-                    <SettingsOutlinedIcon />
-                    <span style={{ marginLeft: '6px' }}>Manage Contract</span>
-                </Button>    */}
                 <Button size='small' variant="outlined" className='action-btn' onClick={() => navigateToManageContract()}>
                     <SettingsOutlinedIcon />
                     <span style={{ marginLeft: '6px' }}>Manage Contract</span>
@@ -498,8 +486,6 @@ const UserDetails = () => {
                         </Grid>
                     </SectionWithTitle>
                 </Grid>
-
-
             </Grid>
 
             <ContractContactDetails contractContactDetails={contractContactDetails} />                           
@@ -544,7 +530,7 @@ const UserDetails = () => {
             )}
             {openDontCancelDialog && (
                 <DontCancelModal
-                    open={openDontPauseDialog}
+                    open={openDontCancelDialog}
                     handleClose={closeDontCancelDialog}
                     handleSubmit={dontCancelSubscription}
                 />

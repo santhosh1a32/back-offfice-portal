@@ -12,7 +12,7 @@ export default function DontCancelModal({ open, handleClose, handleSubmit }) {
     return (
         <Dialog open={open} onClose={handleClose}>
             <DialogTitle sx={{ m: 0, p: 2 }}>
-                Don't Pause
+                Don't Cancel
                 <IconButton
                     aria-label="close"
                     onClick={handleClose}
