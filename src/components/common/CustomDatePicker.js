@@ -19,6 +19,7 @@ export default function CustomDatePicker({
                     value={value}
                     onChange={(newValue) => onChangeHandler(newValue)}
                     disablePast={disablePast}
+                    format='DD/MM/YYYY'
                 />
             </DemoContainer>
         </LocalizationProvider>

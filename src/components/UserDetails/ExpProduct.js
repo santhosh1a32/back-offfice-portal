@@ -49,18 +49,16 @@ export default function ExpProduct({expDetails= []}) {
       <Table size="small" className='bck-office-table'>
         <TableHead>
           <TableRow>
-            <TableCell>EP Id</TableCell>
-            <TableCell>EP Name</TableCell>
-            <TableCell>EP type</TableCell>
+            <TableCell>Experience Product Name</TableCell>
+            <TableCell>Experience Product type</TableCell>
             <TableCell>Gross Amount</TableCell>
             <TableCell>Net Amount</TableCell>
-            <TableCell>Tax</TableCell>
+            <TableCell>Tax Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {expDetails.map((row) => (
             <TableRow key={row.contractVersionEPId}>
-              <TableCell>{row.contractVersionEPNumber}</TableCell>
               <TableCell>{row.experienceProductName}</TableCell>
               <TableCell>{row.experienceProductType}</TableCell>
               <TableCell>{row.grossAmount}</TableCell>

@@ -30,10 +30,8 @@ export default function Products({ bpDetails, title='Base Product' }) {
       <Table size="small" className='bck-office-table'>
         <TableHead>
           <TableRow>
-            <TableCell>BP Id</TableCell>
-            <TableCell>BP Name</TableCell>
-            <TableCell>Vehicle</TableCell>
-            <TableCell>Price Allocation Type</TableCell>
+            <TableCell>Base Product Name</TableCell>
+            <TableCell>Allocated Vehicle</TableCell>
             <TableCell>Gross Amount</TableCell>
             <TableCell>Net Amount</TableCell>
             <TableCell>Tax Amount</TableCell>
@@ -41,10 +39,8 @@ export default function Products({ bpDetails, title='Base Product' }) {
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell>{contractVersionBPNumber}</TableCell>
             <TableCell>{productName}</TableCell>
             <TableCell>{currentVehicle.vehicleId}</TableCell>
-            <TableCell>{priceAllocationType}</TableCell>
             <TableCell>{grossAmount}</TableCell>
             <TableCell>{netAmount}</TableCell>
             <TableCell>{taxAmount}</TableCell>

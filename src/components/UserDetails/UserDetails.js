@@ -36,6 +36,7 @@ import UpcomingContractConfirm from './UpcomingContractConfirm';
 import DontPauseModal from './DontPauseModal';
 import DontCancelModal from './DontCancelModal';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
+import RescheduleCancelSubscriptionModal from './RescheduleCancelSubscriptionModal';
 
 import dayjs from 'dayjs';
 
@@ -43,6 +44,59 @@ const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+const columns = [
+    { 
+       "manage_contract_button":{
+        label: "Manage Contract",
+        method:"navigateToManageContract",
+        variant:"outlined",
+       // color: "",
+        icon: <SettingsOutlinedIcon />
+        },
+        "pause_button": {
+        label: "Pause Subscription",
+        variant:"contained",
+       // color: "",
+        icon: <PauseCircleOutlinedIcon />
+        },
+        "cancel_button" : {
+        label: "Cancel Subscription",  
+        variant:"contained",
+        color: "error",    
+        icon:  <CancelOutlinedIcon />
+        },
+       "reschedule_pause_button":{
+        label: "Reschedule Pause", 
+        variant:"contained",
+       // color: "",
+        icon: <PauseCircleOutlinedIcon />
+        },
+       "dont_pause_button":{
+        label: "Don't Pause", 
+        variant:"contained",
+        //color: "",     
+        icon: <PauseCircleOutlinedIcon />
+        },
+       "dont_cancel_button":{
+        label: "Don't Cancel",
+        variant:"contained", 
+        color: "error",  
+        icon: <CancelOutlinedIcon />
+        },
+       "reschedule_cancel_button":{
+        label: "Reschedule Cancel",  
+        variant:"contained",
+        color: "error",    
+        icon: <CancelOutlinedIcon />
+        },
+       "resume_button":{
+        label: "Resume Subscription",
+        variant:"contained",
+      //  color: "",      
+        icon: <PauseCircleOutlinedIcon />
+        }
+       }
+  ];
 
 const UserDetails = () => {
     const [expanded, setExpanded] = React.useState();
@@ -53,12 +107,15 @@ const UserDetails = () => {
     const [openDontPauseDialog, setDontPauseDialog] = React.useState(false);
     const [openDontCancelDialog, setDontCancelDialog] = React.useState(false);
     const [openMangeContractDialog, setManageContractDialog] = React.useState(false);
+    const [openRescheduleCancelDialog,setRescheduleCancelDialog] = React.useState(false);
     const [activeContractVersionId, setActiveContractVersionId] = React.useState();
     const [driverDetails, setDriverDetails] = React.useState([]);
     const [invoiceDetails, setInvoiceDetails] = React.useState([]);
     const [otherPaymentsDetails, setOtherPaymentsDetails] = React.useState([]);
     const [contractContactDetails, setContractContactDetails] = React.useState([]);
-    const [pauseCancelReasons, setPauseCancelReasons] = React.useState();
+    const [pauseCancelReasons, setPauseCancelReasons] = React.useState(CONTRACT_DETAILS.pauseCancelReasons);
+    const [pausecontractData,setPauseContractData] = React.useState();
+    const [cancelcontractData,setCancelContractData] = React.useState();
     const [contractChangeRequestType, setContractChangeRequestType] = React.useState();
     const [snackBarConfig, setSnackbarConfig] = React.useState({
         openToast: false,
@@ -124,6 +181,10 @@ const UserDetails = () => {
         setDontCancelDialog(false);
     }
 
+    const closeRescheduleCancelDialog = () => {
+        setRescheduleCancelDialog(false);
+    }
+
     const closeManageContractDialog = () => {
         setManageContractDialog(false);
     }
@@ -133,6 +194,41 @@ const UserDetails = () => {
         setPauseDialog(true);
     }
 
+    const buttonClicked = (param) => {
+        console.log(param); 
+        if(param === "manage_contract_button"){
+           console.log(param); 
+           navigateToManageContract()
+        }
+        else if(param === "cancel_button"){
+            setCancelDialog(true)
+        }
+        else if(param === "pause_button"){
+            console.log(param); 
+            pauseContract("Pause Subscription",true)
+            
+        }
+        else if(param === "reschedule_pause_button"){
+            console.log(param); 
+            pauseContract("Edit Pause",contractVersion[0].isUpcomingPause)
+        }
+        else if(param === "dont_pause_button"){
+            console.log(param); 
+            setDontPauseDialog(true);
+        }
+        else if(param === "dont_cancel_button"){
+            console.log(param); 
+            setDontCancelDialog(true);     
+        }
+        else if(param === "reschedule_cancel_button"){
+            console.log(param); 
+            rescheduleCancel();
+        }
+        else if(param === "resume_button"){
+            console.log(param); 
+        }
+
+    }
     const onToastClose = () => {
         setSnackbarConfig({ ...snackBarConfig, openToast: false });
     }
@@ -142,14 +238,15 @@ const UserDetails = () => {
     const tempContractDetails = {
         contractNumber: contractDetails.contractNumber,
         contractType: contractDetails.contractType,
-        customerName: contractDetails.firstName + ' ' + contractDetails.lastName,
+        customerName: contractDetails.fullName,
         customerId: contractDetails.customerId,
         status: contractDetails.status,
         renewalType: contractDetails.renewalfrequency,
         mobile: contractDetails.mobile,
         email: contractDetails.email,
         contractStartDate: contractDetails.startDate,
-        contractEndDate: contractDetails.endDate
+        contractEndDate: contractDetails.endDate,
+        subStatus: contractDetails.subStatus
     }
 
     const getContractDetails = () => {
@@ -208,10 +305,23 @@ const UserDetails = () => {
     }
 
     const pauseContract = (changeRequestType,contractType) => {
-        console.log("In Edit Contract");
+        console.log("In Edit Contract" + changeRequestType);
        // if(contractType === "Paused"){
         if(contractType){
         setContractChangeRequestType(changeRequestType);
+        let obj ={};
+        let upcomingContractVersionData = getUpcomingContractVersionDetails();
+        let [day, month, year] = upcomingContractVersionData[0].startDate.split('/')
+        let dateObj = new Date(+year, +month - 1, +day)
+        obj.startDate = dayjs(dateObj);
+        if(upcomingContractVersionData[0].endDate !== "Unlimited"){
+            let [day, month, year] = upcomingContractVersionData[0].endDate.split('/')
+            let dateObj = new Date(+year, +month - 1, +day)
+            obj.endDate = dayjs(dateObj);
+        }
+        obj.pauseReasonId = upcomingContractVersionData[0].pauseReasonId;
+        obj.pauseReasonOther = upcomingContractVersionData[0].pauseReasonOther || '';
+        setPauseContractData(obj);
         setPauseDialog(true);
         }
         else{
@@ -220,6 +330,18 @@ const UserDetails = () => {
        // }
        // pauseSubscription()
     }
+
+    const rescheduleCancel = () =>{
+        let obj ={};
+        let [day, month, year] = contractDetails.endDate.split('/')
+        let dateObj = new Date(+year, +month - 1, +day)
+        obj.cancelDate = dayjs(dateObj);
+        obj.cancellationReasonId = contractDetails.cancellationReasonId;
+        setCancelContractData(obj);
+        setRescheduleCancelDialog(true);
+        
+    }
+
     const pauseSubscription = (startDate, endDate = '', pauseReason) => {
         console.log(pauseReason);
         const activeContractVersion = getActiveContractVersionDetails();
@@ -388,17 +510,32 @@ const UserDetails = () => {
                     <ChecklistOutlinedIcon/>
                     <span style={{ marginLeft: '6px' }}>Checklist</span>
                 </Button>
+                   {
+                contractDetails.actionButtonsList.map((button) => (
+                    columns.map((column) => (
+                        <Button size='small' variant={column[button].variant}  color={column[button].color} className='action-btn' onClick={()=>buttonClicked(button)}>
+                            {column[button].icon}
+                            <span style={{ marginLeft: '6px' }}>{column[button].label}</span>
+                        </Button>
+                    ))
+                ))
+                 }  
+                
+                {/* {
+                contractVersion && contractVersion.length && !contractVersion[0].isUpcomingPause &&
                 <Button size='small' variant="outlined" className='action-btn' onClick={() => navigateToManageContract()}>
                     <SettingsOutlinedIcon />
                     <span style={{ marginLeft: '6px' }}>Manage Contract</span>
                 </Button>
+                }
                 {contractVersion && contractVersion.length && contractVersion[0].isUpcomingPause && (
-                    <Button size='small' variant="contained" className='action-btn' onClick={() => setDontPauseDialog(true)}>
-                        <PauseCircleOutlinedIcon />
-                        <span style={{ marginLeft: '6px' }}>Don't Pause</span>
-                    </Button>
+                <Button size='small' variant="contained" className='action-btn' onClick={()=>pauseContract("Edit Pause",contractVersion[0].isUpcomingPause)}>
+                   <PauseCircleOutlinedIcon />
+                        <span style={{ marginLeft: '6px' }}>Reschedule Pause</span>
+                 </Button>
+                    
                 )}
-                {contractVersion && contractVersion.length && !contractVersion[0].isUpcomingPause && (
+                {!contractDetails.cancellationReasonId && contractVersion && contractVersion.length && !contractVersion[0].isUpcomingPause && (
                     <Button size='small' variant="contained" className='action-btn' onClick={() => pauseContract("Pause Subscription",true)}>
                         <PauseCircleOutlinedIcon />
                         <span style={{ marginLeft: '6px' }}>Pause Subscription</span>
@@ -411,11 +548,17 @@ const UserDetails = () => {
                     </Button>
                 )}
                 {tempContractDetails && tempContractDetails.contractEndDate !== 'Unlimited' && (
+                    <>
                     <Button size='small' variant="contained" color="error" className='action-btn' onClick={() => setDontCancelDialog(true)}>
                         <CancelOutlinedIcon />
                         <span style={{ marginLeft: '6px' }}>Don't Cancel</span>
                     </Button>
-                )}
+                    <Button size='small' variant="contained" color="error" className='action-btn' onClick={() => rescheduleCancel()}>
+                      <CancelOutlinedIcon />
+                      <span style={{ marginLeft: '6px' }}>Reschedule Cancel</span>
+                  </Button>
+                  </>
+                )} */}
                 {/* Info Banner */}
 
             </div>
@@ -448,7 +591,7 @@ const UserDetails = () => {
                                             <span className='ml-10'>
                                                 <Chip variant="outlined" label={contract.headerStatus} color={contract.headerStatus === 'Upcoming' ? 'warning' : 'success'} className={contract.headerStatus === 'Upcoming' ? 'chip-warning' : 'chip-success'} />
                                             </span>
-                                            {contract.headerStatus === 'Upcoming' && <EditTwoToneIcon onClick={()=>pauseContract("Edit Pause",contract.isUpcomingPause)}/>}
+                                            {/* {contract.headerStatus === 'Upcoming' && <EditTwoToneIcon onClick={()=>pauseContract("Edit Pause",contract.isUpcomingPause)}/>} */}
                                             </>
                                         )}
                                     </AccordionSummary>
@@ -500,6 +643,7 @@ const UserDetails = () => {
                     open={openPauseDialog}
                     handleClose={closePauseDialog}
                     handleSubmit={pauseSubscription}
+                    pausecontractData={pausecontractData}
                     pauseCancelReasons={pauseCancelReasons.pauseReasons}
                 />
             )}
@@ -535,6 +679,16 @@ const UserDetails = () => {
                     handleSubmit={dontCancelSubscription}
                 />
             )}
+            {openRescheduleCancelDialog && (
+                <RescheduleCancelSubscriptionModal
+                open={openRescheduleCancelDialog}
+                handleClose={closeRescheduleCancelDialog}
+                handleSubmit={cancelSubscription}
+                cancelcontractData={cancelcontractData}
+                cancelReasons={pauseCancelReasons.cancelReasons}
+                />
+            )
+            }
             <Snackbar
                 anchorOrigin={{ vertical, horizontal }}
                 open={snackBarConfig.openToast}

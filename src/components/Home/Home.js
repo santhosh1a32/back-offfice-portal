@@ -53,7 +53,7 @@ const Home = () => {
             {/* Recent Orders */}
             <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                    <SearchCustomer />
+                    {/* <SearchCustomer /> */}
                     <Orders allContractDetails={allContractDetails}/>
                 </Paper>
             </Grid>

@@ -14,19 +14,26 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-export default function PauseSubscriptionModal({ open, handleClose, handleSubmit, pauseCancelReasons}) {
-    const [startDate, updateStartDate] = React.useState();
-    const [endDate, updateEndDate] = React.useState();
+export default function PauseSubscriptionModal({ open, handleClose, handleSubmit, pausecontractData, pauseCancelReasons}) {
     const [currentStep, updateStep] = React.useState(1);
     const [pauseReason, setPauseReason] = React.useState();
-    const changeDate = (type, val) => {
-        if (type === 'start') {
-            updateStartDate(val)
-        }
-        if (type === 'end') {
-            updateEndDate(val)
-        }
+    const [pauseData, setPauseData] = React.useState({});
+
+    const onChangeHandler = (val,name) => {
+        let obj = { ...pauseData };
+            console.log(val, 'value');
+            console.log(name, 'name');
+            obj[name] = val;
+        setPauseData(obj);
     }
+
+    React.useEffect(() => {
+        if (pausecontractData) {
+            setPauseData({ ...pausecontractData });
+            console.log(pauseData);
+        }
+    }, [pausecontractData])
+
 
     return (
         <Dialog open={open} onClose={handleClose}>
@@ -55,16 +62,18 @@ export default function PauseSubscriptionModal({ open, handleClose, handleSubmit
                             <CustomDatePicker
                                 className='pause-modal'
                                 label="Start Date"
-                                value={startDate}
-                                onChangeHandler={(val) => changeDate('start', val)}
+                                name='startDate'
+                                value={pauseData.startDate}
+                                onChangeHandler={(val) => onChangeHandler(val,'startDate')}
                                 disablePast={true}
                             />
                             <CustomDatePicker
                                 className='pause-modal'
                                 label="End Date"
-                                value={endDate}
+                                name='endDate'
+                                value={pauseData.endDate}
                                 disablePast={true}
-                                onChangeHandler={(val) => changeDate('end', val)}
+                                onChangeHandler={(val) => onChangeHandler(val,'endDate')}
                             />
                             <FormControl fullWidth className='pause-modal'>
                             <InputLabel id="demo-simple-select-pause-label">Pause Reason</InputLabel>
@@ -72,12 +81,15 @@ export default function PauseSubscriptionModal({ open, handleClose, handleSubmit
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 label="Pause Reason"
-                                onChange={(e) => setPauseReason(e.target.value)}
-                            >                             
-                                {
-                                Object.entries(pauseCancelReasons).map(([key,value]) =>
-                                 (<MenuItem value={key}>{value}</MenuItem>)
-                                 )}
+                                name='pauseReasonId'
+                                value={pauseData.pauseReasonId}
+                                onChange={(val) => onChangeHandler(val.target.value,'pauseReasonId')}
+                            >   
+                            {
+                                Object.entries(pauseCancelReasons).map((pauseReason) =>
+                                (<MenuItem key={pauseReason[0]} value={pauseReason[0]}>
+                                    {pauseReason[1]}</MenuItem>)
+                                )}                          
                             </Select>
                             </FormControl>
                         </React.Fragment>
@@ -85,7 +97,7 @@ export default function PauseSubscriptionModal({ open, handleClose, handleSubmit
                     {currentStep === 2 && (
                         <React.Fragment>
                             <DialogContentText>
-                                <span>Your Subscription will be paused from {dayjs(startDate).format('DD/MM/YYYY')} .</span>
+                                <span>Your Subscription will be paused from {dayjs(pauseData.startDate).format('DD/MM/YYYY')} .</span>
                                 <span><Button variant="text" onClick={()=> updateStep(1)}>Click here</Button> to modify or click Submit to proceed</span>
                             </DialogContentText>
                         </React.Fragment>
@@ -95,7 +107,7 @@ export default function PauseSubscriptionModal({ open, handleClose, handleSubmit
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
                 {currentStep === 1 && <Button onClick={()=> updateStep(2)}>Next</Button>}
-                {currentStep === 2 && <Button onClick={() => handleSubmit(startDate, endDate, pauseReason)}>Submit</Button>}
+                {currentStep === 2 && <Button onClick={() => handleSubmit(pauseData.startDate, pauseData.endDate, pauseData.pauseReasonId)}>Submit</Button>}
             </DialogActions>
         </Dialog>
     )

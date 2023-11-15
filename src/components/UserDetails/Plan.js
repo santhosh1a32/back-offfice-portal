@@ -13,22 +13,18 @@ export default function Plan({planDetails=[]}) {
       <Table size="small" className='bck-office-table'>
         <TableHead>
           <TableRow>
-            <TableCell>Plan Id</TableCell>
             <TableCell>Plan Name</TableCell>
-            <TableCell>Insurance</TableCell>
-            <TableCell>Mileage Included</TableCell>
+            <TableCell>Description</TableCell>
             <TableCell>Gross Amount</TableCell>
             <TableCell>Net Amount</TableCell>
-            <TableCell>Tax</TableCell>
+            <TableCell>Tax Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {planDetails.map((row) => (
             <TableRow key={row.contractVersionPlanId}>
-              <TableCell>{row.contractVersionPlanNumber}</TableCell>
               <TableCell>{row.planName}</TableCell>
-              <TableCell>{row.insuranceExcess}</TableCell>
-              <TableCell>{row.includedMileage}</TableCell>
+              <TableCell>{row.description}</TableCell>
               <TableCell>{row.grossAmount}</TableCell>
               <TableCell>{row.netAmount}</TableCell>
               <TableCell>{row.taxAmount}</TableCell>

@@ -75,11 +75,24 @@ body {
 .search-input{
   
 }
+.contracts-title{
+  margin-top: 0.8rem !important;
+}
 
 .contract-details{
   display: 'flex';
   flex-direction: 'column';
   margin-bottom: 1rem;
+}
+
+.contract-search{
+  .MuiFormControl-root.MuiTextField-root{
+    min-width: 20rem;
+  }
+  // #standard-basic-search{
+  // width: 22%;
+  // margin-bottom: 1rem;
+  // }
 }
 
 .App {
