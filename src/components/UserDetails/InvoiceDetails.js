@@ -18,12 +18,11 @@ import "./DriverDetails.scss";
 
 const columns = [
   { field: "invoiceNumber", label: "Invoice Number", minWidth: 170 },
-  { field: "invoiceDate", label: "Invoice Date", minWidth: 100 },
-  { field: "invoiceType", label: "Invoice Type", minWidth: 100 },
-  { field: "invoiceDue", label: "Invoice Due", minWidth: 100 },
-  { field: "invoicePaid", label: "Invoice Paid", minWidth: 100 },
-  { field: "invoiceRemaining", label: "Invoice Remaining", minWidth: 100 },
-  { field: "invoiceStatus", label: "Invoice Status", minWidth: 100 }
+  { field: "invoiceStartDate", label: "Period Start Date", minWidth: 100 },
+  { field: "invoiceEndDate", label: "Period End Date", minWidth: 100 },
+  { field: "invoicePaid", label: "Amount", minWidth: 100 },
+  { field: "invoiceStatus", label: "Invoice Status", minWidth: 100 },
+  { field: "linkedPaymentMethod", label: "Linked Payment Method", minWidth: 100 },
   
   // {
   //   field: "billingPeriod",
@@ -88,6 +87,9 @@ export default function InvoiceDetails({ invoiceDetails }) {
                       {column.label}
                     </TableCell>
                   ))}
+                  <TableCell>
+                      Action
+                    </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -103,6 +105,7 @@ export default function InvoiceDetails({ invoiceDetails }) {
                           // {column.type?(<TableCell>Downlaod</TableCell>):(<TableCell key={column.field} align={column.align}>{column.format ? column.format(row) : value}</TableCell>)}
                         );
                       })}
+                      <TableCell>View</TableCell>
                     </TableRow>
                   );
                 })}

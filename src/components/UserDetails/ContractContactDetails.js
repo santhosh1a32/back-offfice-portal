@@ -14,7 +14,7 @@ import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import SectionWithTitle from "../common/SectionWithTitle";
 
 const columns = [
-    { field: "contactContractId", label: "Contract Id", minWidth: 50 },
+    // { field: "contactContractId", label: "Contract Id", minWidth: 50 },
     { field: "contactBillingAddress", label: "Billing Address", minWidth: 150 },
     { field: "billingAddressVerificationStatus", label: "Billing Address Status", minWidth: 100 },    
     { field: "contactHomeAddress", label: "Home Address", minWidth: 150 },
@@ -22,10 +22,16 @@ const columns = [
     { field: "contactMobile", label: "Mobile", minWidth: 100 },
     { field: "mobileVerificationStatus", label: "Mobile Status", minWidth: 100 },    
     { field: "contactValidFrom", label: "Valid From", minWidth: 100 },
-    { field: "contactValidTo", label: "Valid To", minWidth: 100 }
+    { field: "contactValidTo", label: "Valid To", minWidth: 100 },
+    // { field: "action", label: "Action", minWidth: 100 }
 ]
 
 const ContractContactDetails = ({contractContactDetails}) => {
+
+  const showAddressModal = () => {
+    console.log("address modal");
+  }
+
     return (
         <Grid container spacing={3}>
         <Grid item xs={12} className="section">
@@ -43,6 +49,7 @@ const ContractContactDetails = ({contractContactDetails}) => {
                         {column.label}
                       </TableCell>
                     ))}
+                    <TableCell>Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -58,6 +65,7 @@ const ContractContactDetails = ({contractContactDetails}) => {
                             // {column.type?(<TableCell>Downlaod</TableCell>):(<TableCell key={column.field} align={column.align}>{column.format ? column.format(row) : value}</TableCell>)}
                           );
                         })}
+                        <TableCell onClick={showAddressModal}>Update</TableCell>
                       </TableRow>
                     );
                   })}

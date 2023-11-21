@@ -14,41 +14,6 @@ function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
 }
 
-const rows = [
-  createData(
-    0,
-    '03 Aug, 2023',
-    'John Cena',
-    'Subscription',
-    'Active',
-    312.44,
-  ),
-  createData(
-    1,
-    '02 Aug, 2023',
-    'Paul McCartney',
-    'Subscription',
-    'Paused',
-    866.99,
-  ),
-  // createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  // createData(
-  //   3,
-  //   '16 Mar, 2023',
-  //   'Michael Jackson',
-  //   'Gary, NL',
-  //   'AMEX ⠀•••• 2000',
-  //   654.39,
-  // ),
-  // createData(
-  //   4,
-  //   '15 Mar, 2023',
-  //   'Bruce Springsteen',
-  //   'Long Branch, US',
-  //   'VISA ⠀•••• 5919',
-  //   212.79,
-  // ),
-];
 const columns = [
   { field: "contractNumber", label: "Subscription Number"},
   { field: "fullName", label: "Customer Name"},
@@ -79,8 +44,11 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 } 
 
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
+function stableSort(array,order,orderBy,comparator) {
+  if(array.length>0){
+  let filteredArray = array.filter((item) => item[orderBy] == null)
+  let tosort = array.filter((item) => item[orderBy])
+  const stabilizedThis = tosort.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
@@ -88,21 +56,24 @@ function stableSort(array, comparator) {
     }
     return a[1] - b[1];
   });
-  return stabilizedThis.map((el) => el[0]);
+  let filteredItems = order === 'desc'?stabilizedThis.map((el) => el[0]).concat(filteredArray):filteredArray.concat(stabilizedThis.map((el) => el[0]));
+  // console.log(filteredItems);
+  return filteredItems;
+  }
 }
 
 
 export default function Orders({allContractDetails}) {
-  const [allContracts, setAllContracts] = React.useState([]);
-  const [filteredContracts, setFilteredContracts] = React.useState([]);
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('contractNumber');
+  const [allContracts, setAllContracts] = React.useState({});
+  const [filteredContracts, setFilteredContracts] = React.useState({});
+  const [order, setOrder] = React.useState('desc');
+  const [orderBy, setOrderBy] = React.useState('createdDate');
   const [searched, setSearched] = React.useState("");
 
   let navigate = useNavigate();
 
   const onClickHandle = (contractId) => {
-    console.log(contractId);
+    // console.log(contractId);
     navigate('/details?contractId='+contractId);
   }
 
@@ -110,7 +81,7 @@ export default function Orders({allContractDetails}) {
       const isAsc = orderBy === property && order === 'asc';
       setOrder(isAsc ? 'desc' : 'asc');
       setOrderBy(property);
-      console.log(order,orderBy);
+      // console.log(order,orderBy);
     };
   const createSortHandler = (property) => (event) => {
       handleRequestSort(event, property);
@@ -118,7 +89,7 @@ export default function Orders({allContractDetails}) {
 
   const visibleRows = React.useMemo(
       () =>
-        stableSort(filteredContracts, getComparator(order, orderBy)),
+        stableSort(filteredContracts,order,orderBy, getComparator(order, orderBy)),
       [order, orderBy,filteredContracts]
     );
 
@@ -131,7 +102,7 @@ export default function Orders({allContractDetails}) {
           row.createdDate.toLowerCase().includes(e.target.value.toLowerCase()) ||
           row.email.toLowerCase().includes(e.target.value.toLowerCase())        
       });
-      console.log(filteredRows);
+      // console.log(filteredRows);
       setFilteredContracts(filteredRows);
   };
 
@@ -174,8 +145,8 @@ React.useEffect(() => {
         </TableRow>
         </TableHead>
         <TableBody>
-          {visibleRows.length && visibleRows.map((row) => (
-            <TableRow key={row.contractId} onClick={() => onClickHandle(row.contractId)} style={{cursor: 'pointer',whiteSpace:'nowrap'}}>
+          {visibleRows && visibleRows.map((row) => (
+            <TableRow key={row.contractId} onClick={() => onClickHandle(row.contractId)} style={{cursor: 'pointer'}}>
               {columns.map(column => (
                           <TableCell key={column.field}>
                             {row[column.field]}

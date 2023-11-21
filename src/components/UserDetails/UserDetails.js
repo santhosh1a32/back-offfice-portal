@@ -37,7 +37,10 @@ import DontPauseModal from './DontPauseModal';
 import DontCancelModal from './DontCancelModal';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import RescheduleCancelSubscriptionModal from './RescheduleCancelSubscriptionModal';
-
+import AllocatedVehicleDetails from './AllocatedVehicleDetails';
+import DeliveryAndCollectionDetails from './DeliveryAndCollectionDetails';
+import PaymentMethodDetails from './PaymentMethodDetails';
+import CompletedCheckList from './CompletedCheckList';
 import dayjs from 'dayjs';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -111,6 +114,8 @@ const UserDetails = () => {
     const [activeContractVersionId, setActiveContractVersionId] = React.useState();
     const [driverDetails, setDriverDetails] = React.useState([]);
     const [invoiceDetails, setInvoiceDetails] = React.useState([]);
+    const [paymentMethods, setPaymentMethods] = React.useState([]);
+    const [completedCheckList, setCompletedCheckList] = React.useState([]);
     const [otherPaymentsDetails, setOtherPaymentsDetails] = React.useState([]);
     const [contractContactDetails, setContractContactDetails] = React.useState([]);
     const [pauseCancelReasons, setPauseCancelReasons] = React.useState(CONTRACT_DETAILS.pauseCancelReasons);
@@ -487,6 +492,29 @@ const UserDetails = () => {
             })
         }
     }
+    const getCompletedChecklistDetails = () => {
+        var obj = { contractId: searchParams.get("contractId") }
+        if (window['BackOfficePortalCtrl']) {
+            getDataWithParam('BackOfficePortalCtrl', 'getCompletedChecklistDetails', JSON.stringify(obj)).then(result => {
+                if(result && result.CheckListDetails) {
+                    console.log(result);
+                    setCompletedCheckList(result.CheckListDetails);
+                }
+            })
+        }
+    }
+
+    const getPaymentMethods = () => {
+        var obj = { contractId: searchParams.get("contractId") }
+        if (window['BackOfficePortalCtrl']) {
+            getDataWithParam('BackOfficePortalCtrl', 'getPaymentMethods', JSON.stringify(obj)).then(result => {
+                if(result && result.PaymentDetails) {
+                    console.log(result);
+                    setPaymentMethods(result.PaymentDetails);
+                }
+            })
+        }
+    }
 
     React.useEffect(() => {
         const activeContractVersion = getActiveContractVersionDetails();
@@ -497,6 +525,8 @@ const UserDetails = () => {
         getOtherPaymentsDetails();
         getContractContacts();
         getPauseCancelReasons();
+        getPaymentMethods();
+        getCompletedChecklistDetails();
     },[contractDetails])
 
     React.useEffect(() => {
@@ -510,7 +540,7 @@ const UserDetails = () => {
                     <ChecklistOutlinedIcon/>
                     <span style={{ marginLeft: '6px' }}>Checklist</span>
                 </Button>
-                   {
+                   { contractDetails.actionButtonsList &&
                 contractDetails.actionButtonsList.map((button) => (
                     columns.map((column) => (
                         <Button size='small' variant={column[button].variant}  color={column[button].color} className='action-btn' onClick={()=>buttonClicked(button)}>
@@ -621,6 +651,23 @@ const UserDetails = () => {
                                                 </Paper>
                                             </Grid>
                                         )}
+                                        {/* Allocated Vehicles Details */}
+                                        {
+                                            <Grid item xs={12}>
+                                                <Paper className="contract-details" sx={{ p: 2}}>
+                                                    <AllocatedVehicleDetails allocatedVehicle={contract.contractVersion_ALLC}/>
+                                                </Paper>
+                                            </Grid>
+                                        }
+                                        {/* Delivery and Collection Details */}
+                                        {
+                                            <Grid item xs={12}>
+                                              <Paper className="contract-details" sx={{ p: 2}}>
+                                                  <DeliveryAndCollectionDetails deliveryDetails={contract.contractVersion_DAC}/>
+                                              </Paper>
+                                           </Grid>
+                                           
+                                        }
 
                                     </AccordionDetails>
                                 </Accordion>
@@ -634,10 +681,16 @@ const UserDetails = () => {
             <ContractContactDetails contractContactDetails={contractContactDetails} />                           
 
             <DriverDetails driverDetails={driverDetails}/>
+            
+            <PaymentMethodDetails paymentMethods={paymentMethods}/> 
 
             <InvoiceDetails invoiceDetails={invoiceDetails} />
 
             <OtherPaymentsDetails otherPayments={otherPaymentsDetails}/>
+
+            <CompletedCheckList completedCheckList={completedCheckList}/>
+
+
             {openPauseDialog && (
                 <PauseSubscriptionModal
                     open={openPauseDialog}

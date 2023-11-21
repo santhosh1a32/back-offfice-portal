@@ -69,7 +69,24 @@ export const CONTRACT_DETAILS = {
           "experienceProductType": "Add on",
           "experienceProductLink": "https://abc-2c3-dev-ed--c.develop.vf.force.com/a1I5i0000030UKnEAM"
         }
-      ]
+      ],
+      "contractVersion_ALLC": {
+        "alllocatedVehicleId": "a0X5i000005PwtTEAS",
+        "vehicleVIN": "TMYLR567793",
+        "vehiclePlateNumber": "MUC 7632 N",
+        "startMileage": "20",
+        "endMilage": "30",
+        "startFuel": "20",
+        "endFuel": "5",
+        "startDate": "17/11/2023, 8:09 pm",
+        "endDate": "17/11/2023, 8:09 pm"
+      },
+      "contractVersion_DAC": {
+          "contractVersionId": "a1U5i000001OtfSEAS",
+          "deliveryAddress": "502 Mansion Park Drive, 95054, Santa Clara, United States",
+          "deliveryDate": 1701043200000,
+          "deliverytime": "8.00-12.00"
+      }
     },
     {
       "contractVersionId": "a1U5i000001vZxdEAE",
@@ -182,6 +199,22 @@ export const CONTRACT_DETAILS = {
       ]
     }
   ],
+  PaymentDetails :[{
+          "paymentId":"",
+          "paymentLast4Digits":"",
+          "paymentCardType":"",
+          "paymentCardIssuer":"",
+          "paymentExpiryMonth":"",
+          "paymentExpiryYear":""
+      }],
+  CheckListDetails:[{
+          "checkListId":"",
+          "checkListType":"",
+          "name":"",
+          "taskAgentVerifiedDate":"",
+          "taskCustomerVerifiedDate":"",
+          "action":""     
+    }],    
   Invoices: [
     {
       id: "il_1NhiUpDPnVWRKvJjR9syRHhv",
