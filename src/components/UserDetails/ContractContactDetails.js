@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import SectionWithTitle from "../common/SectionWithTitle";
+import  AddressModal  from "../Checklist/AddressModal";
 
 const columns = [
     // { field: "contactContractId", label: "Contract Id", minWidth: 50 },
@@ -27,9 +28,19 @@ const columns = [
 ]
 
 const ContractContactDetails = ({contractContactDetails}) => {
+  const [openAddressDialog, setAddressDialog] = React.useState(false);
 
   const showAddressModal = () => {
     console.log("address modal");
+    setAddressDialog(true);
+}
+
+  const closeAddressDialog = () => {
+    setAddressDialog(false);
+}
+
+  const handleSubmit = () => {
+    console.log("submit address modal");
   }
 
     return (
@@ -65,13 +76,21 @@ const ContractContactDetails = ({contractContactDetails}) => {
                             // {column.type?(<TableCell>Downlaod</TableCell>):(<TableCell key={column.field} align={column.align}>{column.format ? column.format(row) : value}</TableCell>)}
                           );
                         })}
-                        <TableCell onClick={showAddressModal}>Update</TableCell>
+                        <TableCell>
+                          <span style={{color:'blue',cursor:'pointer'}} onClick={showAddressModal}>Update</span></TableCell>
                       </TableRow>
                     );
                   })}
                 </TableBody>
               </Table>
             </TableContainer>
+            {openAddressDialog && 
+            <AddressModal 
+                open={openAddressDialog}
+                handleClose={closeAddressDialog}
+                contractContactDetails={contractContactDetails}
+                onSubmit={handleSubmit}
+            />}
           </Paper>
         </Grid>
       </Grid>

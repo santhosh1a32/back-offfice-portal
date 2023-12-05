@@ -28,44 +28,9 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-      return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-      return 1;
-  }
-  return 0;
-} 
-
-function stableSort(array,order,orderBy,comparator) {
-  if(array.length>0){
-  let filteredArray = array.filter((item) => item[orderBy] == null)
-  let tosort = array.filter((item) => item[orderBy])
-  const stabilizedThis = tosort.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  let filteredItems = order === 'desc'?stabilizedThis.map((el) => el[0]).concat(filteredArray):filteredArray.concat(stabilizedThis.map((el) => el[0]));
-  // console.log(filteredItems);
-  return filteredItems;
-  }
-}
-
-
 export default function Orders({allContractDetails}) {
   const [allContracts, setAllContracts] = React.useState({});
-  const [filteredContracts, setFilteredContracts] = React.useState({});
+  const [filteredContracts, setFilteredContracts] = React.useState();
   const [order, setOrder] = React.useState('desc');
   const [orderBy, setOrderBy] = React.useState('createdDate');
   const [searched, setSearched] = React.useState("");
@@ -77,32 +42,46 @@ export default function Orders({allContractDetails}) {
     navigate('/details?contractId='+contractId);
   }
 
-  const handleRequestSort = (event, property) => {
-      const isAsc = orderBy === property && order === 'asc';
-      setOrder(isAsc ? 'desc' : 'asc');
-      setOrderBy(property);
-      // console.log(order,orderBy);
-    };
-  const createSortHandler = (property) => (event) => {
-      handleRequestSort(event, property);
-  };
+  const convertDate = (date,sortField) => {
+    let [day, month, year] = date.split('/');
+    if(sortField==="startDate")
+    year = year.split(',')[0];
+    let dateObj = new Date(+year, +month - 1, +day);
+    return dateObj;
+  }
 
-  const visibleRows = React.useMemo(
-      () =>
-        stableSort(filteredContracts,order,orderBy, getComparator(order, orderBy)),
-      [order, orderBy,filteredContracts]
-    );
+  const sortItems = (sortField) =>{
+    let sortOrder = (orderBy === sortField && order === 'asc')?-1:1;
+    setOrder(sortOrder == 1 ?'asc':'desc');
+    setOrderBy(sortField);
+    let filteredNullArray = filteredContracts.filter((item) => item[sortField] === undefined);
+    let tosort = filteredContracts.filter((item) => item[sortField]);
+    if(sortField === "startDate"){
+      tosort.map((item) => convertDate(item[sortField],item))
+    }
+    tosort.sort((a,b)=>{
+      if(a[sortField]>b[sortField])
+        return 1*sortOrder;
+      else if(a[sortField]<b[sortField])
+        return -1*sortOrder;
+      else
+        return 0;
+    })
+    let filteredItems = tosort.concat(filteredNullArray)
+    setFilteredContracts(filteredItems);
+  }
 
   const requestSearch = (e) => {
       setSearched(e.target.value);
       let filteredRows = allContracts.filter((row) => {
-          return row.fullName.toLowerCase().includes(e.target.value.toLowerCase()) || 
-          // row.subStatus.toLowerCase().includes(e.target.value.toLowerCase()) || 
-          // row.status.toLowerCase().includes(e.target.value.toLowerCase()) ||
-          row.createdDate.toLowerCase().includes(e.target.value.toLowerCase()) ||
-          row.email.toLowerCase().includes(e.target.value.toLowerCase())        
+          return (row.fullName && row.fullName.toLowerCase().includes(e.target.value.toLowerCase())) || 
+          (row.subStatus && row.subStatus.toLowerCase().includes(e.target.value.toLowerCase())) || 
+          (row.status && row.status.toLowerCase().includes(e.target.value.toLowerCase())) ||
+          (row.contractNumber && row.contractNumber.includes(e.target.value))||
+          (row.customerNumber && row.customerNumber.includes(e.target.value))||
+          (row.createdDate && row.createdDate.toLowerCase().includes(e.target.value.toLowerCase())) ||
+          (row.email && row.email.toLowerCase().includes(e.target.value.toLowerCase()))       
       });
-      // console.log(filteredRows);
       setFilteredContracts(filteredRows);
   };
 
@@ -127,11 +106,11 @@ React.useEffect(() => {
               align={headCell.numeric ? 'right' : 'left'}
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.field ? order : false}
+              onClick={()=>sortItems(headCell.field)}
           >
               <TableSortLabel
               active={orderBy === headCell.field}
               direction={orderBy === headCell.field ? order : 'asc'}
-              onClick={createSortHandler(headCell.field)}
               >
               {headCell.label}
               {orderBy === headCell.field ? (
@@ -145,7 +124,7 @@ React.useEffect(() => {
         </TableRow>
         </TableHead>
         <TableBody>
-          {visibleRows && visibleRows.map((row) => (
+          {filteredContracts && filteredContracts.map((row) => (
             <TableRow key={row.contractId} onClick={() => onClickHandle(row.contractId)} style={{cursor: 'pointer'}}>
               {columns.map(column => (
                           <TableCell key={column.field}>
