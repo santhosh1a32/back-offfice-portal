@@ -76,7 +76,9 @@ const CollectionAddress = ({open, contractCheckListId,upcomingContractVersionId,
         getDataWithParam('BackOfficePortalCtrl', 'getCollectionAddress', JSON.stringify(obj)).then(result => {
           if(Object.keys(result).length === 0){
             console.log(result);
-            setCollectionAddress(result.collectionAddress);
+            if(result && result.collectionAddress) {
+              setCollectionAddress(result.collectionAddress);
+            }
             setCollectionDateTime({
               ...collectionDateTime,
               collectionDate: result.collectionDate ? dayjs(result.collectionDate) : '',
